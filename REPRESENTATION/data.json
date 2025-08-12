@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "HTML Temelleri",
+    "description": "HTML etiketleri, yapı ve temel kullanım.",
+    "list": ["<html>", "<head>", "<body>"],
+    "image": ""
+  },
+  {
+    "id": 2,
+    "title": "CSS Temelleri",
+    "description": "CSS seçiciler ve responsive design.",
+    "list": [],
+    "image": ""
+  }
+]
