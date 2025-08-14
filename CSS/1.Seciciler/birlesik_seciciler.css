@@ -1,0 +1,21 @@
+/*
+Konu: Birleşik Seçiciler
+Öğrenme Hedefi: Birden fazla seçiciyi bir arada kullanmayı öğrenmek.
+*/
+
+/* Çocuk seçici: Sadece doğrudan çocukları seçer */
+ul > li {
+  color: green;
+}
+/* Ardışık kardeş seçici: Aynı seviyedeki bir sonraki öğeyi seçer */
+h2 + p {
+  margin-top: 0;
+}
+/* HTML örneği:
+<ul>
+  <li>Birinci</li>
+  <li>İkinci</li>
+</ul>
+<h2>Başlık</h2>
+<p>Başlıktan hemen sonra gelen paragraf</p>
+*/

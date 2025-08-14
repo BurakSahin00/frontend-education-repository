@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<!-- Sayfanın karakter kodlamasını belirtir -->
+	<meta charset="UTF-8">
+	<!-- Sayfa başlığını tarayıcı sekmesinde gösterir -->
+	<title>HTML Attribute Örnekleri</title>
+	<!-- Responsive tasarım için viewport ayarı -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<!-- 'href' attribute'u ile bağlantı adresi tanımlanır, 'target' ile yeni sekmede açılır -->
+	<a href="https://www.w3schools.com" target="_blank" title="W3Schools sitesine git">W3Schools'a Git</a>
+	<br><br>
+
+	<!-- 'src' ile görsel yolu, 'alt' ile alternatif metin, 'width' ve 'height' ile boyut ayarlanır -->
+	<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools Logosu" width="200" height="60">
+
+	<br><br>
+	<!-- 'id' attribute'u ile benzersiz kimlik verilir, 'class' ile stil veya JS için grup tanımlanır -->
+	<p id="ozel-paragraf" class="vurgulu">Bu paragrafın id ve class attributeları var.</p>
+
+	<!-- 'style' attribute'u ile satır içi CSS uygulanır -->
+	<p style="color: blue; font-weight: bold;">Bu paragraf mavi ve kalın yazılmıştır.</p>
+
+	<!-- 'title' attribute'u ile üzerine gelince bilgi kutusu gösterilir -->
+	<abbr title="HyperText Markup Language">HTML</abbr> nedir?
+
+	<br><br>
+	<!-- 'disabled' attribute'u ile buton pasif hale getirilir -->
+	<button disabled>Pasif Buton</button>
+
+	<!-- 'value' attribute'u ile inputun başlangıç değeri ayarlanır, 'placeholder' ile ipucu gösterilir -->
+	<input type="text" value="Önceden girilmiş" placeholder="Buraya yazın">
+
+	<br><br>
+	<!-- 'required' attribute'u ile form alanı zorunlu yapılır -->
+	<form>
+		<label for="email">E-posta:</label>
+		<input type="email" id="email" name="email" required>
+		<input type="submit" value="Gönder">
+	</form>
+</body>
+</html>

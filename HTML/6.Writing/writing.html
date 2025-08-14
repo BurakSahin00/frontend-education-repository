@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Yazı ve Semantik Etiketler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1>HTML Yazı ve Semantik Etiketler</h1>
+
+    <!-- Uzun alıntı: Başka bir kaynaktan blok halinde alıntı yapılır, cite ile kaynak belirtilir -->
+    <blockquote cite="https://www.w3schools.com/html/html_quotation_elements.asp">
+        "The HTML <strong>blockquote</strong> element defines a section that is quoted from another source."
+    </blockquote>
+
+    <!-- Kısa alıntı: Metin içinde kısa alıntı için <q> etiketi kullanılır -->
+    <p>As Shakespeare said: <q>To be, or not to be</q>.</p>
+
+    <!-- Kısaltma: <abbr> etiketi ile kısaltmanın tam açılımı title ile verilir -->
+    <p><abbr title="HyperText Markup Language">HTML</abbr> ve <abbr title="Reverend">Rev.</abbr> örnekleri.</p>
+
+    <!-- İletişim bilgileri: <address> etiketi ile yazar veya site sahibi bilgisi verilir -->
+    <address>
+        Burak Şahin<br>
+        <a href="mailto:burak@example.com">burak@example.com</a>
+    </address>
+
+    <!-- Üst simge ve alt simge: Matematiksel ve kimyasal ifadeler için -->
+    <p>X<sup>2</sup> = 9</p>
+    <p>H<sub>2</sub>O</p>
+
+    <!-- Kod gösterimi: <code>, <var>, <kbd>, <pre>, <samp> örnekleri -->
+    <p>Kod örneği: <code>console.log('Merhaba!')</code></p>
+    <p>Değişken: <var>x</var> = <var>y</var> + 2</p>
+    <p>Klavye girişi: <kbd>Ctrl</kbd> + <kbd>C</kbd> ile kopyalayın.</p>
+    <pre>
+for (let i = 0; i &lt; 5; i++) {
+	console.log(i);
+}
+	</pre>
+    <p>Program çıktısı: <samp>Process completed successfully.</samp></p>
+
+    <!-- Tarih ve saat: <time> etiketi ile makine tarafından okunabilir tarih -->
+    <p>Etkinlik tarihi: <time datetime="2025-08-14">14 Ağustos 2025</time></p>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+/*
+Konu: Flexbox ile Sıralama
+Öğrenme Hedefi: Flex yönünü ve sıralamayı öğrenmek.
+*/
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+/* HTML örneği:
+<div class="row">
+  <div>Kutu 1</div>
+  <div>Kutu 2</div>
+</div>
+<div class="column">
+  <div>Kutu A</div>
+  <div>Kutu B</div>
+</div>
+*/

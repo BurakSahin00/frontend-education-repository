@@ -1,0 +1,16 @@
+/*
+Konu: CSS Grid ile İki Sütun
+Öğrenme Hedefi: Grid ile temel iki sütunlu düzen oluşturmak.
+*/
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+/* HTML örneği:
+<div class="grid-container">
+  <div>Sol</div>
+  <div>Sağ</div>
+</div>
+*/

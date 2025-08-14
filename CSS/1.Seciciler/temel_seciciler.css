@@ -1,0 +1,22 @@
+/*
+Konu: Temel CSS Seçiciler
+Öğrenme Hedefi: Farklı seçici türlerini ve temel kullanımını öğrenmek.
+*/
+
+/* Etiket seçici: Tüm <p> etiketlerini seçer */
+p {
+  color: blue;
+}
+/* Sınıf seçici: .vurgulu sınıfına sahip öğeleri seçer */
+.vurgulu {
+  background: yellow;
+}
+/* ID seçici: #ozel id'li öğeyi seçer */
+#ozel {
+  font-weight: bold;
+}
+/* HTML örneği:
+<p>Normal paragraf</p>
+<p class="vurgulu">Vurgulu paragraf</p>
+<p id="ozel">Özel paragraf</p>
+*/

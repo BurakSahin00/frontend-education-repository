@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<title>Vurgulama ve Önem: Semantik Metin Etiketleri</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1>Vurgulama ve Önem: Semantik Metin Etiketleri</h1>
+
+	<!-- <em>: Anlam veya ton açısından vurgu için kullanılır, ekran okuyucular tarafından da vurgulu okunur -->
+	<h2>1. <em>Emphasis</em> – <code>&lt;em&gt;</code></h2>
+	<p>I am <em>glad</em> you weren't <em>late</em>.</p>
+
+	<!-- <strong>: Önemli içerik vurgusu için kullanılır, ekran okuyucular tarafından güçlü tonla okunur -->
+	<h2>2. <strong>Strong Importance</strong> – <code>&lt;strong&gt;</code></h2>
+	<p>This liquid is <strong>highly toxic</strong>.</p>
+	<p>I am counting on you. <strong>Do not</strong> be late!</p>
+
+	<!-- <strong> ve <em> birlikte kullanılabilir, hem önemli hem vurgulu ifade için -->
+	<h2>3. Birlikte Kullanım (İç İçe Yerleştirme)</h2>
+	<p>This liquid is <strong>highly toxic</strong> — if you drink it, <strong>you may <em>die</em></strong>.</p>
+
+	<!-- Stil amaçlı eski etiketler yerine semantik etiketler ve CSS kullanılması önerilir -->
+	<h2>4. Presentasyon Etiketlerinden Kaçının</h2>
+	<p><big>Bu metin <code>&lt;big&gt;</code> etiketiyle büyütülmüştür. (Kullanımı önerilmez)</big></p>
+	<p><font color="red">Bu metin <code>&lt;font&gt;</code> etiketiyle renklendirilmiştir. (Kullanımı önerilmez)</font></p>
+
+	<!-- <i>: Farklı bir ton, ruh hali veya yabancı kelime için kullanılır, sadece görsel vurgu sağlar -->
+	<p>Latincede <i>carpe diem</i> ifadesi "anı yaşa" anlamına gelir.</p>
+
+	<!-- <b>: Sadece görsel olarak kalın gösterir, anlamda önem taşımaz -->
+	<p><b>Bu metin sadece kalın görünür, anlamda önem taşımaz.</b></p>
+
+	<!-- <small>: Daha küçük metin için kullanılır, genellikle dipnot veya ek bilgi -->
+	<p>Bu metin <small>daha küçük</small> görünür.</p>
+
+	<!-- <sub>: Alt simge, genellikle kimya veya matematikte kullanılır -->
+	<p>Kimyasal formül: H<sub>2</sub>O</p>
+
+	<!-- <sup>: Üst simge, genellikle matematikte üs göstermek için kullanılır -->
+	<p>Matematiksel ifade: x<sup>2</sup> + y<sup>2</sup></p>
+
+	<!-- <ins>: Eklenmiş metni belirtir, genellikle altı çizili gösterilir -->
+	<p>Bu cümlede <ins>yeni eklenen</ins> bir ifade var.</p>
+
+	<!-- <del>: Silinmiş metni belirtir, genellikle üstü çizili gösterilir -->
+	<p>Bu cümlede <del>artık geçerli olmayan</del> bir ifade var.</p>
+
+	<!-- <mark>: Vurgulanan/işaretlenen metni belirtir, genellikle sarı arka planlı -->
+	<p>Bu cümlede <mark>önemli</mark> bir kelime vurgulanmıştır.</p>
+</body>
+</html>

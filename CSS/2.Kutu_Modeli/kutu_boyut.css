@@ -1,0 +1,13 @@
+/*
+Konu: Kutu Boyutlandırma
+Öğrenme Hedefi: width, height ve box-sizing kullanımı.
+*/
+
+.box {
+  width: 300px;
+  height: 120px;
+  box-sizing: border-box; /* Kenarlık ve padding dahil boyutlandırma */
+}
+/* HTML örneği:
+<div class="box">Boyutlandırılmış Kutu</div>
+*/
