@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Events (Olaylar) Örnekleri</title>
+  <style>
+    button, input { margin: 8px 0; }
+    #output { margin-top: 16px; color: #1976d2; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Events (Olaylar)</h1>
+  <p>JS eventleri, kullanıcı veya tarayıcı tarafından tetiklenen olaylardır. En yaygın eventler ve örnekler:</p>
+
+  <!-- 1. Click Event -->
+  <h2>1. Click (Tıklama)</h2>
+  <button id="btn">Bana Tıkla</button>
+  <script>
+    document.getElementById("btn").onclick = function() {
+      document.getElementById("output").textContent = "Butona tıklandı!";
+    };
+  </script>
+
+  <!-- 2. Mouseover Event -->
+  <h2>2. Mouseover (Üzerine Gelme)</h2>
+  <div id="hoverDiv" style="width:120px; height:40px; background:#e3f2fd; text-align:center; line-height:40px;">Üzerime gel</div>
+  <script>
+    document.getElementById("hoverDiv").onmouseover = function() {
+      document.getElementById("output").textContent = "Div'in üzerine gelindi!";
+    };
+  </script>
+
+  <!-- 3. Change Event -->
+  <h2>3. Change (Değişiklik)</h2>
+  <input type="text" id="inputChange" placeholder="Bir şey yaz...">
+  <script>
+    document.getElementById("inputChange").onchange = function() {
+      document.getElementById("output").textContent = "Input değişti: " + this.value;
+    };
+  </script>
+
+  <!-- 4. Keydown Event -->
+  <h2>4. Keydown (Tuşa Basma)</h2>
+  <input type="text" id="inputKey" placeholder="Tuşa bas...">
+  <script>
+    document.getElementById("inputKey").onkeydown = function(e) {
+      document.getElementById("output").textContent = "Basılan tuş: " + e.key;
+    };
+  </script>
+
+  <!-- 5. Load Event -->
+  <h2>5. Load (Sayfa Yüklendiğinde)</h2>
+  <script>
+    window.onload = function() {
+      document.getElementById("output").textContent = "Sayfa yüklendi!";
+    };
+  </script>
+
+  <div id="output"></div>
+
+  <hr>
+  <h3>Diğer Yaygın Eventler</h3>
+  <ul>
+    <li><b>dblclick</b>: Çift tıklama</li>
+    <li><b>focus</b>: Bir inputa odaklanma</li>
+    <li><b>blur</b>: Odak kaybı</li>
+    <li><b>submit</b>: Form gönderme</li>
+    <li><b>resize</b>: Pencere boyutu değişince</li>
+    <li><b>scroll</b>: Sayfa kaydırılınca</li>
+  </ul>
+</body>
+</html>

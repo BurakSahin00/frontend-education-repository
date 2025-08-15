@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Nesne Özelliklerini HTML'de Gösterme</title>
+</head>
+<body>
+  <h2>Kitap Bilgisi</h2>
+  <p id="bilgi"></p>
+
+  <script>
+    // JS ile nesne oluşturma
+    let kitap = { ad: "JS", yazar: "Burak" };
+    // HTML'de nesne özelliklerini gösterme
+    document.getElementById("bilgi").textContent = kitap.ad + " - " + kitap.yazar;
+  </script>
+</body>
+</html>
