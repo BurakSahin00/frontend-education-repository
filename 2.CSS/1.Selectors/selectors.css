@@ -1,0 +1,76 @@
+/* CSS Selectors */
+
+/* 1. Element Selector */
+h1 {
+	color: blue;
+}
+/* h1 etiketindeki tüm başlıklar mavi olur */
+
+/* 2. Id Selector */
+#ozelBaslik {
+	color: red;
+}
+/* id="ozelBaslik" olan element kırmızı olur */
+
+/* 3. Class Selector */
+.vurgulu {
+	font-weight: bold;
+}
+/* class="vurgulu" olan element kalın olur */
+
+/* 4. Universal Selector */
+* {
+	box-sizing: border-box;
+}
+/* Tüm elementlere box-sizing uygulanır */
+
+/* 5. Grouping Selector */
+h2, p {
+	margin-bottom: 16px;
+}
+/* h2 ve p etiketlerine aynı stil uygulanır */
+
+/* 6. Descendant Selector */
+div p {
+	color: green;
+}
+/* Sadece div içindeki p etiketleri yeşil olur */
+
+/* 7. Child Selector */
+ul > li {
+	list-style-type: square;
+}
+/* Sadece ul'nin doğrudan çocuk li'leri kare madde işareti alır */
+
+/* 8. Adjacent Sibling Selector */
+h2 + p {
+	color: orange;
+}
+/* h2'den hemen sonra gelen p turuncu olur */
+
+/* 9. General Sibling Selector */
+h2 ~ p {
+	font-style: italic;
+}
+/* h2 ile aynı seviyede olan sonraki tüm p'ler italik olur */
+
+/* 10. Attribute Selector */
+a[target] {
+	text-decoration: underline;
+}
+/* target attribute'u olan a etiketleri altı çizili olur */
+
+a[href^="https"] {
+	color: purple;
+}
+/* href'i https ile başlayan a etiketleri mor olur */
+
+a[href$=".pdf"] {
+	color: brown;
+}
+/* href'i .pdf ile biten a etiketleri kahverengi olur */
+
+a[href*="w3schools"] {
+	background: yellow;
+}
+/* href'inde 'w3schools' geçen a etiketleri sarı arka plan alır */

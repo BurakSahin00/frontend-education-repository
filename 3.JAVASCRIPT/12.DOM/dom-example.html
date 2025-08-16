@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM Temel Örnekler</title>
+  <link rel="stylesheet" href="dom-example.css">
+</head>
+<body>
+  <!-- ===================== DOM Element Seçimi ===================== -->
+  <!-- Bu bölümde kullanılan JS kodları: dom.js dosyasının başındaki 'Element Seçimi' bölümü (getElementById, getElementsByClassName, getElementsByTagName, querySelector, querySelectorAll) -->
+  <section>
+    <h2>Element Seçimi</h2>
+    <div class="desc">getElementById, getElementsByClassName, getElementsByTagName, querySelector, querySelectorAll ile sayfadaki elementleri seçebilirsiniz.<br>
+    <b>Kullanılan JS:</b> dom.js - Element Seçimi</div>
+    <h1 id="myTitle">Başlık</h1>
+    <div id="myDiv">Div içeriği</div>
+    <div class="flex-row">
+      <div class="kutu" id="kutu1">Kutu 1</div>
+      <div class="kutu" id="kutu2">Kutu 2</div>
+    </div>
+    <p id="myP">Paragraf örneği</p>
+    <p>İkinci paragraf</p>
+  </section>
+
+  <!-- ===================== DOM İçerik & Özellik Değiştirme ===================== -->
+  <!-- Bu bölümde kullanılan JS kodları: dom.js 'İçerik ve Özellik Değiştirme' ve 'HTML DOM ile Element İçeriği ve Özelliklerini Değiştirme' bölümleri -->
+  <section>
+    <h2>İçerik & Özellik Değiştirme</h2>
+    <div class="desc">innerHTML, textContent, setAttribute, style, src, href, value gibi özelliklerle elementlerin içeriği ve özellikleri değiştirilebilir.<br>
+    <b>Kullanılan JS:</b> dom.js - İçerik ve Özellik Değiştirme</div>
+    <div class="flex-row">
+      <a id="myLink" href="#">Bağlantı</a>
+      <img id="myImg" src="https://via.placeholder.com/100" alt="Resim">
+      <input id="myInput" type="text" value="">
+    </div>
+  </section>
+
+  <!-- ===================== DOM Form Doğrulama ===================== -->
+  <!-- Bu bölümde kullanılan JS kodları: dom.js 'Form Doğrulama', 'validateForm', 'validateNumber', 'validateEmail' fonksiyonları -->
+  <section>
+    <h2>Form Doğrulama</h2>
+    <div class="desc">Form gönderilmeden önce alanların doğruluğu JavaScript ile kontrol edilebilir.<br>
+    <b>Kullanılan JS:</b> dom.js - Form Doğrulama, validateForm, validateNumber, validateEmail</div>
+    <form name="myForm" onsubmit="return validateForm()">
+      <input type="text" name="ad" placeholder="Adınız">
+      <input type="number" id="yasInput" placeholder="Yaşınız">
+      <input type="email" id="emailInput" placeholder="E-posta">
+      <button type="submit">Gönder</button>
+    </form>
+  </section>
+
+  <!-- ===================== DOM Olaylar (Events) ===================== -->
+  <!-- Bu bölümde kullanılan JS kodları: dom.js 'Olaylar', 'addEventListener', olay nesnesi ve olay kaldırma örnekleri -->
+  <section>
+    <h2>Olaylar (Events)</h2>
+    <div class="desc">onclick, addEventListener gibi metotlarla kullanıcı etkileşimleri yakalanabilir.<br>
+    <b>Kullanılan JS:</b> dom.js - Olaylar, addEventListener, olay nesnesi, olay kaldırma</div>
+    <button id="myBtn">Buton</button>
+  </section>
+
+  <!-- ===================== DOM Animasyon ===================== -->
+  <!-- Bu bölümde kullanılan JS kodları: dom.js 'Animasyon', hareketEt fonksiyonu -->
+  <section>
+    <h2>Animasyon</h2>
+    <div class="desc">setInterval ile bir kutu sağa doğru hareket ettirilir.<br>
+    <b>Kullanılan JS:</b> dom.js - Animasyon, hareketEt fonksiyonu</div>
+    <button onclick="hareketEt()">Animasyonu Başlat</button>
+    <div id="animKutu"></div>
+  </section>
+
+  <!-- ===================== Açıklama ===================== -->
+  <!-- Tüm örnekler için dom.js dosyası kullanılmaktadır. Her bölüm ilgili DOM konusunu ve örneğini içerir. -->
+  <script src="dom.js"></script>
+</body>
+</html>

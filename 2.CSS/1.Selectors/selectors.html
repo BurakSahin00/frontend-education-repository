@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Selector Örnekleri</title>
+  <link rel="stylesheet" href="selectors.css">
+</head>
+<body>
+  <!-- 1. Element Selector -->
+  <h1>Element Selector: Bu başlık mavi olmalı</h1>
+
+  <!-- 2. Id Selector -->
+  <h2 id="ozelBaslik">Id Selector: Bu başlık kırmızı olmalı</h2>
+
+  <!-- 3. Class Selector -->
+  <p class="vurgulu">Class Selector: Bu paragraf kalın olmalı</p>
+
+  <!-- 4. Universal Selector -->
+  <div>Universal Selector: Tüm elementlerde box-sizing uygulanır</div>
+
+  <!-- 5. Grouping Selector -->
+  <h2>Grouping Selector: h2 ve p'ye margin-bottom uygulanır</h2>
+  <p>Grouping Selector: h2 ve p'ye margin-bottom uygulanır</p>
+
+  <!-- 6. Descendant Selector -->
+  <div>
+    <p>Descendant Selector: div içindeki p yeşil olmalı</p>
+    <span><p>Bu p, span içinde ve div'in içinde olduğu için yine yeşil olmalı</p></span>
+  </div>
+
+  <!-- 7. Child Selector -->
+  <ul>
+    <li>Child Selector: ul'nin doğrudan çocuğu kare madde işareti alır</li>
+    <li>
+      <ul>
+        <li>Bu li, iç içe ul'nin çocuğu olduğu için kare olmaz</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- 8. Adjacent Sibling Selector -->
+  <h2>Adjacent Sibling Selector</h2>
+  <p>Bu p, h2'den hemen sonra geldiği için turuncu olmalı</p>
+
+  <!-- 9. General Sibling Selector -->
+  <h2>General Sibling Selector</h2>
+  <div>Araya başka bir element</div>
+  <p>Bu p, h2 ile aynı seviyede ve sonrasında olduğu için italik olmalı</p>
+  <p>Bir başka p, yine italik olmalı</p>
+
+  <!-- 10. Attribute Selector -->
+  <a href="https://www.w3schools.com" target="_blank">Attribute Selector: target ve w3schools içeriyor</a><br>
+  <a href="https://example.com">Attribute Selector: https ile başlıyor</a><br>
+  <a href="dosya.pdf">Attribute Selector: .pdf ile bitiyor</a><br>
+  <a href="http://w3schools.com">Attribute Selector: w3schools içeriyor</a><br>
+
+</body>
+</html>

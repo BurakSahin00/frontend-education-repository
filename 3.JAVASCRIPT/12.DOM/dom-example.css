@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+section {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 32px auto;
+  padding: 24px 32px;
+  max-width: 600px;
+  display: block;
+}
+h2 {
+  margin-top: 0;
+  color: #2a4d7a;
+  font-size: 1.3em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+.desc {
+  color: #555;
+  font-size: 0.98em;
+  margin-bottom: 16px;
+}
+.kutu {
+  width: 100px;
+  height: 100px;
+  background: #eee;
+  margin: 10px 10px 10px 0;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 100px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+#animKutu {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: red;
+  left: 0;
+  top: 0;
+  margin-top: 16px;
+  border-radius: 6px;
+}
+form input, form button {
+  margin: 6px 0;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+form button {
+  background: #2a4d7a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button {
+  margin: 8px 0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid #2a4d7a;
+  background: #fff;
+  color: #2a4d7a;
+  font-weight: bold;
+  cursor: pointer;
+}
+a {
+  color: #2a4d7a;
+  text-decoration: underline;
+  margin-right: 12px;
+}
+img {
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+.flex-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
