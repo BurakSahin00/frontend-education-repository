@@ -1,0 +1,77 @@
+
+/*
+Konu: CSS Renkler
+Öğrenme Hedefi: Renk tanımlama yöntemleri, arka plan, metin ve kenarlık renkleri.
+*/
+
+/* 1. Renk İsimleri ile */
+.color-name {
+  background-color: red;
+  color: white;
+}
+/* HTML: <div class="color-name">Arka plan: red, Metin: white</div> */
+
+/* 2. HEX Kodları ile */
+.color-hex {
+  background-color: #4CAF50;
+  color: #fff;
+}
+/* HTML: <div class="color-hex">Arka plan: #4CAF50, Metin: #fff</div> */
+
+/* 3. RGB ile */
+.color-rgb {
+  background-color: rgb(0, 128, 255);
+  color: rgb(255,255,255);
+}
+/* HTML: <div class="color-rgb">Arka plan: rgb(0,128,255), Metin: rgb(255,255,255)</div> */
+
+/* 4. RGBA ile (alfa kanalı ile şeffaflık) */
+.color-rgba {
+  background-color: rgba(255, 99, 71, 0.5);
+  color: black;
+}
+/* HTML: <div class="color-rgba">Arka plan: rgba(255,99,71,0.5), Metin: black</div> */
+
+/* 5. HSL ile */
+.color-hsl {
+  background-color: hsl(120, 100%, 50%);
+  color: hsl(0, 0%, 100%);
+}
+/* HTML: <div class="color-hsl">Arka plan: hsl(120,100%,50%), Metin: hsl(0,0%,100%)</div> */
+
+/* 6. HSLA ile (alfa kanalı ile şeffaflık) */
+.color-hsla {
+  background-color: hsla(240, 100%, 50%, 0.3);
+  color: hsl(0, 0%, 20%);
+}
+/* HTML: <div class="color-hsla">Arka plan: hsla(240,100%,50%,0.3), Metin: hsl(0,0%,20%)</div> */
+
+/* 7. Arka plan rengi */
+.bg-yellow {
+  background-color: yellow;
+}
+/* HTML: <div class="bg-yellow">Arka plan: yellow</div> */
+
+/* 8. Metin rengi */
+.text-blue {
+  color: blue;
+}
+/* HTML: <span class="text-blue">Metin: blue</span> */
+
+/* 9. Kenarlık rengi */
+.border-green {
+  border: 2px solid green;
+}
+/* HTML: <div class="border-green">Kenarlık: green</div> */
+
+/* 10. Birden fazla renkli kutu örneği */
+.color-demo {
+  width: 120px;
+  height: 60px;
+  margin: 8px;
+  display: inline-block;
+  text-align: center;
+  line-height: 60px;
+  font-weight: bold;
+  border-radius: 8px;
+}

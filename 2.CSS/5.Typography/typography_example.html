@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Typography - Örnekler</title>
+  <link rel="stylesheet" href="typography.css">
+  <style>
+    body { background: #f8f8f8; font-family: Arial, sans-serif; }
+    h2 { margin-top: 32px; }
+    .demo-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+    .demo-row > * { min-width: 180px; margin-bottom: 12px; }
+    .icon-demo { font-size: 32px; }
+  </style>
+  <!-- FontAwesome CDN (icon-demo için) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <h1>CSS Typography - Tüm Özellikler ve Örnekler</h1>
+  <p>Bu sayfada <b>typography.css</b> dosyasındaki tüm örnekler uygulanmıştır.</p>
+
+  <h2>1. Text Özellikleri</h2>
+  <div class="demo-row">
+    <p class="text-align">Ortalanmış metin</p>
+    <p class="text-decoration">Altı çizili metin</p>
+    <p class="text-transform">BÜYÜK HARF METİN</p>
+    <p class="text-indent">İlk satır girintili metin</p>
+    <p class="letter-spacing">Harf aralıklı metin</p>
+    <p class="word-spacing">Kelime aralıklı metin</p>
+    <p class="line-height">Yüksek satır aralığı</p>
+    <p class="text-shadow">Gölge efektli metin</p>
+  </div>
+
+  <h2>2. Font Özellikleri</h2>
+  <div class="demo-row">
+    <span class="font-family">Arial fontu</span>
+    <span class="font-size">Büyük font</span>
+    <span class="font-style">İtalik font</span>
+    <span class="font-weight">Kalın font</span>
+    <span class="font-variant">Küçük büyük harf</span>
+  </div>
+
+  <h2>3. Icon (FontAwesome)</h2>
+  <div class="demo-row">
+    <i class="icon-demo fa fa-home"></i>
+    <i class="icon-demo fa fa-star"></i>
+    <i class="icon-demo fa fa-heart"></i>
+    <i class="icon-demo fa fa-user"></i>
+  </div>
+
+  <h2>4. Link Özellikleri</h2>
+  <div class="demo-row">
+    <a href="#" class="link-basic">Normal Link</a>
+    <a href="#" class="link-basic link-visited">Ziyaret Edilmiş Link</a>
+    <a href="#" class="link-basic link-active">Aktif Link</a>
+    <a href="#" class="link-button">Buton Link</a>
+  </div>
+
+  <hr>
+  <p><b>Kullanılan CSS dosyası:</b> typography.css</p>
+</body>
+</html>

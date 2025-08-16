@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Box Model - Örnekler</title>
+  <link rel="stylesheet" href="boxmodel.css">
+  <style>
+    body { background: #f8f8f8; font-family: Arial, sans-serif; }
+    h2 { margin-top: 32px; }
+    .demo-row { display: flex; flex-wrap: wrap; gap: 16px; }
+    .demo-row > div { min-width: 180px; }
+  </style>
+</head>
+<body>
+  <h1>CSS Box Model - Tüm Özellikler ve Örnekler</h1>
+  <p>Bu sayfada <b>boxmodel.css</b> dosyasındaki tüm örnekler uygulanmıştır.</p>
+
+  <h2>1. Box Model Demo</h2>
+  <div class="boxmodel-demo">Box Model Demo</div>
+  <div class="boxmodel-borderbox">Box-Sizing: border-box</div>
+  <div class="boxmodel-content">Content</div>
+
+  <h2>2. Border Özellikleri</h2>
+  <div class="demo-row">
+    <div class="border-demo border-width">border-width</div>
+    <div class="border-demo border-solid">solid</div>
+    <div class="border-demo border-dashed">dashed</div>
+    <div class="border-demo border-dotted">dotted</div>
+    <div class="border-demo border-double">double</div>
+    <div class="border-demo border-groove">groove</div>
+    <div class="border-demo border-ridge">ridge</div>
+    <div class="border-demo border-inset">inset</div>
+    <div class="border-demo border-outset">outset</div>
+    <div class="border-demo border-color">Renkli Kenarlar</div>
+    <div class="border-demo border-radius">Yuvarlatılmış Köşe</div>
+    <div class="border-demo border-radius-circle">Daire</div>
+    <div class="border-demo border-shorthand">Kısa Yazım</div>
+    <div class="border-demo border-top">Üst Kenar</div>
+    <div class="border-demo border-right">Sağ Kenar</div>
+    <div class="border-demo border-bottom">Alt Kenar</div>
+    <div class="border-demo border-left">Sol Kenar</div>
+  </div>
+
+  <h2>3. Padding Özellikleri</h2>
+  <div class="demo-row">
+    <div class="border-demo padding-all">Tüm Kenarlarda Padding</div>
+    <div class="border-demo padding-top">Üstte Padding</div>
+    <div class="border-demo padding-right">Sağda Padding</div>
+    <div class="border-demo padding-bottom">Altta Padding</div>
+    <div class="border-demo padding-left">Solda Padding</div>
+    <div class="border-demo padding-shorthand">Kısa Yazım Padding</div>
+    <div class="border-demo padding-percent">Yüzde ile Padding</div>
+    <div class="border-demo padding-px">Pixel ile Padding</div>
+  </div>
+
+  <h2>4. Margin Özellikleri</h2>
+  <div class="demo-row">
+    <div class="border-demo margin-all">Tüm Kenarlarda Margin</div>
+    <div class="border-demo margin-top">Üstte Margin</div>
+    <div class="border-demo margin-right">Sağda Margin</div>
+    <div class="border-demo margin-bottom">Altta Margin</div>
+    <div class="border-demo margin-left">Solda Margin</div>
+    <div class="border-demo margin-shorthand">Kısa Yazım Margin</div>
+    <div class="border-demo margin-auto">Otomatik Margin</div>
+    <div class="border-demo margin-percent">Yüzde ile Margin</div>
+    <div class="border-demo margin-px">Pixel ile Margin</div>
+  </div>
+
+  <hr>
+  <p><b>Kullanılan CSS dosyası:</b> boxmodel.css</p>
+</body>
+</html>

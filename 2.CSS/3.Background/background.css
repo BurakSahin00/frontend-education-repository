@@ -1,0 +1,95 @@
+
+/*
+Konu: CSS Background Özellikleri
+Öğrenme Hedefi: Arka plan rengi, resim, tekrar, konum, boyut, sabitleme ve kısa yazım.
+*/
+
+/* 1. Arka Plan Rengi */
+.bg-color {
+	background-color: #f0e68c;
+}
+/* HTML: <div class="bg-color">Arka plan rengi: #f0e68c</div> */
+
+/* 2. Arka Plan Resmi */
+.bg-image {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-size: cover;
+	background-position: center;
+}
+/* HTML: <div class="bg-image">Arka plan resmi</div> */
+
+/* 3. background-repeat */
+.bg-repeat {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: repeat;
+}
+.bg-no-repeat {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: no-repeat;
+}
+.bg-repeat-x {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: repeat-x;
+}
+.bg-repeat-y {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: repeat-y;
+}
+/* HTML: <div class="bg-repeat">repeat</div>, <div class="bg-no-repeat">no-repeat</div>, ... */
+
+/* 4. background-position */
+.bg-pos-right {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+.bg-pos-center {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+/* HTML: <div class="bg-pos-right">Sağ üst</div>, <div class="bg-pos-center">Orta</div> */
+
+/* 5. background-size */
+.bg-size-cover {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-size: cover;
+}
+.bg-size-contain {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-size: contain;
+}
+/* HTML: <div class="bg-size-cover">cover</div>, <div class="bg-size-contain">contain</div> */
+
+/* 6. background-attachment */
+.bg-fixed {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-attachment: fixed;
+	background-size: cover;
+}
+.bg-scroll {
+	background-image: url('https://www.w3schools.com/css/img_lights.jpg');
+	background-attachment: scroll;
+	background-size: cover;
+}
+/* HTML: <div class="bg-fixed">Sabit arka plan</div>, <div class="bg-scroll">Kaydırılabilir arka plan</div> */
+
+/* 7. background shorthand (kısa yazım) */
+.bg-shorthand {
+	background: url('https://www.w3schools.com/css/img_lights.jpg') no-repeat center/cover #eee fixed;
+}
+/* HTML: <div class="bg-shorthand">Kısa yazım ile arka plan</div> */
+
+/* 8. Demo kutu boyutu */
+.bg-demo {
+	width: 300px;
+	height: 120px;
+	margin: 12px 0;
+	border-radius: 8px;
+	color: #222;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #ccc;
+}

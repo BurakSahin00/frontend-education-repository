@@ -1,0 +1,93 @@
+/* ================= CSS TYPOGRAPHY ================= */
+/*
+Konu: CSS Typography
+Öğrenme Hedefi: Text, Fonts, Icons, Links ile ilgili tüm temel özellikler.
+Kaynaklar:
+https://www.w3schools.com/css/css_text.asp
+https://www.w3schools.com/css/css_font.asp
+https://www.w3schools.com/css/css_icons.asp
+https://www.w3schools.com/css/css_link.asp
+*/
+
+/* === TEXT === */
+.text-align {
+	text-align: center;
+}
+.text-decoration {
+	text-decoration: underline;
+}
+.text-transform {
+	text-transform: uppercase;
+}
+.text-indent {
+	text-indent: 40px;
+}
+.letter-spacing {
+	letter-spacing: 4px;
+}
+.word-spacing {
+	word-spacing: 16px;
+}
+.line-height {
+	line-height: 2.2;
+}
+.text-shadow {
+	text-shadow: 2px 2px 6px #888;
+}
+/* HTML: <p class="text-align">Ortalanmış metin</p> */
+
+/* === FONTS === */
+.font-family {
+	font-family: 'Arial', sans-serif;
+}
+.font-size {
+	font-size: 2rem;
+}
+.font-style {
+	font-style: italic;
+}
+.font-weight {
+	font-weight: bold;
+}
+.font-variant {
+	font-variant: small-caps;
+}
+/* HTML: <span class="font-family">Arial fontu</span> */
+
+/* === ICONS (Font Awesome örneği) === */
+.icon-demo {
+	font-family: 'FontAwesome';
+	font-size: 32px;
+	color: #2196F3;
+}
+/* HTML: <i class="icon-demo fa fa-home"></i> (FontAwesome kütüphanesi yüklü olmalı) */
+
+/* === LINKS === */
+a.link-basic {
+	color: #2196F3;
+	text-decoration: none;
+}
+a.link-basic:hover {
+	text-decoration: underline;
+	color: #e91e63;
+}
+a.link-visited {
+	color: #9c27b0;
+}
+a.link-active {
+	color: #ff9800;
+}
+a.link-button {
+	display: inline-block;
+	background: #2196F3;
+	color: #fff;
+	padding: 8px 20px;
+	border-radius: 6px;
+	text-decoration: none;
+	font-weight: bold;
+	transition: background 0.2s;
+}
+a.link-button:hover {
+	background: #1769aa;
+}
+/* HTML: <a href="#" class="link-basic">Normal Link</a> <a href="#" class="link-button">Buton Link</a> */

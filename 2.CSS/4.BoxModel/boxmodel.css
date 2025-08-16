@@ -1,0 +1,250 @@
+/* ================= CSS BOX MODEL ================= */
+/*
+Konu: CSS Box Model
+Öğrenme Hedefi: Content, Padding, Border, Margin, Box-Sizing kavramları ve ilişkileri.
+Sıralama: Content → Padding → Border → Margin
+*/
+
+/* 1. Kutu Modeli (content, padding, border, margin) */
+.boxmodel-demo {
+	width: 220px;
+	height: 80px;
+	background: #fffbe7;
+	padding: 16px;
+	border: 4px solid #2196F3;
+	margin: 24px;
+	color: #222;
+	font-weight: bold;
+	border-radius: 8px;
+	box-sizing: content-box;
+}
+/* HTML: <div class="boxmodel-demo">Box Model Demo</div> */
+
+/* 2. box-sizing: border-box (padding ve border dahil boyutlandırma) */
+.boxmodel-borderbox {
+	width: 220px;
+	height: 80px;
+	background: #e3f2fd;
+	padding: 16px;
+	border: 4px solid #e91e63;
+	margin: 24px;
+	color: #222;
+	font-weight: bold;
+	border-radius: 8px;
+	box-sizing: border-box;
+}
+/* HTML: <div class="boxmodel-borderbox">Box-Sizing: border-box</div> */
+
+/* 3. Sadece content alanı */
+.boxmodel-content {
+	width: 120px;
+	height: 40px;
+	background: #fff;
+	color: #222;
+	font-weight: bold;
+	border-radius: 4px;
+}
+/* HTML: <div class="boxmodel-content">Content</div> */
+
+/* Açıklama:
+Box Model, bir HTML elementinin toplam boyutunu belirler. Sıralama:
+Content (içerik) → Padding (iç boşluk) → Border (kenarlık) → Margin (dış boşluk)
+box-sizing: content-box (varsayılan) → width/height sadece içerik alanını kapsar
+box-sizing: border-box → width/height padding ve border dahil toplam kutu boyutunu kapsar
+*/
+
+/* ================= CSS BORDER ================= */
+/*
+Konu: CSS Border Özellikleri
+Öğrenme Hedefi: Kenarlık kalınlığı, stili, rengi, köşe yuvarlama ve kısa yazım.
+*/
+
+/* 1. border-width (kenarlık kalınlığı) */
+.border-width {
+	border-width: 5px;
+	border-style: solid;
+	border-color: #2196F3;
+}
+/* HTML: <div class="border-width">5px kalın kenarlık</div> */
+
+/* 2. border-style (kenarlık stili) */
+.border-solid {
+	border: 3px solid #333;
+}
+.border-dashed {
+	border: 3px dashed #e91e63;
+}
+.border-dotted {
+	border: 3px dotted #4caf50;
+}
+.border-double {
+	border: 6px double #ff9800;
+}
+.border-groove {
+	border: 6px groove #9c27b0;
+}
+.border-ridge {
+	border: 6px ridge #009688;
+}
+.border-inset {
+	border: 6px inset #607d8b;
+}
+.border-outset {
+	border: 6px outset #795548;
+}
+/* HTML: <div class="border-solid">solid</div>, <div class="border-dashed">dashed</div>, ... */
+
+/* 3. border-color (kenarlık rengi) */
+.border-color {
+	border: 4px solid;
+	border-color: red green blue yellow;
+}
+/* HTML: <div class="border-color">Farklı kenar renkleri</div> */
+
+/* 4. border-radius (köşe yuvarlama) */
+.border-radius {
+	border: 3px solid #333;
+	border-radius: 16px;
+}
+.border-radius-circle {
+	border: 3px solid #333;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+}
+/* HTML: <div class="border-radius">Yuvarlatılmış köşe</div>, <div class="border-radius-circle">Daire</div> */
+
+/* 5. border shorthand (kısa yazım) */
+.border-shorthand {
+	border: 4px dashed #2196F3;
+}
+/* HTML: <div class="border-shorthand">Kısa yazım</div> */
+
+/* 6. Sadece bir kenara kenarlık ekleme */
+.border-top {
+	border-top: 4px solid #e91e63;
+}
+.border-right {
+	border-right: 4px solid #4caf50;
+}
+.border-bottom {
+	border-bottom: 4px solid #ff9800;
+}
+.border-left {
+	border-left: 4px solid #2196F3;
+}
+/* HTML: <div class="border-top">Üst kenar</div>, <div class="border-right">Sağ kenar</div>, ... */
+
+/* 7. Demo kutu boyutu */
+.border-demo {
+	width: 180px;
+	height: 60px;
+	margin: 12px 0;
+	color: #222;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #ffcaca;
+}
+
+
+/* ================= CSS PADDING ================= */
+/*
+Konu: CSS Padding Özellikleri
+Öğrenme Hedefi: İç boşlukları ayarlama, yönlere göre padding, kısa yazım, yüzde ve px ile padding.
+Kaynak: https://www.w3schools.com/css/css_padding.asp
+*/
+
+/* 1. margin (tüm kenarlar) */
+.margin-all {
+	margin: 24px;
+}
+/* HTML: <div class="margin-all">Tüm kenarlarda 24px margin</div> */
+
+/* 2. margin-top, margin-right, margin-bottom, margin-left */
+.margin-top {
+	margin-top: 32px;
+}
+.margin-right {
+	margin-right: 32px;
+}
+.margin-bottom {
+	margin-bottom: 32px;
+}
+.margin-left {
+	margin-left: 32px;
+}
+/* HTML: <div class="margin-top">Üstte margin</div>, <div class="margin-right">Sağda margin</div>, ... */
+
+/* 3. margin shorthand (kısa yazım) */
+.margin-shorthand {
+	margin: 10px 20px 30px 40px; /* üst, sağ, alt, sol */
+}
+/* HTML: <div class="margin-shorthand">Kısa yazım margin</div> */
+
+/* 4. margin: auto (merkezleme) */
+.margin-auto {
+	width: 200px;
+	margin: auto;
+}
+/* HTML: <div class="margin-auto">Otomatik margin ile ortalanır</div> */
+
+/* 5. margin yüzde (%) ile */
+.margin-percent {
+	margin: 5%;
+}
+/* HTML: <div class="margin-percent">Yüzde ile margin</div> */
+
+/* 6. margin px ile */
+.margin-px {
+	margin: 40px;
+}
+/* HTML: <div class="margin-px">Pixel ile margin</div> */
+
+
+/* ================= CSS MARGIN ================= */
+/*
+Konu: CSS Margin Özellikleri
+Öğrenme Hedefi: Dış boşlukları ayarlama, yönlere göre margin, kısa yazım, otomatik ve yüzde ile margin.
+Kaynak: https://www.w3schools.com/css/css_margin.asp
+*/
+
+/* 1. padding (tüm kenarlar) */
+.padding-all {
+	padding: 24px;
+}
+/* HTML: <div class="padding-all">Tüm kenarlarda 24px padding</div> */
+
+/* 2. padding-top, padding-right, padding-bottom, padding-left */
+.padding-top {
+	padding-top: 32px;
+}
+.padding-right {
+	padding-right: 32px;
+}
+.padding-bottom {
+	padding-bottom: 32px;
+}
+.padding-left {
+	padding-left: 32px;
+}
+/* HTML: <div class="padding-top">Üstte padding</div>, <div class="padding-right">Sağda padding</div>, ... */
+
+/* 3. padding shorthand (kısa yazım) */
+.padding-shorthand {
+	padding: 10px 20px 30px 40px; /* üst, sağ, alt, sol */
+}
+/* HTML: <div class="padding-shorthand">Kısa yazım padding</div> */
+
+/* 4. padding yüzde (%) ile */
+.padding-percent {
+	padding: 5%;
+}
+/* HTML: <div class="padding-percent">Yüzde ile padding</div> */
+
+/* 5. padding px ile */
+.padding-px {
+	padding: 40px;
+}
+/* HTML: <div class="padding-px">Pixel ile padding</div> */
