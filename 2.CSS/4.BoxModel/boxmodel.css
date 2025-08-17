@@ -248,3 +248,68 @@ Kaynak: https://www.w3schools.com/css/css_margin.asp
 	padding: 40px;
 }
 /* HTML: <div class="padding-px">Pixel ile padding</div> */
+
+/* ================= CSS OVERFLOW ================= */
+/*
+Konu: CSS Overflow Özellikleri
+Öğrenme Hedefi: overflow, overflow-x, overflow-y, visible, hidden, scroll, auto kullanımı ve farkları.
+*/
+
+/* 1. overflow: visible (varsayılan, taşan içerik gösterilir) */
+.overflow-visible {
+	width: 180px;
+	height: 60px;
+	background: #e3f2fd;
+	border: 2px solid #2196F3;
+	overflow: visible;
+}
+/* HTML: <div class="overflow-visible">Çok uzun metin burada taşar ve görünür.</div> */
+
+/* 2. overflow: hidden (taşan içerik gizlenir) */
+.overflow-hidden {
+	width: 180px;
+	height: 60px;
+	background: #ffe0b2;
+	border: 2px solid #ff9800;
+	overflow: hidden;
+}
+/* HTML: <div class="overflow-hidden">Çok uzun metin burada taşar ama gizlenir.</div> */
+
+/* 3. overflow: scroll (her zaman kaydırma çubuğu gösterilir) */
+.overflow-scroll {
+	width: 180px;
+	height: 60px;
+	background: #c8e6c9;
+	border: 2px solid #4caf50;
+	overflow: scroll;
+}
+/* HTML: <div class="overflow-scroll">Çok uzun metin burada taşar ve kaydırma çubuğu çıkar.</div> */
+
+/* 4. overflow: auto (içerik taşarsa kaydırma çubuğu çıkar) */
+.overflow-auto {
+	width: 180px;
+	height: 60px;
+	background: #b2dfdb;
+	border: 2px solid #009688;
+	overflow: auto;
+}
+/* HTML: <div class="overflow-auto">Çok uzun metin burada taşarsa kaydırma çubuğu çıkar.</div> */
+
+/* 5. overflow-x ve overflow-y (yatay/dikey taşma kontrolü) */
+.overflow-x-scroll {
+	width: 180px;
+	height: 60px;
+	background: #f8bbd0;
+	border: 2px solid #e91e63;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+.overflow-y-scroll {
+	width: 180px;
+	height: 60px;
+	background: #fffbe7;
+	border: 2px solid #795548;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+/* HTML: <div class="overflow-x-scroll">Yatay taşma için scroll</div>, <div class="overflow-y-scroll">Dikey taşma için scroll</div> */

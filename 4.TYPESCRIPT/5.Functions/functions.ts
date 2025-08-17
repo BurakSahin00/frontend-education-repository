@@ -76,7 +76,7 @@ sumAll(1, 2, 3, 4); // 10
 Fonksiyonun dönüş tipi void:
 Fonksiyon bir değer döndürmüyorsa void kullanılır.
 */
-function logMessage(msg: string): void {
+function logMessageFunc(msg: string): void {
   console.log(msg);
 }
 
@@ -84,7 +84,7 @@ function logMessage(msg: string): void {
 Fonksiyonun dönüş tipi never:
 Fonksiyon asla normal şekilde tamamlanmazsa (ör: hata fırlatırsa) never kullanılır.
 */
-function throwError(message: string): never {
+function throwErrorFunc(message: string): never {
   throw new Error(message);
 }
 

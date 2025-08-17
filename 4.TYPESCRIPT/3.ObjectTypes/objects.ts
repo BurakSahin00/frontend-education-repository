@@ -154,6 +154,7 @@ type Task = {
   title: string;
   status: Status;
 };
+
 let myTask: Task = {
   title: "Ödev",
   status: Status.Pending

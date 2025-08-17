@@ -22,6 +22,20 @@ type StatusType = "active" | "inactive" | "pending";
 let currentStatusAlias: StatusType = "active";
 
 /*
+Union type ile fonksiyon örneği:
+Bir fonksiyonun parametresi birden fazla tip alabilir. Örneğin hem string hem number kabul eden bir fonksiyon:
+*/
+function printId(id: string | number) {
+  if (typeof id === "string") {
+    console.log("ID (string):", id.toUpperCase());
+  } else {
+    console.log("ID (number):", id);
+  }
+}
+printId("abc123"); // ID (string): ABC123
+printId(456);       // ID (number): 456
+
+/*
 Interface:
 Interface ile nesne tipleri tanımlanır. Özellikle class ve object yapılarında kullanılır. Genişletilebilir ve birden fazla interface birleştirilebilir.
 */
@@ -81,20 +95,6 @@ type Admin = {
 };
 type AdminUser = UserAlias & Admin;
 let adminA: AdminUser = { name: "Veli", age: 40, admin: true };
-
-/*
-Union type ile fonksiyon örneği:
-Bir fonksiyonun parametresi birden fazla tip alabilir. Örneğin hem string hem number kabul eden bir fonksiyon:
-*/
-function printId(id: string | number) {
-  if (typeof id === "string") {
-    console.log("ID (string):", id.toUpperCase());
-  } else {
-    console.log("ID (number):", id);
-  }
-}
-printId("abc123"); // ID (string): ABC123
-printId(456);       // ID (number): 456
 
 /*
 Açıklamalar:
