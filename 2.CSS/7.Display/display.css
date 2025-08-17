@@ -2,7 +2,6 @@
 /*
 Konu: CSS max-width
 Öğrenme Hedefi: max-width ile elemanın maksimum genişliğini belirleme, responsive tasarımda kullanımı.
-Kaynak: https://www.w3schools.com/css/css_max-width.asp
 */
 
 /* max-width: Elemanın genişliği belirli bir değeri aşamaz, ekran küçülünce otomatik daralır. Responsive tasarımda çok kullanılır. */
@@ -240,3 +239,35 @@ Responsive grid için otomatik yerleşim ve minmax kullanımı mümkündür.
 }
 
 /* HTML: <div class="display-listitem">Liste Elemanı</div> */
+
+
+/* ================= CSS INLINE-BLOCK ================= */
+/*
+Konu: CSS Inline-block
+Öğrenme Hedefi: inline-block ile elemanların hem satır içinde hem de genişlik/yükseklik ayarlanabilir şekilde yerleşmesi.
+*/
+
+/* display: inline-block: Elemanlar satır içinde yan yana gelir, fakat block gibi genişlik/yükseklik ayarlanabilir. Buton, kutu, menü gibi elemanlarda sıkça kullanılır. */
+.inlineblock-demo {
+    display: inline-block;
+    background: #c8e6c9;
+    padding: 10px 20px;
+    margin: 6px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 2px solid #4caf50;
+}
+/* HTML: <span class="inlineblock-demo">Inline-block 1</span> <span class="inlineblock-demo">Inline-block 2</span> */
+
+/* Inline-block ile yan yana kutular örneği */
+.inlineblock-container {
+    background: #f1f1f1;
+    padding: 12px;
+}
+/* HTML:
+<div class="inlineblock-container">
+  <span class="inlineblock-demo">Kutu 1</span>
+  <span class="inlineblock-demo">Kutu 2</span>
+  <span class="inlineblock-demo">Kutu 3</span>
+</div>
+*/

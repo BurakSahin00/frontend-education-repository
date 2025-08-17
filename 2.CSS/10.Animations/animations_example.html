@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Animations & Transforms Örnekleri</title>
+	<link rel="stylesheet" href="animations.css">
+	<style>
+		body { background: #f8f8f8; font-family: Arial, sans-serif; }
+		h2 { margin-top: 32px; }
+		.demo-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+		.demo-row > div { min-width: 120px; }
+	</style>
+</head>
+<body>
+	<header style="margin-bottom:32px;">
+		<h1>CSS Animasyonlar, Transforms ve Transitions</h1>
+		<p>Bu sayfada <b>animations.css</b> dosyasındaki tüm animasyon, transform ve transition örnekleri uygulanmıştır.</p>
+	</header>
+
+	<!-- ========== 1. 2D Transform Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>1. 2D Transform (Dönüşüm) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="transform-rotate-demo" style="padding:16px; border-radius:8px;">rotate(20deg)</div>
+			<div class="transform-scale-demo" style="padding:16px; border-radius:8px;">scale(1.2)</div>
+			<div class="transform-skew-demo" style="padding:16px; border-radius:8px;">skew(20deg, 10deg)</div>
+			<div class="transform-translate-demo" style="padding:16px; border-radius:8px;">translate(30px, 10px)</div>
+		</div>
+		<p>2D transform ile kutular döndürülebilir, büyütülebilir, eğriltilebilir veya taşınabilir.</p>
+	</section>
+
+	<!-- ========== 2. 3D Transform Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>2. 3D Transform (Dönüşüm) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="transform-3d-demo" style="padding:16px; border-radius:8px;">rotateY(30deg) rotateX(10deg)</div>
+		</div>
+		<p>3D transform ile kutular X, Y ve Z eksenlerinde döndürülebilir ve perspektif eklenebilir.</p>
+	</section>
+
+	<!-- ========== 3. Transition (Geçiş) Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>3. Transition (Geçiş) Efektleri</h2>
+		<div class="demo-row">
+			<div class="transition-demo" style="padding:16px; border-radius:8px;">Üzerine gelince renk ve köşe değişir</div>
+		</div>
+		<p>Transition ile bir özelliğin değişimi yumuşak bir şekilde gerçekleşir. <b>transition-property</b>, <b>duration</b>, <b>timing-function</b>, <b>delay</b> gibi parametreler kullanılabilir.</p>
+	</section>
+
+	<!-- ========== 4. Animation (Animasyon) Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>4. Animation (Animasyon) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="animation-demo">Kutu Hareketi</div>
+			<div class="animation-fade-demo">Fade In/Out</div>
+			<div class="animation-scale-demo">Büyüt/Küçült</div>
+		</div>
+		<p>Animasyonlar <b>@keyframes</b> ile tanımlanır ve <b>animation-name</b>, <b>duration</b>, <b>timing-function</b>, <b>delay</b>, <b>iteration-count</b>, <b>direction</b>, <b>fill-mode</b> gibi özelliklerle kontrol edilir.</p>
+	</section>
+
+	<footer style="margin-top:32px;">
+		<hr>
+		<p><b>Kullanılan CSS dosyası:</b> animations.css</p>
+	</footer>
+</body>
+</html>

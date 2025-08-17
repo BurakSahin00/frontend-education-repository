@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Shadows (Gölge) Örnekleri</title>
+	<link rel="stylesheet" href="shadows.css">
+	<style>
+		body { background: #f8f8f8; font-family: Arial, sans-serif; }
+		h2 { margin-top: 32px; }
+		.demo-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+		.demo-row > div, .demo-row > span { min-width: 180px; }
+	</style>
+</head>
+<body>
+	<header style="margin-bottom:32px;">
+		<h1>CSS Shadows (Kutu ve Metin Gölgesi) Örnekleri</h1>
+		<p>Bu sayfada <b>shadows.css</b> dosyasındaki tüm gölge örnekleri uygulanmıştır.</p>
+	</header>
+
+	<!-- ========== 1. Box-Shadow (Kutu Gölgesi) Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>1. Box-Shadow (Kutu Gölgesi) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="shadow-box-simple">Basit kutu gölgesi</div>
+			<div class="shadow-box-color">Renkli kutu gölgesi</div>
+			<div class="shadow-box-inset">İç gölge (inset)</div>
+			<div class="shadow-box-multi">Çoklu kutu gölgesi</div>
+		</div>
+		<p><b>box-shadow</b> ile kutulara dış ve iç gölge, renkli ve çoklu gölge eklenebilir.</p>
+	</section>
+
+	<!-- ========== 2. Text-Shadow (Metin Gölgesi) Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>2. Text-Shadow (Metin Gölgesi) Örnekleri</h2>
+		<div class="demo-row">
+			<span class="shadow-text-simple">Basit metin gölgesi</span>
+			<span class="shadow-text-color">Renkli metin gölgesi</span>
+			<span class="shadow-text-multi">Çoklu metin gölgesi</span>
+		</div>
+		<p><b>text-shadow</b> ile metinlere gölge, renkli ve çoklu gölge eklenebilir.</p>
+	</section>
+
+	<footer style="margin-top:32px;">
+		<hr>
+		<p><b>Kullanılan CSS dosyası:</b> shadows.css</p>
+	</footer>
+</body>
+</html>

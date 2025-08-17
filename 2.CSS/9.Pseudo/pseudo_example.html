@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Pseudo-Class & Pseudo-Element Örnekleri</title>
+	<link rel="stylesheet" href="pseudo.css">
+	<style>
+		body { background: #f8f8f8; font-family: Arial, sans-serif; }
+		h2 { margin-top: 32px; }
+		.demo-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+		.demo-row > div, .demo-row > a, .demo-row > input { min-width: 180px; }
+		ul.pseudo-list-demo { margin: 0; padding: 0; list-style: none; }
+		ul.pseudo-list-demo li { padding: 8px 12px; margin-bottom: 4px; border-radius: 6px; }
+	</style>
+</head>
+<body>
+	<header style="margin-bottom:32px;">
+		<h1>CSS Pseudo-Class & Pseudo-Element Örnekleri</h1>
+		<p>Bu sayfada <b>pseudo.css</b> dosyasındaki tüm pseudo-class ve pseudo-element örnekleri uygulanmıştır.</p>
+	</header>
+
+	<!-- ========== 1. Pseudo-Class Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>1. Pseudo-Class (Durum) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="pseudo-hover-demo" style="background:#fff; padding:12px; border-radius:8px;">Üzerine gelince (hover)</div>
+			<div class="pseudo-active-demo" style="background:#fff; padding:12px; border-radius:8px;">Tıklanınca (active)</div>
+			<input class="pseudo-focus-demo" type="text" placeholder="Odaklanınca (focus)" style="padding:8px; border-radius:8px; border:1px solid #ccc;">
+			<a class="pseudo-visited-demo" href="#" style="padding:12px; border-radius:8px; color:#1976d2; text-decoration:underline;">Ziyaret edilen link (visited)</a>
+		</div>
+		<h3>Liste Elemanları ile Pseudo-Class</h3>
+		<ul class="pseudo-list-demo">
+			<li>Birinci eleman (:first-child)</li>
+			<li>İkinci eleman (:nth-child(2))</li>
+			<li>Son eleman (:last-child)</li>
+		</ul>
+	</section>
+
+	<!-- ========== 2. Pseudo-Element Örnekleri ========== -->
+	<section style="margin-bottom:40px;">
+		<h2>2. Pseudo-Element (Sanal Eleman) Örnekleri</h2>
+		<div class="demo-row">
+			<div class="pseudo-beforeafter-demo" style="background:#fff; padding:12px; border-radius:8px;">::before ve ::after ile içerik ekleme</div>
+			<div class="pseudo-firstletter-demo" style="background:#fff; padding:12px; border-radius:8px;">İlk harfi biçimlendir (::first-letter)</div>
+			<div class="pseudo-firstline-demo" style="background:#fff; padding:12px; border-radius:8px;">İlk satırı biçimlendir (::first-line)<br>Bu satır ikinci satırdır.</div>
+			<div class="pseudo-selection-demo" style="background:#fff; padding:12px; border-radius:8px;">Bu metni seçerseniz (::selection) arka planı değişir.</div>
+		</div>
+	</section>
+
+	<footer style="margin-top:32px;">
+		<hr>
+		<p><b>Kullanılan CSS dosyası:</b> pseudo.css</p>
+	</footer>
+</body>
+</html>

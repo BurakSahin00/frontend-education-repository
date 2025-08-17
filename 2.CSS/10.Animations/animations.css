@@ -1,0 +1,142 @@
+/* ================= CSS 2D TRANSFORMS ================= */
+/*
+Konu: CSS 2D Transforms
+Öğrenme Hedefi: rotate, scale, skew, translate ile 2D dönüşümler
+*/
+.transform-rotate-demo {
+	background: #e3f2fd;
+	transition: transform 0.3s;
+}
+.transform-rotate-demo:hover {
+	transform: rotate(20deg);
+	background: #ff5722;
+	color: #fff;
+}
+.transform-scale-demo {
+	background: #ffe0b2;
+	transition: transform 0.3s;
+}
+.transform-scale-demo:hover {
+	transform: scale(1.2);
+	background: #009688;
+	color: #fff;
+}
+.transform-skew-demo {
+	background: #c8e6c9;
+	transition: transform 0.3s;
+}
+.transform-skew-demo:hover {
+	transform: skew(20deg, 10deg);
+	background: #e91e63;
+	color: #fff;
+}
+.transform-translate-demo {
+	background: #b2dfdb;
+	transition: transform 0.3s;
+}
+.transform-translate-demo:hover {
+	transform: translate(30px, 10px);
+	background: #3f51b5;
+	color: #fff;
+}
+
+/* ================= CSS 3D TRANSFORMS ================= */
+/*
+Konu: CSS 3D Transforms
+Öğrenme Hedefi: rotateX, rotateY, rotateZ, perspective
+*/
+.transform-3d-demo {
+	background: #ffcaca;
+	perspective: 600px;
+	transition: transform 0.5s;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+	transform-style: preserve-3d;
+	border: 2px solid #e91e63;
+}
+
+.transform-3d-demo:hover {
+	transform: rotateY(60deg) rotateX(30deg) scale3d(1.2,1.2,1.2);
+	background: #00bcd4;
+	color: #fff;
+	box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+}
+
+/* ================= CSS TRANSITIONS ================= */
+/*
+Konu: CSS Transitions
+Öğrenme Hedefi: Geçiş efektleri, transition-property, duration, timing-function, delay
+*/
+.transition-demo {
+	background: #f8bbd0;
+	transition: background 0.5s, color 0.5s, border-radius 0.5s;
+}
+.transition-demo:hover {
+	background: #6a1b9a;
+	color: #fff;
+	border-radius: 24px;
+}
+
+/* ================= CSS ANIMATIONS ================= */
+/*
+Konu: CSS Animations
+Öğrenme Hedefi: @keyframes ile animasyon tanımlama, animation-name, duration, timing-function, delay, iteration-count, direction, fill-mode
+*/
+.animation-demo {
+	width: 120px;
+	height: 60px;
+	background: #e3f2fd;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	/* Animasyon varsayılan olarak çalışmaz, hover ile tetiklenir */
+	transition: background 0.3s;
+}
+.animation-demo:hover {
+	animation: moveBox 2s infinite alternate;
+}
+@keyframes moveBox {
+	0%   { transform: translateX(0); background: #e3f2fd; }
+	50%  { transform: translateX(80px); background: #ffe0b2; }
+	100% { transform: translateX(0); background: #c8e6c9; }
+}
+
+.animation-fade-demo {
+	width: 120px;
+	height: 60px;
+	background: #ffcaca;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	transition: opacity 0.3s;
+}
+.animation-fade-demo:hover {
+	animation: fadeInOut 3s infinite;
+}
+@keyframes fadeInOut {
+	0%   { opacity: 0; }
+	50%  { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+.animation-scale-demo {
+	width: 120px;
+	height: 60px;
+	background: #b2dfdb;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	transition: transform 0.3s;
+}
+.animation-scale-demo:hover {
+	animation: scaleUpDown 2s infinite alternate;
+}
+@keyframes scaleUpDown {
+	0%   { transform: scale(1); }
+	100% { transform: scale(1.3); }
+}

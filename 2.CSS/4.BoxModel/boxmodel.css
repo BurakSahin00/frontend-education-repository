@@ -1,3 +1,101 @@
+/* ================= CSS ALIGN (Hizalama) ================= */
+/*
+Konu: CSS Align (Hizalama)
+Öğrenme Hedefi: Metin, blok ve kutu hizalama yöntemleri; yatay ve dikey hizalama, flex ve grid ile hizalama.
+*/
+
+/* 1. text-align: Metin ve inline elemanları yatayda hizalar. */
+.align-text-left {
+	text-align: left;
+}
+.align-text-center {
+	text-align: center;
+}
+.align-text-right {
+	text-align: right;
+}
+.align-text-justify {
+	text-align: justify;
+}
+/* HTML: <div class="align-text-center">Ortalanmış metin</div> */
+
+/* 2. vertical-align: Inline ve table-cell elemanları dikeyde hizalar. */
+.align-vertical-top {
+	vertical-align: top;
+}
+.align-vertical-middle {
+	vertical-align: middle;
+}
+.align-vertical-bottom {
+	vertical-align: bottom;
+}
+/* HTML: <span class="align-vertical-middle">Dikey ortalanmış</span> */
+
+/* 3. Flexbox ile hizalama: justify-content ve align-items */
+.align-flex-row {
+	display: flex;
+	justify-content: center; /* yatayda ortala */
+	align-items: center;     /* dikeyde ortala */
+	gap: 12px;
+	background: #e3f2fd;
+	height: 80px;
+}
+/* HTML: <div class="align-flex-row"><div>Kutu 1</div><div>Kutu 2</div></div> */
+
+/* justify-content: flex-start, center, flex-end, space-between, space-around, space-evenly */
+.align-flex-between {
+	display: flex;
+	justify-content: space-between;
+	background: #ffe0b2;
+	padding: 12px;
+}
+
+/* align-items: flex-start, center, flex-end, stretch, baseline */
+.align-flex-end {
+	display: flex;
+	align-items: flex-end;
+	background: #c8e6c9;
+	height: 80px;
+	gap: 8px;
+}
+
+/* align-self: Bireysel eleman hizalama */
+.align-self-center {
+	align-self: center;
+}
+.align-self-end {
+	align-self: flex-end;
+}
+
+/* 4. Grid ile hizalama: justify-items, align-items, justify-content, align-content */
+.align-grid-demo {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-items: center; /* hücre içi yatay hizalama */
+	align-items: center;    /* hücre içi dikey hizalama */
+	gap: 12px;
+	background: #b2dfdb;
+	height: 100px;
+}
+/* HTML: <div class="align-grid-demo"><div>Kutu 1</div><div>Kutu 2</div><div>Kutu 3</div></div> */
+
+/* justify-content ve align-content: Tüm gridin ana eksende hizalanması */
+.align-grid-content {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: end;
+	align-content: end;
+	gap: 8px;
+	background: #ffcaca;
+	height: 120px;
+}
+
+/* Açıklama:
+text-align: Metin ve inline elemanları yatayda hizalar.
+vertical-align: Inline ve tablo hücrelerinde dikey hizalama sağlar.
+Flexbox: justify-content ile yatay, align-items ile dikey hizalama yapılır.
+Grid: justify-items ve align-items ile hücre içi, justify-content ve align-content ile tüm grid hizalanır.
+*/
 /* ================= CSS BOX MODEL ================= */
 /*
 Konu: CSS Box Model
@@ -313,3 +411,4 @@ Konu: CSS Overflow Özellikleri
 	overflow-y: scroll;
 }
 /* HTML: <div class="overflow-x-scroll">Yatay taşma için scroll</div>, <div class="overflow-y-scroll">Dikey taşma için scroll</div> */
+

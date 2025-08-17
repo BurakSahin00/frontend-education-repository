@@ -1,0 +1,65 @@
+/* ================= CSS SHADOWS ================= */
+/*
+Konu: CSS Shadows
+Öğrenme Hedefi: box-shadow ve text-shadow ile kutu ve metinlere gölge ekleme, parametreler, renkler, iç gölge, çoklu gölge.
+*/
+
+/* 1. Basit kutu gölgesi */
+.shadow-box-simple {
+	background: #fffbe7;
+	border-radius: 8px;
+	box-shadow: 4px 4px 12px rgba(33,150,243,0.25);
+	padding: 16px;
+	margin-bottom: 16px;
+}
+
+/* 2. Renkli kutu gölgesi */
+.shadow-box-color {
+	background: #ffe0b2;
+	border-radius: 8px;
+	box-shadow: 0 8px 24px #e91e63;
+	padding: 16px;
+	margin-bottom: 16px;
+}
+
+/* 3. İç gölge (inset) */
+.shadow-box-inset {
+	background: #e3f2fd;
+	border-radius: 8px;
+	box-shadow: inset 0 4px 16px #009688;
+	padding: 16px;
+	margin-bottom: 16px;
+}
+
+/* 4. Çoklu kutu gölgesi */
+.shadow-box-multi {
+	background: #ffcaca;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px #333, 0 8px 32px #e91e63;
+	padding: 16px;
+	margin-bottom: 16px;
+}
+
+/* 5. Metin gölgesi */
+.shadow-text-simple {
+	color: #222;
+	font-size: 2em;
+	text-shadow: 2px 2px 6px #2196F3;
+	margin-bottom: 16px;
+}
+
+/* 6. Renkli metin gölgesi */
+.shadow-text-color {
+	color: #e91e63;
+	font-size: 2em;
+	text-shadow: 0 4px 12px #ff9800;
+	margin-bottom: 16px;
+}
+
+/* 7. Çoklu metin gölgesi */
+.shadow-text-multi {
+	color: #009688;
+	font-size: 2em;
+	text-shadow: 2px 2px 6px #333, 0 8px 24px #e91e63;
+	margin-bottom: 16px;
+}
