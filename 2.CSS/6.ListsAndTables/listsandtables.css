@@ -1,0 +1,99 @@
+/* ================= CSS LISTS ================= */
+/*
+Konu: CSS Lists
+Öğrenme Hedefi: Liste türleri, işaret stilleri, konum, özel ikon, liste iç boşlukları.
+*/
+
+/* 1. Sıralı Liste (numaralı) */
+.list-ordered {
+	list-style-type: decimal;
+}
+/* HTML: <ol class="list-ordered"><li>Bir</li><li>İki</li></ol> */
+
+/* 2. Sırasız Liste (işaretli) */
+.list-unordered {
+	list-style-type: disc;
+}
+/* HTML: <ul class="list-unordered"><li>Bir</li><li>İki</li></ul> */
+
+/* 3. Farklı işaret tipleri */
+.list-circle {
+	list-style-type: circle;
+}
+.list-square {
+	list-style-type: square;
+}
+.list-none {
+	list-style-type: none;
+}
+/* HTML: <ul class="list-circle">...</ul>, <ul class="list-square">...</ul>, <ul class="list-none">...</ul> */
+
+/* 4. list-style-position */
+.list-inside {
+	list-style-position: inside;
+}
+.list-outside {
+	list-style-position: outside;
+}
+/* HTML: <ul class="list-inside">...</ul>, <ul class="list-outside">...</ul> */
+
+/* 5. Özel ikon ile liste */
+.list-custom {
+	list-style-image: url('https://www.w3schools.com/css/sqpurple.gif');
+}
+/* HTML: <ul class="list-custom">...</ul> */
+
+/* 6. Liste iç boşlukları */
+.list-padding {
+	padding-left: 32px;
+}
+.list-margin {
+	margin-bottom: 24px;
+}
+
+/* ================= CSS TABLES ================= */
+/*
+Konu: CSS Tables
+Öğrenme Hedefi: Tablo kenarlıkları, arka plan, hücre boşlukları, hizalama, zebra şerit, hover efekti.
+*/
+
+/* 1. Temel tablo stili */
+.table-basic {
+	border-collapse: collapse;
+	width: 100%;
+}
+.table-basic th, .table-basic td {
+	border: 1px solid #2196F3;
+	padding: 8px 16px;
+	text-align: left;
+}
+
+/* 2. Başlık arka planı */
+.table-basic th {
+	background: #e3f2fd;
+}
+
+/* 3. Zebra şeritli satırlar */
+.table-basic tr:nth-child(even) {
+	background: #c9abab;
+}
+
+/* 4. Hover efekti */
+.table-basic tr:hover {
+	background: #ffe0b2;
+}
+
+/* 5. Tablo kenar boşlukları */
+.table-spacing {
+	border-spacing: 12px;
+}
+
+/* 6. Tablo hücre hizalama */
+.table-center th, .table-center td {
+	text-align: center;
+}
+
+/* 7. Tablo genişliği */
+.table-width {
+	width: 60%;
+}

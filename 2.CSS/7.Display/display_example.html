@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Display & Visibility - Örnekler</title>
+  <link rel="stylesheet" href="display.css">
+  <style>
+    body { background: #f8f8f8; font-family: Arial, sans-serif; }
+    h2 { margin-top: 32px; }
+    .demo-row { margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <h1>CSS Display & Visibility - Tüm Özellikler ve Örnekler</h1>
+  <p>Bu sayfada <b>display.css</b> dosyasındaki tüm örnekler uygulanmıştır.</p>
+
+  <h2>1. display: block</h2>
+  <div class="display-block">Block Element</div>
+
+  <h2>2. display: inline</h2>
+  <span class="display-inline">Inline Element</span>
+  <span class="display-inline">Yan yana</span>
+
+  <h2>3. display: inline-block</h2>
+  <span class="display-inlineblock">Inline-block 1</span>
+  <span class="display-inlineblock">Inline-block 2</span>
+
+  <h2>4. display: none</h2>
+  <div class="display-none">Bu kutu görünmez</div>
+  <div>Görünür kutu</div>
+
+  <h2>5. visibility: hidden & visible</h2>
+  <div class="visibility-hidden">Gizli kutu (hidden)</div>
+  <div class="visibility-visible">Görünür kutu (visible)</div>
+
+  <h2>6. display: flex</h2>
+  <div class="display-flex">
+    <div>Yatay Flex 1</div>
+    <div>Yatay Flex 2</div>
+    <div>Yatay Flex 3</div>
+  </div>
+  <div class="display-flex-col" style="margin-top:12px;">
+    <div>Dikey Flex A</div>
+    <div>Dikey Flex B</div>
+  </div>
+  <div class="display-flex-center" style="margin-top:12px;">
+    <div>Ortalanmış X</div>
+    <div>Ortalanmış Y</div>
+  </div>
+  <div class="display-flex-wrap" style="margin-top:12px;">
+    <div>Wrap 1</div>
+    <div>Wrap 2</div>
+    <div>Wrap 3</div>
+    <div>Wrap 4</div>
+  </div>
+
+  <h2>7. display: grid</h2>
+  <div class="display-grid">
+    <div>Grid 1</div>
+    <div>Grid 2</div>
+    <div>Grid 3</div>
+  </div>
+  <div class="display-grid-rows" style="margin-top:12px;">
+    <div>Satır 1, Sütun 1</div>
+    <div>Satır 1, Sütun 2</div>
+    <div>Satır 2, Sütun 1</div>
+    <div>Satır 2, Sütun 2</div>
+  </div>
+  <div class="display-grid-area" style="margin-top:12px;">
+    <div class="header">Header</div>
+    <div class="sidebar">Sidebar</div>
+    <div class="main">Main</div>
+    <div class="footer">Footer</div>
+  </div>
+
+  <h2>8. display: table</h2>
+  <div class="display-table">
+    <div class="display-table-row">
+      <div class="display-table-cell">A</div>
+      <div class="display-table-cell">B</div>
+      <div class="display-table-cell">C</div>
+    </div>
+    <div class="display-table-row">
+      <div class="display-table-cell">D</div>
+      <div class="display-table-cell">E</div>
+      <div class="display-table-cell">F</div>
+    </div>
+  </div>
+
+  <h2>9. display: list-item</h2>
+  <div class="display-listitem">Liste Elemanı 1</div>
+  <div class="display-listitem">Liste Elemanı 2</div>
+
+  <hr>
+  <p><b>Kullanılan CSS dosyası:</b> display.css</p>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* ================= CSS POSITION ================= */
+/*
+Konu: CSS Position
+Öğrenme Hedefi: static, relative, absolute, fixed, sticky, z-index, top/right/bottom/left kullanımı.
+*/
+
+
+/* position: static - Varsayılan konumlandırma. Eleman normal akışta, top/right/bottom/left etkisizdir. */
+.pos-static {
+	position: static;
+	background: #e3f2fd;
+	padding: 12px;
+	border: 1px solid #2196F3;
+}
+/* HTML: <div class="pos-static">Static</div> */
+
+/* position: relative - Eleman normal akışta, top/right/bottom/left ile kendine göre kaydırılır. */
+.pos-relative {
+	position: relative;
+	left: 40px;
+	background: #ffe0b2;
+	padding: 12px;
+	border: 1px solid #ff9800;
+}
+/* HTML: <div class="pos-relative">Relative (left: 40px)</div> */
+
+/* position: relative - Absolute elemanlar için referans konteyner. */
+.pos-absolute-container {
+	position: relative;
+	width: 300px;
+	height: 120px;
+	background: #f8f8f8;
+	border: 1px dashed #888;
+	margin-bottom: 24px;
+}
+
+/* position: absolute - Konteynerine göre tam konumlandırılır, normal akıştan çıkar. */
+.pos-absolute {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	background: #c8e6c9;
+	padding: 12px;
+	border: 1px solid #4caf50;
+}
+/* HTML: <div class="pos-absolute-container"><div class="pos-absolute">Absolute</div></div> */
+
+/* position: fixed - Sayfa kaydırılsa bile ekranda sabit kalır. Genellikle menü, bildirim için kullanılır. */
+.pos-fixed {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	background: #b2dfdb;
+	padding: 12px;
+	border: 1px solid #009688;
+	z-index: 100;
+}
+/* HTML: <div class="pos-fixed">Fixed (sayfa kaydırılsa bile sabit)</div> */
+
+/* Yüksekliği olan bir konteyner. Sticky eleman için referans. */
+.pos-sticky-container {
+	height: 120px;
+	background: #f8f8f8;
+	border: 1px dashed #888;
+	margin-bottom: 24px;
+}
+/* position: sticky - Scroll ile belirli bir noktada sabitlenir. */
+.pos-sticky {
+	position: sticky;
+	top: 8px;
+	background: #f8bbd0;
+	padding: 12px;
+	border: 1px solid #e91e63;
+}
+/* HTML: <div class="pos-sticky-container"><div class="pos-sticky">Sticky (scroll ile sabitlenir)</div></div> */
+
+/* position: relative - Z-index örneği için referans konteyner. */
+.pos-zindex-container {
+	position: relative;
+	width: 220px;
+	height: 80px;
+	background: #fffbe7;
+	border: 1px dashed #888;
+	margin-bottom: 24px;
+}
+/* z-index: 1 - Alt katmanda gösterilir. */
+.pos-zindex1 {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	background: #e3f2fd;
+	padding: 12px;
+	border: 1px solid #2196F3;
+	z-index: 1;
+}
+/* z-index: 2 - Üst katmanda gösterilir. */
+.pos-zindex2 {
+	position: absolute;
+	left: 40px;
+	top: 40px;
+	background: #ffe0b2;
+	padding: 12px;
+	border: 1px solid #ff9800;
+	z-index: 2;
+}
+/* HTML: <div class="pos-zindex-container"><div class="pos-zindex1">z-index:1</div><div class="pos-zindex2">z-index:2</div></div> */

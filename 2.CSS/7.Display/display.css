@@ -1,0 +1,224 @@
+/* ================= CSS DISPLAY & VISIBILITY ================= */
+/*
+Konu: CSS Display ve Visibility
+Öğrenme Hedefi: display türleri, görünürlük, blok/inline, none, flex, grid, table, list-item, visibility.
+*/
+
+
+/* display: block: Eleman yeni satırda başlar, tüm satırı kaplar. Genellikle <div>, <p>, <h1> gibi blok elemanlarda kullanılır. */
+.display-block {
+    display: block;
+    background: #e3f2fd;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+/* HTML: <div class="display-block">Block</div> */
+
+/* display: inline: Eleman satır içinde akar, genişlik/yükseklik ayarlanamaz. <span>, <a> gibi elemanlarda kullanılır. */
+.display-inline {
+    display: inline;
+    background: #ffe0b2;
+    padding: 4px 8px;
+}
+
+/* HTML: <span class="display-inline">Inline</span> */
+
+/* display: inline-block: Satır içinde akar, fakat genişlik/yükseklik ayarlanabilir. Buton, kutu gibi elemanlarda kullanılır. */
+.display-inlineblock {
+    display: inline-block;
+    background: #c8e6c9;
+    padding: 8px 16px;
+    margin: 4px;
+}
+
+/* HTML: <span class="display-inlineblock">Inline-block</span> */
+
+/* display: none: Eleman tamamen gizlenir, sayfa akışında yer kaplamaz. */
+.display-none {
+    display: none;
+}
+
+/* HTML: <div class="display-none">Görünmez</div> */
+
+/* visibility: hidden: Eleman görünmez olur ama sayfa akışında yer kaplar. */
+.visibility-hidden {
+    visibility: hidden;
+}
+
+/* visibility: visible: Eleman görünür olur. Varsayılan değerdir. */
+.visibility-visible {
+    visibility: visible;
+}
+
+/* HTML: <div class="visibility-hidden">Gizli</div>, <div class="visibility-visible">Görünür</div> */
+
+
+/* display: flex: Esnek kutu düzeni sağlar, çocuk elemanlar yatay/dikey hizalanabilir. Modern layout için kullanılır.
+Özellikler:
+- flex-direction: row (varsayılan), column, row-reverse, column-reverse
+- justify-content: ana eksende hizalama (flex-start, center, flex-end, space-between, space-around)
+- align-items: çapraz eksende hizalama (stretch, center, flex-start, flex-end)
+- flex-wrap: elemanların sarmalanması (nowrap, wrap, wrap-reverse)
+*/
+.display-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    background: #f8bbd0;
+    padding: 12px;
+}
+
+.display-flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f8bbd0;
+    padding: 12px;
+}
+
+.display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: #f8bbd0;
+    padding: 12px;
+    height: 100px;
+}
+
+.display-flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #f8bbd0;
+    padding: 12px;
+    width: 300px;
+}
+
+.display-flex>div,
+.display-flex-col>div,
+.display-flex-center>div,
+.display-flex-wrap>div {
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* HTML:
+<div class="display-flex"><div>1</div><div>2</div></div>
+<div class="display-flex-col"><div>A</div><div>B</div></div>
+<div class="display-flex-center"><div>X</div><div>Y</div></div>
+<div class="display-flex-wrap"><div>1</div><div>2</div><div>3</div><div>4</div></div>
+*/
+
+
+/* display: grid: Izgara tabanlı düzen sağlar, satır ve sütunlara kolayca yerleştirme yapılabilir.
+Özellikler:
+- grid-template-columns: sütun sayısı ve genişliği (ör: 1fr 2fr 1fr)
+- grid-template-rows: satır yüksekliği
+- gap: satır/sütun aralığı
+- grid-column, grid-row: hücrelerin konumunu belirleme
+- grid-area: alan tanımlama
+Responsive grid için otomatik yerleşim ve minmax kullanımı mümkündür.
+*/
+.display-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    background: #b2dfdb;
+    padding: 12px;
+}
+
+.display-grid-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 60px 60px;
+    gap: 8px;
+    background: #b2dfdb;
+    padding: 12px;
+}
+
+.display-grid-area {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 40px 80px 40px;
+    gap: 8px;
+    background: #b2dfdb;
+    padding: 12px;
+}
+
+.display-grid-area>.header {
+    grid-area: header;
+    background: #fff;
+}
+
+.display-grid-area>.sidebar {
+    grid-area: sidebar;
+    background: #e3f2fd;
+}
+
+.display-grid-area>.main {
+    grid-area: main;
+    background: #fff;
+}
+
+.display-grid-area>.footer {
+    grid-area: footer;
+    background: #e3f2fd;
+}
+
+.display-grid>div,
+.display-grid-rows>div,
+.display-grid-area>div {
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* HTML:
+<div class="display-grid"><div>1</div><div>2</div><div>3</div></div>
+<div class="display-grid-rows"><div>A</div><div>B</div><div>C</div><div>D</div></div>
+<div class="display-grid-area">
+	<div class="header">Header</div>
+	<div class="sidebar">Sidebar</div>
+	<div class="main">Main</div>
+	<div class="footer">Footer</div>
+</div>
+*/
+
+/* display: table: Elemanı tablo gibi davranmasını sağlar. <div> ile tablo benzeri yapı kurmak için kullanılır. */
+.display-table {
+    display: table;
+    width: 100%;
+    background: #d1c4e9;
+    margin-bottom: 12px;
+}
+
+/* display: table-row: Tablo satırı gibi davranır. */
+.display-table-row {
+    display: table-row;
+}
+
+/* display: table-cell: Tablo hücresi gibi davranır. */
+.display-table-cell {
+    display: table-cell;
+    padding: 8px;
+    border: 1px solid #888;
+}
+
+/* HTML: <div class="display-table"><div class="display-table-row"><div class="display-table-cell">A</div><div class="display-table-cell">B</div></div></div> */
+
+/* display: list-item: Elemanı liste elemanı gibi gösterir, başında işaret ekler. */
+.display-listitem {
+    display: list-item;
+    margin-left: 24px;
+}
+
+/* HTML: <div class="display-listitem">Liste Elemanı</div> */

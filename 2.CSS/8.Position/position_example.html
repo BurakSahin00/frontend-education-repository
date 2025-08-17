@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Position - Örnekler</title>
+  <link rel="stylesheet" href="position.css">
+  <style>
+    body { background: #f8f8f8; font-family: Arial, sans-serif; }
+    h2 { margin-top: 32px; }
+    .demo-row { margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <h1>CSS Position - Tüm Özellikler ve Örnekler</h1>
+  <p>Bu sayfada <b>position.css</b> dosyasındaki tüm örnekler uygulanmıştır.</p>
+
+  <h2>1. position: static</h2>
+  <div class="pos-static">Static (varsayılan)</div>
+
+  <h2>2. position: relative</h2>
+  <div class="pos-relative">Relative (left: 40px)</div>
+
+  <h2>3. position: absolute</h2>
+  <div class="pos-absolute-container">
+    <div class="pos-absolute">Absolute (top: 20px, right: 20px)</div>
+  </div>
+
+  <h2>4. position: fixed</h2>
+  <div class="pos-fixed">Fixed (sayfa kaydırılsa bile sabit)</div>
+  <div style="height: 120px;"></div>
+
+  <h2>5. position: sticky</h2>
+  <div class="pos-sticky-container">
+    <div class="pos-sticky">Sticky (scroll ile sabitlenir)</div>
+  </div>
+  <div style="height: 200px;"></div>
+
+  <h2>6. z-index</h2>
+  <div class="pos-zindex-container">
+    <div class="pos-zindex1">z-index:1</div>
+    <div class="pos-zindex2">z-index:2 (üstte)</div>
+  </div>
+
+  <hr>
+  <p><b>Kullanılan CSS dosyası:</b> position.css</p>
+</body>
+</html>
