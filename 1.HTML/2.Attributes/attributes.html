@@ -7,38 +7,146 @@
 	<title>HTML Attribute Örnekleri</title>
 	<!-- Responsive tasarım için viewport ayarı -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background: #f8f8f8;
+			margin: 0;
+			padding: 0 0 32px 0;
+		}
+		h1 {
+			background: #2196F3;
+			color: #fff;
+			padding: 18px 0 18px 24px;
+			margin-bottom: 24px;
+		}
+		section {
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+			margin: 24px auto;
+			max-width: 600px;
+			padding: 24px;
+		}
+		section:not(:first-child) { margin-top: 0; }
+		.demo-title {
+			font-size: 1.1em;
+			color: #2196F3;
+			margin-bottom: 8px;
+			font-weight: bold;
+		}
+		input, button, select, textarea {
+			margin: 6px 0 12px 0;
+			padding: 6px 10px;
+			border-radius: 4px;
+			border: 1px solid #bbb;
+			font-size: 1em;
+		}
+		label { display: block; margin-bottom: 4px; }
+		.vurgulu { color: #e91e63; font-weight: bold; }
+		.kutu { background: #e3f2fd; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+		.btn { padding: 8px 18px; border: none; border-radius: 4px; background: #2196F3; color: #fff; cursor: pointer; }
+		.btn-primary { background: #4caf50; }
+		abbr { border-bottom: 1px dotted #888; cursor: help; }
+		form { margin-bottom: 16px; }
+	</style>
 </head>
 <body>
-	<!-- 'href' attribute'u ile bağlantı adresi tanımlanır, 'target' ile yeni sekmede açılır -->
-	<a href="https://www.w3schools.com" target="_blank" title="W3Schools sitesine git">W3Schools'a Git</a>
-	<br><br>
+	<h1>HTML Attribute Örnekleri</h1>
+	<section>
+		<div class="demo-title">Bağlantı (href, target, title)</div>
+		<!-- 'href' attribute'u ile bağlantı adresi tanımlanır, 'target' ile yeni sekmede açılır -->
+		<a href="https://www.w3schools.com" target="_blank" title="W3Schools sitesine git">W3Schools'a Git</a>
+	</section>
+	<section>
+		<div class="demo-title">Görsel (src, alt, width, height)</div>
+		<!-- 'src' ile görsel yolu, 'alt' ile alternatif metin, 'width' ve 'height' ile boyut ayarlanır -->
+		<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools Logosu" width="200" height="60">
+	</section>
+	<section>
+		<div class="demo-title">Kimlik ve Grup (id, class)</div>
+		<!-- 'id' attribute'u ile benzersiz kimlik verilir, 'class' ile stil veya JS için grup tanımlanır -->
+		<p id="ozel-paragraf" class="vurgulu">Bu paragrafın id ve class attributeları var.</p>
 
-	<!-- 'src' ile görsel yolu, 'alt' ile alternatif metin, 'width' ve 'height' ile boyut ayarlanır -->
-	<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools Logosu" width="200" height="60">
+		<!-- 'class' attribute'u ile birden fazla elemana aynı stil veya JS davranışı atanabilir -->
+		<p class="vurgulu">Bu paragraf vurgulu class'ı ile stillendirildi.</p>
 
-	<br><br>
-	<!-- 'id' attribute'u ile benzersiz kimlik verilir, 'class' ile stil veya JS için grup tanımlanır -->
-	<p id="ozel-paragraf" class="vurgulu">Bu paragrafın id ve class attributeları var.</p>
+		<!-- 'class' ile birden fazla sınıf eklenebilir -->
+		<div class="kutu vurgulu">Birden fazla class ile stillendirilmiş div.</div>
 
-	<!-- 'style' attribute'u ile satır içi CSS uygulanır -->
-	<p style="color: blue; font-weight: bold;">Bu paragraf mavi ve kalın yazılmıştır.</p>
-
-	<!-- 'title' attribute'u ile üzerine gelince bilgi kutusu gösterilir -->
-	<abbr title="HyperText Markup Language">HTML</abbr> nedir?
-
-	<br><br>
-	<!-- 'disabled' attribute'u ile buton pasif hale getirilir -->
-	<button disabled>Pasif Buton</button>
-
-	<!-- 'value' attribute'u ile inputun başlangıç değeri ayarlanır, 'placeholder' ile ipucu gösterilir -->
-	<input type="text" value="Önceden girilmiş" placeholder="Buraya yazın">
-
-	<br><br>
-	<!-- 'required' attribute'u ile form alanı zorunlu yapılır -->
-	<form>
-		<label for="email">E-posta:</label>
-		<input type="email" id="email" name="email" required>
-		<input type="submit" value="Gönder">
-	</form>
+		<!-- 'class' ile JS ile seçme örneği -->
+		<button class="btn btn-primary">Class ile JS ve stil</button>
+	</section>
+	<section>
+		<div class="demo-title">Satır İçi Stil (style)</div>
+		<!-- 'style' attribute'u ile satır içi CSS uygulanır -->
+		<p style="color: blue; font-weight: bold;">Bu paragraf mavi ve kalın yazılmıştır.</p>
+	</section>
+	<section>
+		<div class="demo-title">Açıklama (title)</div>
+		<!-- 'title' attribute'u ile üzerine gelince bilgi kutusu gösterilir -->
+		<abbr title="HyperText Markup Language">HTML</abbr> nedir?
+	</section>
+	<section>
+		<div class="demo-title">Buton Durumu (disabled)</div>
+		<!-- 'disabled' attribute'u ile buton pasif hale getirilir -->
+		<button disabled>Pasif Buton</button>
+	</section>
+	<section>
+		<div class="demo-title">Input Değeri ve İpucu (value, placeholder)</div>
+		<!-- 'value' attribute'u ile inputun başlangıç değeri ayarlanır, 'placeholder' ile ipucu gösterilir -->
+		<input type="text" value="Önceden girilmiş" placeholder="Buraya yazın">
+	</section>
+	<section>
+		<div class="demo-title">Form Zorunluluğu (required)</div>
+		<!-- 'required' attribute'u ile form alanı zorunlu yapılır -->
+		<form>
+			<label for="email">E-posta:</label>
+			<input type="email" id="email" name="email" required>
+			<input type="submit" value="Gönder">
+		</form>
+	</section>
+	<section>
+		<div class="demo-title">Özel Veri (data-*)</div>
+		<!-- 'data-*' attribute'u ile özel veri taşınabilir -->
+		<div data-user-id="123" data-role="admin">Bu div'de özel data attributeları var.</div>
+	</section>
+	<section>
+		<div class="demo-title">Odak Sırası (tabindex)</div>
+		<!-- 'tabindex' ile odak sırası ayarlanır -->
+		<button tabindex="1">Öncelikli Buton</button>
+		<button tabindex="2">İkinci Buton</button>
+	</section>
+	<section>
+		<div class="demo-title">Sadece Okunabilir (readonly)</div>
+		<!-- 'readonly' ile input sadece okunabilir yapılır -->
+		<input type="text" value="Sadece okunabilir" readonly>
+	</section>
+	<section>
+		<div class="demo-title">Varsayılan Seçili (checked)</div>
+		<!-- 'checked' ile checkbox veya radio varsayılan seçili yapılır -->
+		<label><input type="checkbox" checked> Onaylıyorum</label>
+		<label><input type="radio" name="cinsiyet" value="erkek" checked> Erkek</label>
+		<label><input type="radio" name="cinsiyet" value="kadın"> Kadın</label>
+	</section>
+	<section>
+		<div class="demo-title">Maksimum Karakter (maxlength)</div>
+		<!-- 'maxlength' ile inputa maksimum karakter sınırı konur -->
+		<input type="text" maxlength="10" placeholder="En fazla 10 karakter">
+	</section>
+	<section>
+		<div class="demo-title">Sayı Aralığı (min, max)</div>
+		<!-- 'min' ve 'max' ile sayısal inputta aralık belirlenir -->
+		<input type="number" min="1" max="10" value="5">
+	</section>
+	<section>
+		<div class="demo-title">Otomatik Tamamlama (autocomplete)</div>
+		<!-- 'autocomplete' ile formda otomatik tamamlama açılıp kapatılır -->
+		<form autocomplete="off">
+			<label for="ad">Ad:</label>
+			<input type="text" id="ad" name="ad">
+			<input type="submit" value="Kaydet">
+		</form>
+	</section>
 </body>
 </html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Tables - Tüm Detaylar</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; }
+    h1, h2 { color: #2196F3; }
+    table { border-collapse: collapse; margin-bottom: 24px; }
+    th, td { border: 1px solid #888; padding: 8px 12px; text-align: left; }
+    th { background: #e3f2fd; }
+    .striped tr:nth-child(even) { background: #f1f1f1; }
+    .bordered { border: 2px solid #2196F3; }
+    .caption { font-weight: bold; color: #e91e63; }
+    .highlight { background: #fffbe7; }
+    .centered { text-align: center; }
+  </style>
+</head>
+<body>
+  <!-- Temel tablo yapısı -->
+  <h1>HTML Tables - Tüm Detaylar</h1>
+  <p>HTML tabloları, verileri satır ve sütunlar halinde düzenlemek için kullanılır. Aşağıda tüm temel ve gelişmiş table özellikleri örneklerle açıklanmıştır.</p>
+
+  <!-- Basit tablo örneği -->
+  <h2>1. Basit Tablo</h2>
+  <table>
+    <!-- Tablo başlık satırı -->
+    <tr>
+      <th>Ad</th>
+      <th>Soyad</th>
+      <th>Yaş</th>
+    </tr>
+    <!-- Veri satırları -->
+    <tr>
+      <td>Ali</td>
+      <td>Yılmaz</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <td>Ayşe</td>
+      <td>Kaya</td>
+      <td>24</td>
+    </tr>
+  </table>
+
+  <!-- Tablo başlığı (caption) -->
+  <h2>2. Tablo Başlığı (caption)</h2>
+  <table>
+    <caption class="caption">Çalışanlar Tablosu</caption>
+    <tr>
+      <th>Ad</th>
+      <th>Departman</th>
+    </tr>
+    <tr>
+      <td>Burak</td>
+      <td>IT</td>
+    </tr>
+    <tr>
+      <td>Elif</td>
+      <td>Finans</td>
+    </tr>
+  </table>
+
+  <!-- Satır ve sütun birleştirme -->
+  <h2>3. Satır ve Sütun Birleştirme (colspan, rowspan)</h2>
+  <table>
+    <tr>
+      <th colspan="2">Birleşik Başlık</th>
+    </tr>
+    <tr>
+      <td rowspan="2">Tek Satır</td>
+      <td>Birinci Sütun</td>
+    </tr>
+    <tr>
+      <td>İkinci Sütun</td>
+    </tr>
+  </table>
+
+  <!-- Tablo kenarlıkları ve hücre stilleri -->
+  <h2>4. Tablo Kenarlıkları ve Hücre Stilleri</h2>
+  <table class="bordered">
+    <tr>
+      <th>Ürün</th>
+      <th>Fiyat</th>
+      <th class="centered">Stok</th>
+    </tr>
+    <tr>
+      <td>Kalem</td>
+      <td>5 TL</td>
+      <td class="centered">100</td>
+    </tr>
+    <tr class="highlight">
+      <td>Defter</td>
+      <td>10 TL</td>
+      <td class="centered">50</td>
+    </tr>
+  </table>
+
+  <!-- Zebra/striped tablo -->
+  <h2>5. Tablo Satırlarını Renklendirme (Zebra/Striped)</h2>
+  <table class="striped">
+    <tr>
+      <th>Ülke</th>
+      <th>Başkent</th>
+      <th>Nüfus (milyon)</th>
+    </tr>
+    <tr>
+      <td>Türkiye</td>
+      <td>Ankara</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <td>Almanya</td>
+      <td>Berlin</td>
+      <td>83</td>
+    </tr>
+    <tr>
+      <td>Fransa</td>
+      <td>Paris</td>
+      <td>67</td>
+    </tr>
+  </table>
+
+  <!-- thead, tbody, tfoot kullanımı -->
+  <h2>6. Table Head, Body, Foot</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Ay</th>
+        <th>Gelir</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ocak</td>
+        <td>5000</td>
+      </tr>
+      <tr>
+        <td>Şubat</td>
+        <td>6000</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Toplam</td>
+        <td>11000</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- Responsive tablo -->
+  <h2>7. Responsive Tablo (Yatay kaydırma)</h2>
+  <div style="overflow-x:auto;">
+    <table>
+      <tr>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Şehir</th>
+        <th>Meslek</th>
+        <th>Yaş</th>
+        <th>Email</th>
+      </tr>
+      <tr>
+        <td>Ali</td>
+        <td>Yılmaz</td>
+        <td>İstanbul</td>
+        <td>Mühendis</td>
+        <td>28</td>
+        <td>ali@example.com</td>
+      </tr>
+      <tr>
+        <td>Ayşe</td>
+        <td>Kaya</td>
+        <td>İzmir</td>
+        <td>Doktor</td>
+        <td>24</td>
+        <td>ayse@example.com</td>
+      </tr>
+      <tr>
+        <td>Burak</td>
+        <td>Demir</td>
+        <td>Ankara</td>
+        <td>Öğretmen</td>
+        <td>32</td>
+        <td>burak@example.com</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Scope ve erişilebilirlik için açıklama -->
+  <h2>8. Scope ve Erişilebilirlik</h2>
+  <table>
+    <tr>
+      <th scope="col">Ürün</th>
+      <th scope="col">Fiyat</th>
+      <th scope="col">Stok</th>
+    </tr>
+    <tr>
+      <th scope="row">Kalem</th>
+      <td>5 TL</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th scope="row">Defter</th>
+      <td>10 TL</td>
+      <td>50</td>
+    </tr>
+  </table>
+
+  <!-- Tabloya açıklama ve notlar ekleme -->
+  <h2>9. Tabloya Açıklama ve Notlar</h2>
+  <!-- Tabloya açıklama eklemek için <caption> kullanılır -->
+  <table>
+    <caption>Not: Fiyatlar örnektir.</caption>
+    <tr>
+      <th>Ürün</th>
+      <th>Fiyat</th>
+    </tr>
+    <tr>
+      <td>Silgi</td>
+      <td>2 TL</td>
+    </tr>
+  </table>
+
+  <hr>
+  <!-- Özet ve önemli noktalar -->
+  <h3>Özet</h3>
+  <ul>
+    <li><b>&lt;table&gt;</b>: Tabloyu başlatır.</li>
+    <li><b>&lt;tr&gt;</b>: Satır ekler.</li>
+    <li><b>&lt;th&gt;</b>: Başlık hücresi ekler.</li>
+    <li><b>&lt;td&gt;</b>: Veri hücresi ekler.</li>
+    <li><b>&lt;caption&gt;</b>: Tablo başlığı ekler.</li>
+    <li><b>colspan, rowspan</b>: Hücreleri birleştirir.</li>
+    <li><b>&lt;thead&gt;, &lt;tbody&gt;, &lt;tfoot&gt;</b>: Tablo bölümlerini ayırır.</li>
+    <li><b>scope</b>: Erişilebilirlik için başlık hücresinin kapsamını belirtir.</li>
+    <li><b>Responsive</b>: Geniş tabloları yatay kaydırma ile gösterir.</li>
+    <li><b>Stil ve class</b>: CSS ile tabloyu görsel olarak özelleştirebilirsin.</li>
+  </ul>
+
+  <!-- Kodun her bölümünde açıklama ve örnekler için yorum satırları eklendi -->
+</body>
+</html>

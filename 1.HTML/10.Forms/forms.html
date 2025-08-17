@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Forms - Tüm Detaylar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; }
+    h1, h2 { color: #2196F3; }
+    section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin: 24px auto; max-width: 700px; padding: 24px; }
+    form { margin-bottom: 24px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; }
+    input, select, textarea, button { margin-bottom: 14px; padding: 7px 10px; border-radius: 4px; border: 1px solid #bbb; font-size: 1em; }
+    input[type="checkbox"], input[type="radio"] { margin-right: 6px; }
+    .form-row { margin-bottom: 12px; }
+    .note { color: #888; font-size: 0.95em; margin-bottom: 8px; }
+    .group { background: #e3f2fd; padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <h1>HTML Forms - Tüm Detaylar</h1>
+  <section>
+    <!-- Formun temel yapısı -->
+    <h2>1. Temel Form Yapısı</h2>
+    <!-- action: Formun gönderileceği adres, method: GET/POST -->
+    <form action="/submit" method="post">
+      <label for="ad">Ad:</label>
+      <input type="text" id="ad" name="ad" required>
+      <label for="email">E-posta:</label>
+      <input type="email" id="email" name="email" required>
+      <input type="submit" value="Gönder">
+    </form>
+    <div class="note">action ve method attributeları ile formun gönderim adresi ve yöntemi belirlenir.</div>
+  </section>
+
+  <section>
+    <!-- Farklı input tipleri ve elementler -->
+    <h2>2. Form Elemanları ve Input Tipleri</h2>
+    <form>
+      <!-- text, password, email, number, tel, url, search, date, time, color, range, file -->
+      <div class="form-row"><label for="kadi">Kullanıcı Adı:</label><input type="text" id="kadi" name="kadi" placeholder="Kullanıcı adınızı girin"></div>
+      <div class="form-row"><label for="sifre">Şifre:</label><input type="password" id="sifre" name="sifre"></div>
+      <div class="form-row"><label for="yas">Yaş:</label><input type="number" id="yas" name="yas" min="1" max="120"></div>
+      <div class="form-row"><label for="tel">Telefon:</label><input type="tel" id="tel" name="tel"></div>
+      <div class="form-row"><label for="web">Web Sitesi:</label><input type="url" id="web" name="web"></div>
+      <div class="form-row"><label for="arama">Arama:</label><input type="search" id="arama" name="arama"></div>
+      <div class="form-row"><label for="tarih">Doğum Tarihi:</label><input type="date" id="tarih" name="tarih"></div>
+      <div class="form-row"><label for="saat">Saat:</label><input type="time" id="saat" name="saat"></div>
+      <div class="form-row"><label for="renk">Favori Renk:</label><input type="color" id="renk" name="renk"></div>
+      <div class="form-row"><label for="puan">Puan:</label><input type="range" id="puan" name="puan" min="0" max="100"></div>
+      <div class="form-row"><label for="dosya">Dosya Yükle:</label><input type="file" id="dosya" name="dosya"></div>
+      <input type="submit" value="Kaydet">
+    </form>
+    <div class="note">Her input tipi farklı veri türleri ve kontroller için kullanılır.</div>
+  </section>
+
+  <section>
+    <!-- Checkbox, radio, select, textarea -->
+    <h2>3. Diğer Form Elemanları</h2>
+    <form>
+      <div class="form-row"><label>Cinsiyet:</label>
+        <label><input type="radio" name="cinsiyet" value="erkek"> Erkek</label>
+        <label><input type="radio" name="cinsiyet" value="kadın"> Kadın</label>
+      </div>
+      <div class="form-row"><label>Hobiler:</label>
+        <label><input type="checkbox" name="hobi" value="spor"> Spor</label>
+        <label><input type="checkbox" name="hobi" value="müzik"> Müzik</label>
+        <label><input type="checkbox" name="hobi" value="kitap"> Kitap</label>
+      </div>
+      <div class="form-row"><label for="sehir">Şehir:</label>
+        <select id="sehir" name="sehir">
+          <option value="">Seçiniz</option>
+          <option value="istanbul">İstanbul</option>
+          <option value="ankara">Ankara</option>
+          <option value="izmir">İzmir</option>
+        </select>
+      </div>
+      <div class="form-row"><label for="mesaj">Mesaj:</label>
+        <textarea id="mesaj" name="mesaj" rows="3" cols="30" placeholder="Mesajınızı yazın..."></textarea>
+      </div>
+      <input type="submit" value="Gönder">
+    </form>
+    <div class="note">Radio, checkbox, select ve textarea ile farklı veri türleri toplanabilir.</div>
+  </section>
+
+  <section>
+    <!-- Form attributeları ve özellikleri -->
+    <h2>4. Form Attributeları ve Özellikleri</h2>
+    <form autocomplete="off" novalidate>
+      <div class="form-row"><label for="mail">E-posta:</label><input type="email" id="mail" name="mail" required></div>
+      <div class="form-row"><label for="kod">Kod:</label><input type="text" id="kod" name="kod" maxlength="6" minlength="3" pattern="[A-Za-z0-9]+" title="Sadece harf ve rakam"></div>
+      <div class="form-row"><label for="ad2">Ad:</label><input type="text" id="ad2" name="ad2" value="Burak" readonly></div>
+      <input type="submit" value="Onayla">
+    </form>
+    <div class="note">autocomplete, novalidate, required, maxlength, minlength, pattern, readonly gibi attributelar ile form davranışı ve doğrulama kontrol edilir.</div>
+  </section>
+
+  <section>
+    <!-- Form elementlerinin form attributeları ile bağlanması -->
+    <h2>5. Form Elementlerini Form ile Bağlama (form attribute)</h2>
+    <!-- Birden fazla form ile inputu bağlama -->
+    <form id="form1">
+      <label for="isim">İsim:</label>
+      <input type="text" id="isim" name="isim">
+    </form>
+    <form id="form2">
+      <label for="soyisim">Soyisim:</label>
+      <input type="text" id="soyisim" name="soyisim">
+      <!-- form="form1" ile başka bir formun parçası olarak inputu bağlama -->
+      <input type="email" id="eposta" name="eposta" form="form1" placeholder="Form1'e bağlı e-posta">
+      <input type="submit" value="Kaydet">
+    </form>
+    <div class="note">form attribute'u ile bir input başka bir formun parçası olarak tanımlanabilir.</div>
+  </section>
+
+  <section>
+    <!-- Buton tipleri ve özellikleri -->
+    <h2>6. Butonlar ve Özellikleri</h2>
+    <form>
+      <button type="submit">Gönder</button>
+      <button type="reset">Temizle</button>
+      <button type="button" onclick="alert('Butona tıklandı!')">Sadece Tıkla</button>
+    </form>
+    <div class="note">type="submit", type="reset", type="button" ile butonun davranışı belirlenir.</div>
+  </section>
+
+  <section>
+    <!-- Grup ve fieldset/legend kullanımı -->
+    <h2>7. Formda Grup ve Açıklama (fieldset, legend)</h2>
+    <form>
+      <fieldset class="group">
+        <legend>Kişisel Bilgiler</legend>
+        <label for="ad3">Ad:</label>
+        <input type="text" id="ad3" name="ad3">
+        <label for="soyad3">Soyad:</label>
+        <input type="text" id="soyad3" name="soyad3">
+      </fieldset>
+      <fieldset class="group">
+        <legend>İletişim Bilgileri</legend>
+        <label for="tel2">Telefon:</label>
+        <input type="tel" id="tel2" name="tel2">
+        <label for="mail2">E-posta:</label>
+        <input type="email" id="mail2" name="mail2">
+      </fieldset>
+      <input type="submit" value="Gönder">
+    </form>
+    <div class="note">fieldset ile formda gruplama, legend ile grup başlığı eklenir.</div>
+  </section>
+
+  <hr>
+  <h3>Özet</h3>
+  <ul>
+    <li><b>&lt;form&gt;</b>: Formu başlatır, action ve method ile gönderim ayarlanır.</li>
+    <li><b>&lt;input&gt;</b>: Veri girişi için kullanılır, birçok tipi vardır.</li>
+    <li><b>&lt;select&gt;, &lt;option&gt;</b>: Açılır liste oluşturur.</li>
+    <li><b>&lt;textarea&gt;</b>: Çok satırlı metin girişi sağlar.</li>
+    <li><b>&lt;button&gt;</b>: Farklı tipte butonlar eklenebilir.</li>
+    <li><b>Form attributeları:</b> required, readonly, disabled, autocomplete, novalidate, maxlength, minlength, pattern, min, max, value, placeholder, form, action, method, enctype, accept, multiple, checked, selected, autofocus, size, step, list, name, id, for, type, tabindex, accesskey, formaction, formenctype, formmethod, formnovalidate, formtarget.</li>
+    <li><b>Grup:</b> fieldset ve legend ile formda alanlar gruplandırılır.</li>
+    <li><b>Yorumlar:</b> Her örnekte açıklama ve önemli noktalar için yorum satırları eklenmiştir.</li>
+  </ul>
+</body>
+</html>

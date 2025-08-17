@@ -1,3 +1,21 @@
+/* ================= CSS MAX-WIDTH ================= */
+/*
+Konu: CSS max-width
+Öğrenme Hedefi: max-width ile elemanın maksimum genişliğini belirleme, responsive tasarımda kullanımı.
+Kaynak: https://www.w3schools.com/css/css_max-width.asp
+*/
+
+/* max-width: Elemanın genişliği belirli bir değeri aşamaz, ekran küçülünce otomatik daralır. Responsive tasarımda çok kullanılır. */
+.maxwidth-demo {
+    width: 100%;
+    max-width: 400px;
+    background: #ffe0b2;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+/* HTML: <div class="maxwidth-demo">Bu kutu max-width ile responsive olur.</div> */
 /* ================= CSS DISPLAY & VISIBILITY ================= */
 /*
 Konu: CSS Display ve Visibility

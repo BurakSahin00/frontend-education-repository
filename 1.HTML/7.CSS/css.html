@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML'de CSS Kullanımı</title>
+  <!-- Internal CSS örneği -->
+  <style>
+    .internal-demo {
+      color: #fff;
+      background: #2196F3;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <!-- External CSS örneği -->
+  <link rel="stylesheet" href="external-demo.css">
+</head>
+<body>
+  <h1>HTML'de CSS Kullanımı</h1>
+  <p>CSS, HTML sayfalarında üç farklı şekilde kullanılabilir: <b>inline</b>, <b>internal</b> ve <b>external</b>.</p>
+
+  <h2>1. Inline CSS</h2>
+  <p>Inline CSS, doğrudan HTML elemanının <code>style</code> özniteliği ile uygulanır. Sadece ilgili elemana etki eder.</p>
+  <div style="color: #fff; background: #e91e63; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+    Bu kutu <b>inline CSS</b> ile stillendirildi.<br>
+    &lt;div style="..."&gt; ... &lt;/div&gt;
+  </div>
+
+  <h2>2. Internal CSS</h2>
+  <p>Internal CSS, <code>&lt;style&gt;</code> etiketi ile <code>&lt;head&gt;</code> bölümünde tanımlanır. Sayfa içindeki birden fazla elemana etki edebilir.</p>
+  <div class="internal-demo">
+    Bu kutu <b>internal CSS</b> ile stillendirildi.<br>
+    &lt;style&gt; .internal-demo { ... } &lt;/style&gt;
+  </div>
+
+  <h2>3. External CSS</h2>
+  <p>External CSS, ayrı bir dosyada yazılır ve <code>&lt;link&gt;</code> etiketi ile sayfaya eklenir. Büyük projelerde ve tekrar kullanılabilir stiller için idealdir.</p>
+  <div class="external-demo">
+    Bu kutu <b>external CSS</b> ile stillendirildi.<br>
+    &lt;link rel="stylesheet" href="external-demo.css"&gt;
+  </div>
+
+  <hr>
+  <h3>Özet</h3>
+  <ul>
+    <li><b>Inline CSS:</b> Hızlı, sadece ilgili elemana özel stil.</li>
+    <li><b>Internal CSS:</b> Sayfa içi, birden fazla elemana etki eder.</li>
+    <li><b>External CSS:</b> Ayrı dosya, tüm siteye uygulanabilir, en çok tercih edilen yöntem.</li>
+  </ul>
+</body>
+</html>

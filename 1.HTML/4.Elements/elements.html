@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Elements - Tüm Detaylar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; }
+    h1, h2 { color: #2196F3; }
+    section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin: 24px auto; max-width: 700px; padding: 24px; }
+    .demo { background: #e3f2fd; padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; }
+    .block { background: #fffbe7; padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; }
+    .inline { background: #ffe0b2; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+    iframe { border: 2px solid #2196F3; border-radius: 6px; }
+    .entity, .symbol, .emoji { font-size: 1.5em; margin-right: 12px; }
+  </style>
+</head>
+<body>
+  <h1>HTML Elements - Tüm Detaylar</h1>
+  <section>
+    <h2>1. HTML Element Nedir?</h2>
+    <div class="demo">
+      <!-- HTML elementleri, bir başlangıç ve bitiş etiketi ile içerikten oluşur -->
+      <p>&lt;p&gt;Bu bir paragraf elementidir.&lt;/p&gt;</p>
+      <p>&lt;h1&gt;Başlık Elementi&lt;/h1&gt;</p>
+      <p>&lt;br&gt; (satır sonu) gibi bazı elementler boş (self-closing) olabilir.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Block ve Inline Elementler</h2>
+    <div class="block">Block Element: &lt;div&gt; &lt;p&gt; &lt;h1&gt; &lt;ul&gt; &lt;table&gt; gibi elementler blok düzende yer alır ve tam satır kaplar.</div>
+    <span class="inline">Inline Element: &lt;span&gt;</span>
+    <span class="inline">&lt;a&gt;</span>
+    <span class="inline">&lt;img&gt;</span>
+    <span class="inline">&lt;strong&gt;</span>
+    <span class="inline">&lt;em&gt;</span>
+    <p>Block elementler yeni satırdan başlar, inline elementler ise satır içinde yan yana gelir.</p>
+  </section>
+
+  <section>
+    <h2>3. Iframe (Gömülü İçerik)</h2>
+    <div class="demo">
+      <!-- iframe ile başka bir web sayfası veya içerik gömülebilir -->
+      <iframe src="https://www.w3schools.com" width="320" height="120" title="W3Schools iframe"></iframe>
+      <p>&lt;iframe&gt; ile harita, video, başka bir site veya doküman gömülebilir.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. HTML Entities (Özel Karakterler)</h2>
+    <div class="demo">
+      <!-- Özel karakterler &amp; ile başlar ve ; ile biter -->
+      <span class="entity">&amp;lt; &lt; (küçüktür işareti)</span>
+      <span class="entity">&amp;gt; &gt; (büyüktür işareti)</span>
+      <span class="entity">&amp;amp; &amp; (ve işareti)</span>
+      <span class="entity">&amp;copy; &copy; (copyright)</span>
+      <span class="entity">&amp;nbsp; (boşluk)</span>
+      <p>Entities ile HTML'de özel karakterler ve semboller gösterilebilir.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. HTML Symbols (Semboller)</h2>
+    <div class="demo">
+      <!-- Semboller entities ile gösterilir -->
+      <span class="symbol">&hearts; (kalp)</span>
+      <span class="symbol">&spades; (maça)</span>
+      <span class="symbol">&clubs; (sinek)</span>
+      <span class="symbol">&diams; (karo)</span>
+      <span class="symbol">&euro; (euro)</span>
+      <span class="symbol">&yen; (yen)</span>
+      <span class="symbol">&sect; (bölüm işareti)</span>
+      <span class="symbol">&trade; (ticari marka)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. HTML Emojis</h2>
+    <div class="demo">
+      <!-- Emojiler Unicode ile gösterilir -->
+      <span class="emoji">&#128512; (Gülen Yüz)</span>
+      <span class="emoji">&#128077; (Beğeni)</span>
+      <span class="emoji">&#128640; (Roket)</span>
+      <span class="emoji">&#128214; (Kitap)</span>
+      <span class="emoji">&#128171; (Kalp)</span>
+      <span class="emoji">&#128293; (Alev)</span>
+      <span class="emoji">&#128161; (Ampul)</span>
+    </div>
+    <p>Emojiler HTML'de Unicode karakterleri ile gösterilir.</p>
+  </section>
+
+  <hr>
+  <h3>Özet</h3>
+  <ul>
+    <li><b>HTML Element:</b> Başlangıç ve bitiş etiketi ile içerikten oluşur.</li>
+    <li><b>Block Element:</b> Tam satır kaplar, yeni satırdan başlar.</li>
+    <li><b>Inline Element:</b> Satır içinde yan yana gelir.</li>
+    <li><b>Iframe:</b> Harici içerik veya sayfa gömmek için kullanılır.</li>
+    <li><b>Entities:</b> &amp; ile başlayan özel karakterler ve semboller.</li>
+    <li><b>Symbols:</b> Entities ile sembol gösterimi.</li>
+    <li><b>Emojis:</b> Unicode ile emoji gösterimi.</li>
+    <li>Her bölümde örnek ve açıklama için yorum satırları eklenmiştir.</li>
+  </ul>
+</body>
+</html>
