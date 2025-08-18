@@ -1,0 +1,58 @@
+[
+	{
+		"ad": "Burak",
+		"yas": 30,
+		"evliMi": false,
+		"hobiler": ["yüzme", "satranç", "yazılım"],
+		"adres": {
+			"sehir": "İstanbul",
+			"ilce": "Kadıköy"
+		},
+		"egitimler": [
+			{
+				"tip": "Lisans",
+				"okul": "İstanbul Üniversitesi",
+				"mezuniyet": 2018
+			},
+			{
+				"tip": "Yüksek Lisans",
+				"okul": "Boğaziçi Üniversitesi",
+				"mezuniyet": 2021
+			}
+		]
+	},
+	{
+		"ad": "Ayşe",
+		"yas": 25,
+		"evliMi": true,
+		"hobiler": ["kitap", "yoga", "resim"],
+		"adres": {
+			"sehir": "Ankara",
+			"ilce": "Çankaya"
+		},
+		"egitimler": [
+			{
+				"tip": "Lisans",
+				"okul": "ODTÜ",
+				"mezuniyet": 2019
+			}
+		]
+	},
+	{
+		"ad": "Mehmet",
+		"yas": 40,
+		"evliMi": true,
+		"hobiler": ["futbol", "müzik"],
+		"adres": {
+			"sehir": "İzmir",
+			"ilce": "Bornova"
+		},
+		"egitimler": [
+			{
+				"tip": "Lise",
+				"okul": "Bornova Anadolu Lisesi",
+				"mezuniyet": 2002
+			}
+		]
+	}
+]
