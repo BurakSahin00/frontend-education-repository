@@ -1,0 +1,49 @@
+:root {
+  --card-bg: linear-gradient(145deg,#ffffff,#f4f8fb);
+  --card-border: rgba(255,255,255,0.4);
+  --grad-start:#3a8edb;
+  --grad-end:#1b5eab;
+  --bg-pill:rgba(255,255,255,0.25);
+  --bg-pill-active:linear-gradient(120deg,var(--grad-start),var(--grad-end));
+  --shadow:0 4px 16px -6px rgba(16,40,72,.28),0 0 0 1px rgba(255,255,255,0.35) inset;
+}
+
+.user-task-wrapper { display:flex; flex-direction:column; gap:1.25rem; }
+.header { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+.title { margin:0; font-size:1.15rem; font-weight:600; letter-spacing:.5px; background:linear-gradient(90deg,var(--grad-start),var(--grad-end)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.summary { display:flex; align-items:center; gap:.65rem; font-size:.75rem; font-weight:500; color:#274c6d; }
+.bar { width:120px; height:6px; background:rgba(0,0,0,0.08); border-radius:4px; overflow:hidden; }
+.fill { height:100%; background:linear-gradient(90deg,var(--grad-start),var(--grad-end)); transition:width .4s ease; }
+.percent { font-weight:600; color:#1b5eab; }
+
+.user-chips { display:flex; flex-wrap:wrap; gap:.55rem; }
+.chip { display:inline-flex; align-items:center; gap:.45rem; padding:.45rem .8rem; font-size:.7rem; letter-spacing:.4px; border:none; border-radius:100px; background:var(--bg-pill); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); color:#0e2a40; cursor:pointer; position:relative; font-weight:600; transition:background .25s,color .25s, box-shadow .25s; }
+.chip:hover { background:rgba(255,255,255,0.4); }
+.chip.active { background:var(--bg-pill-active); color:#fff; box-shadow:0 3px 10px -4px rgba(0,0,0,.35); }
+.avatar { width:22px; height:22px; border-radius:50%; background:linear-gradient(140deg,var(--grad-start),var(--grad-end)); display:inline-flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:600; color:#fff; position:relative; }
+.avatar::after { content:attr(data-initial); }
+
+.cards { display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); }
+.card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:14px; padding:.9rem .9rem 1rem; position:relative; display:flex; flex-direction:column; gap:.55rem; box-shadow:var(--shadow); transition:transform .25s, box-shadow .25s; }
+.card::before { content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(120deg,var(--grad-start),var(--grad-end)); opacity:0; transition:opacity .35s; mix-blend-mode:overlay; }
+.card:hover { transform:translateY(-4px); box-shadow:0 8px 28px -10px rgba(16,40,72,.45),0 0 0 1px rgba(255,255,255,0.5) inset; }
+.card:hover::before { opacity:.25; }
+.card-head { display:flex; justify-content:space-between; align-items:center; gap:.5rem; }
+.card-title { margin:0; font-size:.85rem; font-weight:600; line-height:1.15; color:#18314a; letter-spacing:.3px; }
+.desc { margin:0; font-size:.68rem; color:#38556b; line-height:1.25; min-height:2.2em; }
+.meta { display:flex; justify-content:space-between; align-items:center; font-size:.6rem; text-transform:uppercase; letter-spacing:.4px; }
+.status { font-size:.55rem; padding:.3rem .45rem; border-radius:6px; background:rgba(0,0,0,0.08); color:#264664; font-weight:600; letter-spacing:.5px; }
+.status.done { background:linear-gradient(120deg,#45c176,#2d9151); color:#fff; }
+.priority { padding:.25rem .45rem; border-radius:6px; font-weight:600; background:rgba(0,0,0,0.07); }
+.priority.p-0 { background:linear-gradient(120deg,#6fb6ff,#3a8edb); color:#0b2c4a; }
+.priority.p-1 { background:linear-gradient(120deg,#ffe58f,#ffc53d); color:#614700; }
+.priority.p-2 { background:linear-gradient(120deg,#ff9c6e,#ff4d4f); color:#5a0a0a; }
+.due { color:#1b5eab; font-weight:600; }
+.empty { grid-column:1/-1; text-align:center; padding:2rem 1rem; font-size:.8rem; opacity:.6; }
+
+@media (max-width:700px){
+  .cards { grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }
+  .chip { font-size:.62rem; padding:.4rem .65rem; }
+  .card { padding:.75rem .75rem .85rem; }
+  .card-title { font-size:.8rem; }
+}

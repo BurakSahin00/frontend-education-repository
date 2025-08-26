@@ -1,0 +1,66 @@
+import { Todo, TodoPriority } from '../models/todo.model';
+
+export const TODOS: Todo[] = [
+  {
+    id: '1',
+    title: 'Prepare Project Proposal',
+    description: 'Create and finalize the project proposal for review.',
+    completed: false,
+    priority: TodoPriority.High,
+    parentId: null,
+    assignedUserId: '1',
+    dueDate: new Date('2025-09-10'),
+    createdAt: new Date('2025-08-24'),
+    children: [
+      {
+        id: '2',
+        title: 'Gather Requirements',
+        description: 'Talk to stakeholders to gather all project requirements.',
+        completed: false,
+        parentId: '1',
+        dueDate: new Date('2025-09-05'),
+        createdAt: new Date('2025-08-24'),
+      },
+      {
+        id: '3',
+        title: 'Draft Initial Proposal',
+        description: 'Prepare the first draft of the project proposal.',
+        completed: false,
+        parentId: '1',
+        dueDate: new Date('2025-09-07'),
+        createdAt: new Date('2025-08-24'),
+      },
+    ],
+  },
+  {
+    id: '4',
+    title: 'Team Meeting',
+    description: 'Organize a team meeting to discuss project milestones.',
+    completed: false,
+    priority: TodoPriority.Medium,
+    parentId: null,
+    assignedUserId: '2',
+    dueDate: new Date('2025-08-28'),
+    createdAt: new Date('2025-08-24'),
+    children: [
+      {
+        id: '5',
+        title: 'Prepare Agenda',
+        description: 'Create the meeting agenda and share it with team members.',
+        completed: true,
+        parentId: '4',
+        dueDate: new Date('2025-08-27'),
+        createdAt: new Date('2025-08-24'),
+      },
+      {
+        id: '6',
+        title: 'Send Invites',
+        description: 'Send meeting invites to all team members.',
+        completed: false,
+        parentId: '4',
+        dueDate: new Date('2025-08-26'),
+        createdAt: new Date('2025-08-24'),
+      },
+    ],
+  },
+];

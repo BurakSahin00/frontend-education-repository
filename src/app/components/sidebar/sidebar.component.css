@@ -1,0 +1,214 @@
+/*
+.sidebar {
+    --gradient-start: #3a8edb;
+    --gradient-end: #1b5eab;
+    --bg-glass: rgba(255, 255, 255, 0.35);
+    --bg-hover: rgba(255, 255, 255, 0.55);
+    --bg-active: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    --text-muted: #e4edf6;
+    --text-strong: #ffffff;
+    --divider: rgba(255, 255, 255, 0.2);
+    font-family: 'Inter', Arial, sans-serif;
+    padding: 1.1rem .9rem 1.5rem;
+    height: 100%;
+    overflow-y: auto;
+    background: linear-gradient(165deg, var(--gradient-start), var(--gradient-end));
+    color: var(--text-muted);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    display: flex;
+    flex-direction: column;
+}
+
+.app-title {
+    font-size: 1.05rem;
+    margin: 0 0 1.2rem;
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: .5px;
+    color: var(--text-strong);
+}
+
+section {
+    margin-bottom: 1.4rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .70rem;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    padding: .35rem .4rem;
+    border-radius: 6px;
+    position: relative;
+    transition: background .25s, color .25s;
+}
+
+.section-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--divider);
+    opacity: .6;
+}
+
+.section-header:hover {
+    background: var(--bg-glass);
+    color: var(--text-strong);
+}
+
+.section-header.disabled {
+    cursor: default;
+    opacity: .55;
+    background: transparent;
+}
+
+.section-header.disabled::after {
+    opacity: .25;
+}
+
+.chevron {
+    transition: transform .25s ease;
+    font-size: .6rem;
+}
+
+.chevron.rotated {
+    transform: rotate(-90deg);
+}
+
+.list {
+    list-style: none;
+    margin: .55rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.list li {
+    font-size: .78rem;
+    padding: .45rem .55rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-strong);
+    background: rgba(255, 255, 255, 0.07);
+    line-height: 1.1;
+    letter-spacing: .3px;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    position: relative;
+    transition: background .22s, transform .15s;
+}
+
+.list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: background .25s, transform .25s;
+}
+
+.list li:hover {
+    background: var(--bg-hover);
+    transform: translateX(2px);
+}
+
+.list li:hover::before {
+    background: #fff;
+}
+
+.list li.active {
+    background: var(--bg-active);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+}
+
+.list li.active::before {
+    background: #fff;
+    transform: scale(1.4);
+}
+
+
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        flex-direction: row;
+        height: auto;
+        padding: .75rem .75rem;
+        overflow-x: auto;
+    }
+
+    section {
+        margin: 0 1rem 0 0;
+    }
+
+    .section-header::after {
+        display: none;
+    }
+
+    .list {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .list li {
+        padding: .35rem .55rem;
+    }
+}
+*/
+
+.logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 30px 16px 0;
+    float: left;
+}
+
+.header-menu {
+    line-height: 64px;
+}
+
+.sider-menu {
+    height: 100%;
+    border-right: 0;
+}
+
+.inner-layout {
+    padding: 0 24px 24px;
+}
+
+nz-breadcrumb {
+    margin: 16px 0;
+}
+
+nz-content {
+    background: #fff;
+    padding: 24px;
+    min-height: 280px;
+}

@@ -1,0 +1,32 @@
+<div class="user-task-wrapper">
+  <header class="header">
+    <h2 class="title">User Tasks</h2>
+    <div class="summary" *ngIf="summary() as s">
+      <span>{{s.done}} / {{s.total}} done</span>
+      <div class="bar"><div class="fill" [style.width.%]="s.percent"></div></div>
+      <span class="percent">{{s.percent}}%</span>
+    </div>
+  </header>
+
+  <div class="user-chips">
+    <button class="chip" [class.active]="!selectedUserId()" (click)="selectUser(null)">All</button>
+    <button class="chip" *ngFor="let u of users()" [class.active]="selectedUserId()===u.id" (click)="selectUser(u.id)">
+      <span class="avatar" [attr.data-initial]="u.name.charAt(0)"></span>{{u.name}}
+    </button>
+  </div>
+
+  <div class="cards" *ngIf="userTodos() as list">
+    <div class="card" *ngFor="let t of list">
+      <div class="card-head">
+        <h3 class="card-title">{{t.title}}</h3>
+        <span class="status" [class.done]="t.completed">{{ t.completed ? 'Done' : 'Open' }}</span>
+      </div>
+      <p class="desc">{{t.description}}</p>
+      <div class="meta">
+        <span class="priority p-{{t.priority}}">{{priorityLabel(t.priority)}}</span>
+        <span class="due" *ngIf="t.dueDate">Due: {{t.dueDate | date:'MMM d'}}</span>
+      </div>
+    </div>
+    <div class="empty" *ngIf="!list.length">No tasks found.</div>
+  </div>
+</div>

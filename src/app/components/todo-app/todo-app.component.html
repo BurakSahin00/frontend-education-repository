@@ -1,0 +1,14 @@
+<div class="todo-app">
+  <h2>Görevler</h2>
+  <ul>
+    <li *ngFor="let t of todoService.getTodos()">
+      <strong [style.textDecoration]="t.completed ? 'line-through' : 'none'">{{t.title}}</strong>
+      <span *ngIf="t.priority !== undefined"> - P: {{t.priority}}</span>
+    </li>
+  </ul>
+</div>
+<!--
+  TODO Uygulaması Bileşeni
+  - Todo ekleme, listeleme ve filtreleme bileşenlerini içerir.
+  - TodoService ile etkileşimde bulunur. 
+-->
