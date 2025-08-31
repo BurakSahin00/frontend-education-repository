@@ -6,8 +6,10 @@ export const USERS: User[] = [
     name: 'Alice Johnson',
     email: 'alice@example.com',
     password: 'password123',
-    role: 'Admin',
+    role: 'User',
     createdAt: new Date('2025-01-01'),
+    todoLabels: ['high', 'medium'],
+    todoCategories: ['work', 'personal']
   },
   {
     id: '2',
@@ -16,6 +18,8 @@ export const USERS: User[] = [
     password: 'password123',
     role: 'User',
     createdAt: new Date('2025-02-15'),
+    todoLabels: ['low'],
+    todoCategories: ['personal']
   },
   {
     id: '3',
@@ -24,5 +28,7 @@ export const USERS: User[] = [
     password: 'password123',
     role: 'User',
     createdAt: new Date('2025-03-20'),
+    todoLabels: ['work'],
+    todoCategories: ['work']
   },
 ];

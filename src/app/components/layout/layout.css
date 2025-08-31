@@ -1,0 +1,33 @@
+.logo {
+    width: 150px;
+    height: 31px;
+    float: left;
+    color: #fff;
+}
+
+.header-menu {
+    line-height: 64px;
+}
+
+.sider-menu {
+    height: 100%;
+    border-right: 0;
+    overflow-y: auto;
+}
+
+nz-layout {
+    height: 100vh;
+}
+
+nz-sider {
+    height: calc(100vh - 64px);
+}
+
+button {
+    margin-left: 100px;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+}

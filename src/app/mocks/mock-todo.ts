@@ -20,6 +20,7 @@ export const TODOS: Todo[] = [
         parentId: '1',
         dueDate: new Date('2025-09-05'),
         createdAt: new Date('2025-08-24'),
+        assignedUserId: '1',
       },
       {
         id: '3',
@@ -29,6 +30,7 @@ export const TODOS: Todo[] = [
         parentId: '1',
         dueDate: new Date('2025-09-07'),
         createdAt: new Date('2025-08-24'),
+        assignedUserId: '1',
       },
     ],
   },
@@ -39,7 +41,7 @@ export const TODOS: Todo[] = [
     completed: false,
     priority: TodoPriority.Medium,
     parentId: null,
-    assignedUserId: '2',
+    assignedUserId: '1',
     dueDate: new Date('2025-08-28'),
     createdAt: new Date('2025-08-24'),
     children: [
@@ -51,6 +53,7 @@ export const TODOS: Todo[] = [
         parentId: '4',
         dueDate: new Date('2025-08-27'),
         createdAt: new Date('2025-08-24'),
+        assignedUserId: '1',
       },
       {
         id: '6',
@@ -60,6 +63,7 @@ export const TODOS: Todo[] = [
         parentId: '4',
         dueDate: new Date('2025-08-26'),
         createdAt: new Date('2025-08-24'),
+        assignedUserId: '1',
       },
     ],
   },

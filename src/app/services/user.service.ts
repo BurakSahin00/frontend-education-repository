@@ -7,6 +7,15 @@ import { USERS } from '../mocks/mock-user';
 })
 export class UserService {
   private users: User[] = USERS;
+  private user: User | null = null;
+
+  getLoggedUser(): User | null {
+    return this.user;
+  }
+
+  setLoggedUser(user: User | null): void {
+    this.user = user;
+  }
 
   // Tüm kullanıcıları döndür
   getUsers(): User[] {
@@ -21,5 +30,15 @@ export class UserService {
   // Yeni kullanıcı ekle
   addUser(user: User): void {
     this.users.push(user);
+  }
+
+  getUserTodoLabelsById(id: string): string[] {
+    const user = this.getUserById(id);
+    return user ? user.todoLabels : [];
+  }
+
+  getUserTodoCategoriesById(id: string): string[] {
+    const user = this.getUserById(id);
+    return user ? user.todoCategories : [];
   }
 }

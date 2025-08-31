@@ -16,5 +16,5 @@ export interface Todo {
   createdAt: Date;
   updatedAt?: Date;
   tags?: string[];
-  assignedUserId?: string;   
+  assignedUserId: string;   
 }

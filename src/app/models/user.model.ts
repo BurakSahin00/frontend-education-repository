@@ -8,4 +8,6 @@ export interface User {
     role: UserRole;
     createdAt: Date;
     updatedAt?: Date;
+    todoLabels: string[];
+    todoCategories: string[];
 }

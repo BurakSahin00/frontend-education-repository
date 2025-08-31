@@ -1,0 +1,30 @@
+<nz-layout>
+    <nz-header>
+        <div class="logo">TODO App</div>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+            <li nz-menu-item nzSelected>Home</li>
+            <li nz-menu-item>Office</li>
+            <li nz-menu-item>School</li>
+        </ul>
+    </nz-header>
+    <section>
+        <nz-sider>
+            <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
+                <li nz-submenu nzIcon="user" nzTitle="Categories">
+                    <ul>
+                        <li nz-menu-item *ngFor="let category of userCategories">{{ category }}</li>
+                    </ul>
+                </li>
+                <li nz-submenu nzIcon="user" nzTitle="Labels">
+                    <ul>
+                        <li nz-menu-item *ngFor="let label of userLabels">{{ label }}</li>
+                    </ul>
+                </li>
+                <li nz-menu-item nzIcon="calendar">Calendar</li>
+            </ul>
+        </nz-sider>
+        <nz-content>
+            <router-outlet></router-outlet>
+        </nz-content>
+    </section>
+</nz-layout>

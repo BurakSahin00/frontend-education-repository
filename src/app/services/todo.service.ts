@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Todo } from '../models/todo.model';
 import { TODOS } from '../mocks/mock-todo';
 import { UserService } from './user.service';
+import { get } from 'http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { UserService } from './user.service';
 export class TodoService {
   private todos: Todo[] = TODOS;
   private userService = inject(UserService);
+  private nextTodoId = this.todos.length + 1;
 
   // Tüm todoları döndür
   getTodos(): Todo[] {
@@ -45,5 +47,14 @@ export class TodoService {
     if (index > -1) {
       this.todos[index] = updatedTodo;
     }
+  }
+
+  getTodosByUser(userId: string): Todo[] {
+    return this.todos.filter(todo => todo.assignedUserId === userId);
+  }
+
+  getNextTodoId(): string {
+    this.nextTodoId++;
+    return this.nextTodoId.toString();
   }
 }

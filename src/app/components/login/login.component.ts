@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +19,17 @@ export class LoginComponent {
   errorMessage = '';
 
   private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   login() {
-    const user = this.userService.getUsers().find(
-      u => u.email === this.email && u.password === this.password
-    );
-    if (user) {
+    if (this.authService.login(this.email, this.password)) {
+      this.errorMessage = '';
+      this.router.navigate(['/todos']);
+    } else {
+      this.errorMessage = 'Email veya şifre hatalı';
+    }
+    if (this.authService.getCurrentUser()) {
       this.errorMessage = '';
       this.router.navigate(['/todos']);
     } else {
