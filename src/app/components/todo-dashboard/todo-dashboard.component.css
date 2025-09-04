@@ -16,3 +16,12 @@ nz-card{
     align-items: center;
     width: 100%;
 }
+
+.task-viewport {
+  height: 280px; /* fixed height required for cdk virtual scroll */
+  width: 100%;
+}
+
+.tasks {
+  padding: 16px;
+}

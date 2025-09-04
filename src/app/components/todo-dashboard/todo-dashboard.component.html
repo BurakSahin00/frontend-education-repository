@@ -18,3 +18,15 @@
         </nz-card>
     </aside>
 </section>
+<section class="tasks">
+    <h1>Tasks</h1>
+    <cdk-virtual-scroll-viewport itemSize="73" class="task-viewport">
+        <nz-list>
+            <ng-container *cdkVirtualFor="let todo of todos()">
+                <nz-list-item>
+                    <nz-list-item-meta [nzTitle]="todo.title" [nzDescription]="todo.description"></nz-list-item-meta>
+                </nz-list-item>
+            </ng-container>
+        </nz-list>
+    </cdk-virtual-scroll-viewport>
+</section>

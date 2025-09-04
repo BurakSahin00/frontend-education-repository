@@ -3,12 +3,17 @@ import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { CommonModule } from '@angular/common';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { ScrollingModule } from "@angular/cdk/scrolling";
 import { Subscription } from 'rxjs';
 import type { Todo } from '../../models/todo.model';
 
 @Component({
   selector: 'todo-dashboard',
-  imports: [NzCardModule, NzProgressModule],
+  standalone: true,
+  imports: [CommonModule, NzCardModule, NzProgressModule, ScrollingModule, NzListModule, NzSkeletonModule],
   templateUrl: './todo-dashboard.component.html',
   styleUrls: ['./todo-dashboard.component.css']
 })
