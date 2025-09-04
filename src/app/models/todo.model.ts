@@ -18,3 +18,9 @@ export interface Todo {
   tags?: string[];
   assignedUserId: string;   
 }
+
+export interface TodoUpdate {
+  title: string;
+  description: string;
+  priority?: TodoPriority;
+}

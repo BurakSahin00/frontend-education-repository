@@ -1,29 +1,65 @@
 import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { LoginComponent } from './components/login/login.component';
-import { TodoAppComponent } from './components/todo-app/todo-app.component';
-import { UserTaskCardsComponent } from './components/user-task-cards/user-task-cards.component';
 import { UserService } from './services/user.service';
-import { MainComponent } from './components/main/main.component';
+import { TodosComponent } from './components/todos/todos.component';
+import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
+import { TodoDashboardComponent } from './components/todo-dashboard/todo-dashboard.component';
 import { Layout } from './components/layout/layout';
-
-// Basit auth guard (örnek)
-const authGuard = () => !!inject(UserService).getUsers().length;
-
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'login' },
-    { path: 'login', component: LoginComponent, title: 'Giriş' },
+    { 
+        path: '', 
+        pathMatch: 'full', 
+        redirectTo: 'login' },
+    { 
+        path: 'login', 
+        component: LoginComponent, 
+        title: 'Giriş' },
     {
         path: '',
         component: Layout,
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
         children: [
-            { path: 'todos', component: MainComponent, title: 'Görevler' },
             {
-                path: 'search',
-                loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent),
-                title: route => route.queryParamMap.get('q') ? `Ara: ${route.queryParamMap.get('q')}` : 'Arama'
+                path: 'todos',
+                component: TodosComponent,
+                title: 'Görevler',
+                children: [
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
+                        title: 'Görev Detayı'
+                    },
+                    {
+                        path: 'new',
+                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
+                        title: 'Yeni Görev'
+                    },
+                    {
+                        path: 'calendar',
+                        loadComponent: () => import('./components/todo-calendar/todo-calendar.component').then(m => m.TodoCalendarComponent),
+                        title: 'Takvim Görünümü'
+                    }
+                ],
+            },
+            {
+                path: 'profile',
+                loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent),
+                title: 'Profil',
+                children: [
+                    {
+                        path: 'settings',
+                        loadComponent: () => import('./components/settings/settings.component').then(m => m.SettingsComponent),
+                        title: 'Ayarlar'
+                    },
+                ]
+            },
+            {
+                path: 'dashboard',
+                component: TodoDashboardComponent,
+                title: 'Görev Panosu'
             }
         ]
     },

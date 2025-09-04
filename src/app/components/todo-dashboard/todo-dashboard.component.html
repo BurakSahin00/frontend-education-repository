@@ -1,0 +1,20 @@
+<section class="dashboard">
+    <h1>Statistics</h1>
+    <aside class="progress-cards">
+        <nz-card>
+            <nz-progress [nzPercent]="completedPercentage()" nzType="circle"
+                [nzFormat]="formatCompletedCount" nzStrokeColor="blue"></nz-progress>
+            <h3>Progress</h3>
+        </nz-card>
+        <nz-card>
+            <nz-progress [nzPercent]="completedPercentage()" nzType="circle"
+                [nzFormat]="formatCompletedCount" nzStrokeColor="green"></nz-progress>
+            <h3>Completed Tasks</h3>
+        </nz-card>
+        <nz-card>
+            <nz-progress [nzPercent]="unCompletedPercentage()" nzType="circle"
+                [nzFormat]="formatUncompletedCount" nzStrokeColor="red"></nz-progress>
+            <h3>Uncompleted Tasks</h3>
+        </nz-card>
+    </aside>
+</section>

@@ -1,0 +1,67 @@
+import { Component, computed, signal, OnDestroy } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
+import { AuthService } from '../../services/auth.service';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { Subscription } from 'rxjs';
+import type { Todo } from '../../models/todo.model';
+
+@Component({
+  selector: 'todo-dashboard',
+  imports: [NzCardModule, NzProgressModule],
+  templateUrl: './todo-dashboard.component.html',
+  styleUrls: ['./todo-dashboard.component.css']
+})
+export class TodoDashboardComponent implements OnDestroy {
+
+  todos = signal<Todo[]>([]);
+
+  completedPercentage = computed(() => {
+    const list = this.todos();
+    if (!list || list.length === 0) return 0;
+    const done = list.filter(t => !!t.completed).length;
+    return Math.round((done / list.length) * 100);
+  });
+
+  completedTodoNumber = computed(() => {
+    const list = this.todos();
+    if (!list || list.length === 0) return 0;
+    const done = list.filter(t => !!t.completed).length;
+    return done;
+  });
+
+  unCompletedTodoNumber = computed(() => {
+    const list = this.todos();
+    if (!list || list.length === 0) return 0;
+    const undone = list.filter(t => !t.completed).length;
+    return undone;
+  });
+
+  unCompletedPercentage = computed(() => {
+    const total = Array.isArray(this.todos()) ? this.todos().length : 0;
+    if (total === 0) return 0;
+    const undone = this.unCompletedTodoNumber();
+    return Math.round((undone / total) * 100);
+  });
+
+  formatCompletedCount = (percent: number) => `${this.completedTodoNumber()}`;
+  formatUncompletedCount = (percent: number) => `${this.unCompletedTodoNumber()}`;
+
+  private sub?: Subscription;
+
+  constructor(private todoService: TodoService, private authService: AuthService) {
+    const userId = this.authService.getCurrentUser()?.id || '';
+    this.sub = this.todoService.getTodos(userId).subscribe(list => {
+      this.todos.set(list || []);
+      // Log the actual fetched todos to the console
+      console.log('Fetched todos:', list);
+      // If you want to log the current signal value, use this.todos()
+      // console.log('Signal value:', this.todos());
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+}

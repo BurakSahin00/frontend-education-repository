@@ -2,6 +2,7 @@ import { inject } from '@angular/core/primitives/di';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,14 +16,13 @@ export class AuthService {
   constructor() {
     if (typeof window !== 'undefined' && window.localStorage) {
       const userJson = localStorage.getItem('currentUser');
-      if (userJson) {
+      if (userJson && userJson !== 'undefined') {
         this.currentUser = JSON.parse(userJson);
       }
     }
   }
 
   login(email: string, password: string): boolean {
-
     const user = this.users.find(u => u.email === email && u.password === password);
     if (user) {
       this.currentUser = user;

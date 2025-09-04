@@ -23,6 +23,12 @@ nz-sider {
     height: calc(100vh - 64px);
 }
 
+nz-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 280px;
+}
+
 button {
     margin-left: 100px;
 }

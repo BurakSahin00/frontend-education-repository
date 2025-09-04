@@ -1,0 +1,34 @@
+<section>
+  <button nz-button nzType="primary" (click)="openAddTodoModal()">Add Todo</button>
+  <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Add New Todo" (nzOnCancel)="handleCancel()" (nzOnOk)="addTodo()">
+    <form [formGroup]="todoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
+      <input nz-input formControlName="title" placeholder="Title" />
+      <div *ngIf="todoForm.controls['title'].invalid && todoForm.controls['title'].touched">
+        <small *ngIf="todoForm.controls['title'].errors?.['required']">Title is required</small>
+        <small *ngIf="todoForm.controls['title'].errors?.['minlength']">At least 3 characters</small>
+      </div>
+
+      <input nz-input formControlName="description" placeholder="Description" />
+      <div *ngIf="todoForm.controls['description'].invalid && todoForm.controls['description'].touched">
+        <small *ngIf="todoForm.controls['description'].errors?.['required']">Description is required</small>
+      </div>
+    </form>
+  </nz-modal>
+  <nz-modal [(nzVisible)]="isEditModalVisible" nzTitle="Edit Todo" (nzOnCancel)="handleEditCancel()" (nzOnOk)="updateTodo()">
+    <form [formGroup]="editTodoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
+      <input nz-input formControlName="title" placeholder="Title" />
+      <div *ngIf="editTodoForm.controls['title'].invalid && editTodoForm.controls['title'].touched">
+        <small *ngIf="editTodoForm.controls['title'].errors?.['required']">Title is required</small>
+        <small *ngIf="editTodoForm.controls['title'].errors?.['minlength']">At least 3 characters</small>
+      </div>
+
+      <input nz-input formControlName="description" placeholder="Description" />
+      <div *ngIf="editTodoForm.controls['description'].invalid && editTodoForm.controls['description'].touched">
+        <small *ngIf="editTodoForm.controls['description'].errors?.['required']">Description is required</small>
+      </div>
+    </form>
+  </nz-modal>
+  <div *ngFor="let todo of todos">
+    <todo-card [todo]="todo" (delete)="removeTodo($event)" (edit)="openEditTodoModal($event)"></todo-card>
+  </div>
+</section>

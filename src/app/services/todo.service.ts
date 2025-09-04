@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Todo } from '../models/todo.model';
+import { HttpClient } from '@angular/common/http';
+import { Todo, TodoUpdate } from '../models/todo.model';
 import { TODOS } from '../mocks/mock-todo';
 import { UserService } from './user.service';
-import { get } from 'http';
+import { LoggingService } from './logging.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -10,47 +12,34 @@ import { get } from 'http';
 export class TodoService {
   private todos: Todo[] = TODOS;
   private userService = inject(UserService);
+  private logger = inject(LoggingService);
   private nextTodoId = this.todos.length + 1;
 
+  private readonly API_URL = 'https://8041f853-f90f-4166-8c2b-c52a7ddadb29.mock.pstmn.io';
+
+  constructor(private http: HttpClient) { }
+
   // Tüm todoları döndür
-  getTodos(): Todo[] {
-    return this.todos;
-  }
-
-  // ID ile todo bul
-  getTodoById(id: string): Todo | undefined {
-    return this.todos.find(todo => todo.id === id);
-  }
-
-  // Parent todo'ya kullanıcı atama
-  assignUserToParentTodo(todoId: string, userId: string): void {
-    const todo = this.getTodoById(todoId);
-    const user = this.userService.getUserById(userId);
-    if (todo && user && !todo.parentId) {
-      todo.assignedUserId = user.id;
-    }
+  getTodos(userId: string): Observable<Todo[]> {
+    return this.http.get<Todo[]>(`${this.API_URL}/todo/${userId}`);
   }
 
   // Todo ekle
-  addTodo(todo: Todo): void {
-    this.todos.push(todo);
+  addTodo(todo: Todo): Observable<Todo> {
+  this.logger.info('Yeni todo ekleniyor', todo);
+  return this.http.post<Todo>(`${this.API_URL}/todo/save`, todo);
   }
 
   // Todo sil
-  removeTodo(todoId: string): void {
-    this.todos = this.todos.filter(t => t.id !== todoId);
+  removeTodo(todoId: string, userId: string): Observable<void> {
+  this.logger.warn('Todo siliniyor', { todoId, userId });
+  return this.http.delete<void>(`${this.API_URL}/todo/${userId}/delete/${todoId}`);
   }
 
   // Todo güncelle
-  updateTodo(updatedTodo: Todo): void {
-    const index = this.todos.findIndex(t => t.id === updatedTodo.id);
-    if (index > -1) {
-      this.todos[index] = updatedTodo;
-    }
-  }
-
-  getTodosByUser(userId: string): Todo[] {
-    return this.todos.filter(todo => todo.assignedUserId === userId);
+  updateTodo(todoId: string, update: TodoUpdate): Observable<Todo> {
+  this.logger.info('Todo güncelleniyor', { todoId, update });
+  return this.http.put<Todo>(`${this.API_URL}/todo/update/${todoId}`, update);
   }
 
   getNextTodoId(): string {
