@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormsModule, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -19,11 +19,10 @@ import { NzListModule } from 'ng-zorro-antd/list';
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
-export class TodosComponent {
+export class TodosComponent implements OnInit {
 
   private authService = inject(AuthService);
   private todoService = inject(TodoService);
-  private notificationService = inject(NotificationService);
   todos: Todo[] = [];
   isModalVisible = false;
   isEditModalVisible = false;
@@ -36,9 +35,9 @@ export class TodosComponent {
   }
 
   ngOnInit(): void {
-    this.todoService.getTodos(this.authService.getCurrentUser()?.id || '').subscribe(todos => {
-      this.todos = todos;
-    });
+    // trigger initial load from service (will start HTTP fetch on first call)
+    const userId = this.authService.getCurrentUser()?.id || '';
+    this.todos = this.todoService.getTodos(userId);
   }
 
   createTodoForm(): FormGroup {
@@ -62,7 +61,7 @@ export class TodosComponent {
 
   editingTodoId: string = "N";
   openEditTodoModal(todoId: string): void {
-    const todo = this.todos.find(t => t.id === todoId);
+    const todo = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '').find(t => t.id === todoId);
     if (todo) {
       console.log('Editing Todo:', todo);
       this.editTodoForm.patchValue(todo);
@@ -99,50 +98,34 @@ export class TodosComponent {
         createdAt: new Date(),
         assignedUserId: this.authService.getCurrentUser()?.id || ''
       };
-      this.todoService.addTodo(newTodo).subscribe({
-        next: (newTodo) => {
-          this.todos.push(newTodo);
-          this.notificationService.showSuccess('Todo Eklendi', newTodo.title);
-        },
-        error: (err) => {
-          this.notificationService.showError('Todo Eklenemedi', err?.message || 'Bir hata oluştu');
-        }
-      });
+      this.todoService.addTodo(newTodo);
+      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
       this.isModalVisible = false;
       this.todoForm.reset();
     }
   }
 
   removeTodo(todoId: string): void {
-    this.todoService.removeTodo(todoId, this.authService.getCurrentUser()?.id || '').subscribe({
-      next: () => {
-        this.todos = this.todos.filter(todo => todo.id !== todoId);
-        this.notificationService.showSuccess('Todo Silindi', `ID: ${todoId}`);
-      },
-      error: (err) => {
-        this.notificationService.showError('Todo Silinemedi', err?.message || 'Bir hata oluştu');
-      }
-    });
+    this.todoService.removeTodo(todoId, this.authService.getCurrentUser()?.id || '');
+    this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
   }
 
   updateTodo(): void {
     if (this.editTodoForm.valid && this.editingTodoId) {
       const update: TodoUpdate = this.editTodoForm.value;
-      this.todoService.updateTodo(this.editingTodoId, update).subscribe({
-        next: (updatedTodo) => {
-          const index = this.todos.findIndex(todo => todo.id === updatedTodo.id);
-          if (index !== -1) {
-            this.todos[index] = updatedTodo;
-            this.notificationService.showSuccess('Todo Güncellendi', updatedTodo.title);
-          }
-        },
-        error: (err) => {
-          this.notificationService.showError('Todo Güncellenemedi', err?.message || 'Bir hata oluştu');
-        }
-      });
+      this.todoService.updateTodo(this.editingTodoId, update);
       this.isEditModalVisible = false;
       this.editTodoForm.reset();
       this.editingTodoId = "N";
+      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
+    }
+  }
+
+  toggleTodoCompletion(todoId: string): void {
+    const todo = this.todos.find(t => t.id === todoId);
+    if (todo) {
+      this.todoService.updateTodoStatus(todoId, !todo.completed);
+      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
     }
   }
 }

@@ -15,6 +15,7 @@ export class TodoCard {
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
   @Output() edit = new EventEmitter<string>();
+  @Output() toggleComplete = new EventEmitter<string>();
 
   onDelete(): void {
     this.delete.emit(this.todo.id);
@@ -22,6 +23,14 @@ export class TodoCard {
 
   onEdit(): void {
     this.edit.emit(this.todo.id);
+  }
+
+  onToggleComplete(): void {
+    this.toggleComplete.emit(this.todo.id);
+  }
+
+  onToggleIncomplete(): void {
+    this.toggleComplete.emit(this.todo.id);
   }
 
 }

@@ -17,7 +17,7 @@ import type { Todo } from '../../models/todo.model';
   templateUrl: './todo-dashboard.component.html',
   styleUrls: ['./todo-dashboard.component.css']
 })
-export class TodoDashboardComponent implements OnDestroy {
+export class TodoDashboardComponent {
 
   todos = signal<Todo[]>([]);
 
@@ -52,21 +52,9 @@ export class TodoDashboardComponent implements OnDestroy {
   formatCompletedCount = (percent: number) => `${this.completedTodoNumber()}`;
   formatUncompletedCount = (percent: number) => `${this.unCompletedTodoNumber()}`;
 
-  private sub?: Subscription;
-
   constructor(private todoService: TodoService, private authService: AuthService) {
     const userId = this.authService.getCurrentUser()?.id || '';
-    this.sub = this.todoService.getTodos(userId).subscribe(list => {
-      this.todos.set(list || []);
-      // Log the actual fetched todos to the console
-      console.log('Fetched todos:', list);
-      // If you want to log the current signal value, use this.todos()
-      // console.log('Signal value:', this.todos());
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.todos.set(this.todoService.getTodos(userId));
   }
 
 }

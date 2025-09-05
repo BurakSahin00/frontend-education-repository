@@ -5,3 +5,17 @@ nz-card {
 button {
     margin-right: 24px;
 }
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title-text {
+    font-weight: 600;
+}
+
+.card-body p {
+    margin: 0;
+}

@@ -31,7 +31,12 @@
   </nz-modal>
   <div class="list-container">
     <div class="todo-list" *ngFor="let todo of todos">
-      <todo-card [todo]="todo" (edit)="openEditTodoModal(todo.id)" (delete)="removeTodo(todo.id)"></todo-card>
+      <todo-card 
+        [todo]="todo" 
+        (edit)="openEditTodoModal(todo.id)" 
+        (delete)="removeTodo(todo.id)" 
+        (toggleComplete)="toggleTodoCompletion(todo.id)" 
+        (toggleIncomplete)="toggleTodoCompletion(todo.id)"></todo-card>
     </div>
   </div>
 </section>
