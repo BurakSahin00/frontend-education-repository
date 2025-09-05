@@ -6,14 +6,14 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { UserService } from '../../services/user.service';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import {CommonModule} from "@angular/common";
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'todo-layout',
-  imports: [RouterOutlet, NzLayoutModule, NzMenuModule, NzIconModule, NzBreadCrumbModule, CommonModule, NzButtonModule, NzModalModule],
+  imports: [RouterOutlet, RouterModule, NzLayoutModule, NzMenuModule, NzIconModule, NzBreadCrumbModule, CommonModule, NzButtonModule, NzModalModule],
   templateUrl: './layout.html',
   styleUrls: ['./layout.css']
 })

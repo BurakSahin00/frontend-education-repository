@@ -2,8 +2,11 @@
 section {
   height: 100%;
   width: 100%;
-  padding: 16px;
-  overflow-y: scroll;
+}
+
+.list-container {
+  max-height: 90%;
+  overflow: auto;
 }
 
 button {

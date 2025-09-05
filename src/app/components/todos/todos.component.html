@@ -14,7 +14,8 @@
       </div>
     </form>
   </nz-modal>
-  <nz-modal [(nzVisible)]="isEditModalVisible" nzTitle="Edit Todo" (nzOnCancel)="handleEditCancel()" (nzOnOk)="updateTodo()">
+  <nz-modal [(nzVisible)]="isEditModalVisible" nzTitle="Edit Todo" (nzOnCancel)="handleEditCancel()"
+    (nzOnOk)="updateTodo()">
     <form [formGroup]="editTodoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
       <input nz-input formControlName="title" placeholder="Title" />
       <div *ngIf="editTodoForm.controls['title'].invalid && editTodoForm.controls['title'].touched">
@@ -28,7 +29,9 @@
       </div>
     </form>
   </nz-modal>
-  <div *ngFor="let todo of todos">
-    <todo-card [todo]="todo" (delete)="removeTodo($event)" (edit)="openEditTodoModal($event)"></todo-card>
+  <div class="list-container">
+    <div class="todo-list" *ngFor="let todo of todos">
+      <todo-card [todo]="todo" (edit)="openEditTodoModal(todo.id)" (delete)="removeTodo(todo.id)"></todo-card>
+    </div>
   </div>
 </section>

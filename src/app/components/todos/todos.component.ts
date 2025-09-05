@@ -8,12 +8,14 @@ import { TodoService } from '../../services/todo.service';
 import { TodoCard } from '../todo-card/todo-card';
 import { CommonModule } from '@angular/common';
 import { Todo, TodoPriority, TodoUpdate } from '../../models/todo.model';
+
 import { NotificationService } from '../../services/notification.service';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 @Component({
   selector: 'todos',
   standalone: true,
-  imports: [TodoCard, CommonModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule],
+  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
