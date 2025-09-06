@@ -35,7 +35,6 @@ export class TodosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // trigger initial load from service (will start HTTP fetch on first call)
     const userId = this.authService.getCurrentUser()?.id || '';
     this.todos = this.todoService.getTodos(userId);
   }

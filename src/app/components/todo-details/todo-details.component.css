@@ -1,0 +1,36 @@
+
+:host {
+	display: block;
+	--detail-gap: 16px; /* change this value to increase/decrease spacing */
+	height: 100%; /* allow host to grow to available height so section can scroll */
+}
+
+/* If the template wraps everything in a <section>, make that section a scrollable column
+	 with a consistent gap between its children. This preserves the visual spacing while
+	 allowing scrolling when content overflows. */
+:host > section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--detail-gap);
+	max-height: 100%;
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 0; /* keep template spacing handling neutral */
+}
+
+/* Backwards-compat: if layout doesn't use a wrapping section, fall back to previous margins */
+:host > * {
+	margin-bottom: var(--detail-gap);
+}
+
+:host > *:last-child {
+	margin-bottom: 0;
+}
+
+/* small-screen tweak */
+@media (max-width: 480px) {
+	:host {
+		--detail-gap: 12px;
+	}
+}
+

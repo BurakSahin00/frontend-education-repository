@@ -102,4 +102,12 @@ export class TodoService {
     this.nextTodoId++;
     return this.nextTodoId.toString();
   }
+
+  addChildTodo(parentId: string, childTodo: Todo): void {
+    const parent = this.todos.find(t => t.id === parentId);
+    if (parent) {
+      parent.children = parent.children || [];
+      parent.children.push(childTodo);
+    }
+  }
 }

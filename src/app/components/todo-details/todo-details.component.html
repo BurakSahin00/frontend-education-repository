@@ -1,17 +1,75 @@
-<nz-card [nzTitle]="todo.title" [nzActions]="[dueDate]">
-    <p>{{ todo.description }}</p>
-</nz-card>
-
-<ng-template #dueDate>
-    <strong>Due Date:</strong> {{ todo.dueDate | date:'shortDate' }}
-</ng-template>
-
-<ng-container *ngIf="todo.children && todo.children.length >= 1">
-    <nz-card [nzTitle]="'Subtasks'">
-        <nz-steps nzType="navigation" nzSize="small">
-            <nz-step *ngFor="let child of todo.children" [nzTitle]="child.title"
-                [nzSubtitle]="(child.dueDate | date:'shortDate') || undefined" [nzDescription]="child.description"
-                [nzStatus]="child.completed ? 'finish' : 'process'"></nz-step>
-        </nz-steps>
+<section>
+    <nz-card [nzTitle]="todo.title">
+        <p>{{ todo.description }}</p>
     </nz-card>
-</ng-container>
+
+    <nz-descriptions nzTitle="Todo Details" nzBordered>
+        <nz-descriptions-item nzTitle="Status">{{todo.completed ? 'Completed' : 'Not Completed'}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Priority">{{todo.priority}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Due Date">{{todo.dueDate | date:'shortDate'}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Created At">{{todo.createdAt | date:'shortDate'}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Updated At">{{ todo.updatedAt ? (todo.updatedAt | date:'shortDate') : 'N/A'
+            }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Tags">
+            <ng-container *ngIf="todo.tags && todo.tags.length > 0; else noTags">
+                <ng-container *ngTemplateOutlet="labelTag"></ng-container>
+            </ng-container>
+            <ng-template #noTags>
+                <span>No Tags</span>
+            </ng-template>
+        </nz-descriptions-item>
+    </nz-descriptions>
+
+    <ng-template #addSubtaskButton>
+        <button nz-button nzType="default" (click)="onAddSubtask()">
+            <i nz-icon nzType="plus"></i> Add Subtask
+        </button>
+
+    </ng-template>
+
+    <ng-template #priorityTag>
+        <nz-tag [nzColor]="getPriorityColor(todo.priority)">
+            {{ todo.priority }}
+        </nz-tag>
+    </ng-template>
+
+    <ng-template #labelTag>
+        <nz-tag *ngFor="let label of todo.tags" style="margin-right: 4px;">
+            {{ label }}
+        </nz-tag>
+    </ng-template>
+
+    <ng-template #editButton>
+        <button nz-button nzType="default" (click)="onEditTodo()">
+            <i nz-icon nzType="edit"></i> Edit
+        </button>
+    </ng-template>
+
+    <ng-template #deleteButton>
+        <button nz-button nzType="primary" nzDanger (click)="onDeleteTodo()">
+            <i nz-icon nzType="delete"></i> Delete
+        </button>
+    </ng-template>
+
+    <ng-template #completeButton>
+        <button nz-button nzType="primary" (click)="onToggleComplete()">
+            <i nz-icon [nzType]="todo.completed ? 'check-circle' : 'check-circle-o'"></i>
+            {{ todo.completed ? 'Mark as Incomplete' : 'Mark as Complete' }}
+        </button>
+    </ng-template>
+
+    <ng-container *ngIf="todo.children && todo.children.length >= 1">
+        <nz-card [nzTitle]="'Subtasks'">
+            <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="index"
+                (nzIndexChange)="onSubtaskCardIndexChange($event)">
+                <nz-step *ngFor="let child of todo.children" [nzTitle]="child.title"
+                    [nzSubtitle]="(child.dueDate | date:'shortDate') || undefined"
+                    [nzStatus]="child.completed ? 'finish' : 'process'"></nz-step>
+            </nz-steps>
+        </nz-card>
+        <nz-card *ngIf="displayedSubTodo.id" [nzTitle]="displayedSubTodo.title"
+            [nzActions]="[completeButton, editButton, deleteButton]" [nzExtra]="priorityTag">
+            <p>{{ displayedSubTodo.description }}</p>
+        </nz-card>
+    </ng-container>
+</section>
