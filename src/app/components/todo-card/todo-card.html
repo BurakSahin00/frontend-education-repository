@@ -1,19 +1,17 @@
-<nz-card [nzTitle]="todo.title" [nzActions]="[toggleButtonTemplate, editButtonTemplate, deleteButtonTemplate]">
+<nz-card (click)="onOpenDetails()" [nzTitle]="todo.title" [nzActions]="[toggleButtonTemplate, editButtonTemplate, deleteButtonTemplate]">
   <p>{{ todo.description }}</p>
 </nz-card>
 
 <ng-template #deleteButtonTemplate>
-  <button nz-button nzType="primary" nzDanger (click)="onDelete()">Delete</button>
+  <button nz-button nzType="primary" nzDanger (click)="onDelete(); $event.stopPropagation();">Delete</button>
 </ng-template>
 
 <ng-template #editButtonTemplate>
-  <button nz-button nzType="primary" (click)="onEdit()">Edit</button>
+  <button nz-button nzType="default" (click)="onEdit(); $event.stopPropagation();">Edit</button>
 </ng-template>
 
 <ng-template #toggleButtonTemplate>
-  @if (todo.completed) {
-    <button nz-button nzType="default" (click)="onToggleIncomplete()">Mark Incomplete</button>
-  } @else {
-    <button nz-button nzType="default" (click)="onToggleComplete()">Mark Complete</button>
-  }
+  <button nz-button nzType="primary" (click)="onToggleComplete(); $event.stopPropagation();">
+    {{ todo.completed ? 'Mark Incomplete' : 'Mark Complete' }}
+  </button>
 </ng-template>

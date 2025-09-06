@@ -54,7 +54,7 @@ export class TodosComponent implements OnInit {
     completed: false,
     priority: TodoPriority.Low,
     parentId: null,
-    dueDate: null,
+    dueDate: new Date(),
     createdAt: new Date(),
     assignedUserId: this.authService.getCurrentUser()?.id || ''
   };
@@ -94,7 +94,7 @@ export class TodosComponent implements OnInit {
         completed: false,
         priority: TodoPriority.Low,
         parentId: null,
-        dueDate: null,
+        dueDate: new Date(),
         createdAt: new Date(),
         assignedUserId: this.authService.getCurrentUser()?.id || ''
       };

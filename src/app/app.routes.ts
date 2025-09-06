@@ -28,11 +28,6 @@ export const routes: Routes = [
                 title: 'Görevler',
                 children: [
                     {
-                        path: ':id',
-                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
-                        title: 'Görev Detayı'
-                    },
-                    {
                         path: 'new',
                         loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
                         title: 'Yeni Görev'
@@ -43,6 +38,11 @@ export const routes: Routes = [
                         title: 'Takvim Görünümü'
                     }
                 ],
+            },
+            {
+                        path: 'todos/:id',
+                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
+                        title: 'Görev Detayı'
             },
             {
                 path: 'profile',

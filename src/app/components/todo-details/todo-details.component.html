@@ -1,1 +1,17 @@
-<p>todo-details.component works!</p>
+<nz-card [nzTitle]="todo.title" [nzActions]="[dueDate]">
+    <p>{{ todo.description }}</p>
+</nz-card>
+
+<ng-template #dueDate>
+    <strong>Due Date:</strong> {{ todo.dueDate | date:'shortDate' }}
+</ng-template>
+
+<ng-container *ngIf="todo.children && todo.children.length >= 1">
+    <nz-card [nzTitle]="'Subtasks'">
+        <nz-steps nzType="navigation" nzSize="small">
+            <nz-step *ngFor="let child of todo.children" [nzTitle]="child.title"
+                [nzSubtitle]="(child.dueDate | date:'shortDate') || undefined" [nzDescription]="child.description"
+                [nzStatus]="child.completed ? 'finish' : 'process'"></nz-step>
+        </nz-steps>
+    </nz-card>
+</ng-container>

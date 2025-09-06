@@ -12,7 +12,7 @@ export interface Todo {
   priority?: TodoPriority;
   parentId: string | null;  
   children?: Todo[];
-  dueDate: Date | null;
+  dueDate: Date;
   createdAt: Date;
   updatedAt?: Date;
   tags?: string[];

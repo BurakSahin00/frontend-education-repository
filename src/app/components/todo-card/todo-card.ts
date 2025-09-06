@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Todo } from '../../models/todo.model';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -17,6 +18,8 @@ export class TodoCard {
   @Output() edit = new EventEmitter<string>();
   @Output() toggleComplete = new EventEmitter<string>();
 
+  private router = inject(Router);
+
   onDelete(): void {
     this.delete.emit(this.todo.id);
   }
@@ -29,8 +32,8 @@ export class TodoCard {
     this.toggleComplete.emit(this.todo.id);
   }
 
-  onToggleIncomplete(): void {
-    this.toggleComplete.emit(this.todo.id);
+  onOpenDetails(): void {
+    this.router.navigate(['/todos', this.todo.id]);
   }
 
 }
