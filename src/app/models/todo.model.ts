@@ -24,8 +24,3 @@ export interface TodoUpdate {
   description: string;
   priority?: TodoPriority;
 }
-
-// Runtime guard to validate incoming priority values (use at API boundaries)
-export function isValidPriority(value: any): value is TodoPriority {
-  return Object.values(TodoPriority).includes(value as TodoPriority);
-}

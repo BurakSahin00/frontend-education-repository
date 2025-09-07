@@ -9,14 +9,16 @@ import { Layout } from './components/layout/layout';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    { 
-        path: '', 
-        pathMatch: 'full', 
-        redirectTo: 'login' },
-    { 
-        path: 'login', 
-        component: LoginComponent, 
-        title: 'Giriş' },
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'login'
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Giriş'
+    },
     {
         path: '',
         component: Layout,
@@ -31,18 +33,13 @@ export const routes: Routes = [
                         path: 'new',
                         loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
                         title: 'Yeni Görev'
-                    },
-                    {
-                        path: 'calendar',
-                        loadComponent: () => import('./components/todo-calendar/todo-calendar.component').then(m => m.TodoCalendarComponent),
-                        title: 'Takvim Görünümü'
                     }
                 ],
             },
             {
-                        path: 'todos/:id',
-                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
-                        title: 'Görev Detayı'
+                path: 'todos/:id',
+                loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
+                title: 'Görev Detayı'
             },
             {
                 path: 'profile',
@@ -60,6 +57,11 @@ export const routes: Routes = [
                 path: 'dashboard',
                 component: TodoDashboardComponent,
                 title: 'Görev Panosu'
+            },
+            {
+                path: 'calendar',
+                loadComponent: () => import('./components/calendar/calendar.component').then(m => m.CalendarComponent),
+                title: 'Takvim Görünümü'
             }
         ]
     },

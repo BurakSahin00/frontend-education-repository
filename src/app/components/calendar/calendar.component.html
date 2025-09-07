@@ -1,0 +1,8 @@
+<nz-alert nzMessage="Selected Date: {{ selectedDate | date:'fullDate' }}"></nz-alert>
+<nz-calendar [(ngModel)]="selectedDate" (ngModelChange)="onDateChange($event)">
+    <ul *nzDateCell="let selectedDate">
+        <li *ngFor="let todo of getTodosForDate(selectedDate)">
+            <nz-badge [nzStatus]="todo.completed ? 'success' : 'processing'" [nzText]="todo.title"></nz-badge>
+        </li>
+    </ul>
+</nz-calendar>
