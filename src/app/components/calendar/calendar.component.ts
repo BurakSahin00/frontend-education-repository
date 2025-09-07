@@ -37,7 +37,9 @@ export class CalendarComponent {
       }
     }
     if (user) {
-      this.todos = this.todoService.getTodos(user.id);
+     this.todoService.getTodos().subscribe(todos => {
+        this.todos = todos;
+      });
     }
   }
 

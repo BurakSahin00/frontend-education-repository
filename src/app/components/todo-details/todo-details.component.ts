@@ -50,19 +50,17 @@ export class TodoDetailsComponent {
   };
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (!id) return;
-      const userId = this.authService.getCurrentUser()?.id || '';
-      const todos = this.todoService.getTodos(userId);
-      const found = todos.find(t => t.id === id);
-      if (found) {
-        this.todo = found;
+    const id = this.route.snapshot.paramMap.get('id');
+    this.route.data.subscribe(data => {
+      const todo: Todo = data['todos'].find((t: Todo) => t.id === id);
+      if (todo) {
+        this.todo = todo;
         if (this.todo.children && this.todo.children.length > 0) {
-          this.displayedSubTodo = this.todo.children[0];
+          this.displayedSubTodo = this.todo.children[this.index];
         }
       }
     });
+
   }
 
   getPriorityColor(priority: string): string {

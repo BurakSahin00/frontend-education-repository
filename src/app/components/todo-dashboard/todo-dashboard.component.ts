@@ -1,4 +1,4 @@
-import { Component, computed, signal, OnDestroy } from '@angular/core';
+import { Component, computed, signal, OnDestroy, inject } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -8,6 +8,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import type { Todo } from '../../models/todo.model';
 
 @Component({
@@ -20,6 +21,16 @@ import type { Todo } from '../../models/todo.model';
 export class TodoDashboardComponent {
 
   todos = signal<Todo[]>([]);
+  private route = inject(ActivatedRoute);
+
+  constructor() {}
+
+  ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.todos.set(data['todos'] || []);
+      console.log('Resolved todos for dashboard:', this.todos());
+    });
+  }
 
   completedPercentage = computed(() => {
     const list = this.todos();
@@ -51,10 +62,5 @@ export class TodoDashboardComponent {
 
   formatCompletedCount = (percent: number) => `${this.completedTodoNumber()}`;
   formatUncompletedCount = (percent: number) => `${this.unCompletedTodoNumber()}`;
-
-  constructor(private todoService: TodoService, private authService: AuthService) {
-    const userId = this.authService.getCurrentUser()?.id || '';
-    this.todos.set(this.todoService.getTodos(userId));
-  }
 
 }

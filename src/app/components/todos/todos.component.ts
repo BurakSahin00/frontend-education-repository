@@ -11,6 +11,7 @@ import { Todo, TodoPriority, TodoUpdate } from '../../models/todo.model';
 
 import { NotificationService } from '../../services/notification.service';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'todos',
@@ -29,14 +30,15 @@ export class TodosComponent implements OnInit {
   todoForm: FormGroup;
   editTodoForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
     this.todoForm = this.createTodoForm();
     this.editTodoForm = this.createTodoForm();
   }
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUser()?.id || '';
-    this.todos = this.todoService.getTodos(userId);
+    this.route.data.subscribe(data => {
+      this.todos = data['todos'] || [];
+    });
   }
 
   createTodoForm(): FormGroup {
@@ -60,7 +62,7 @@ export class TodosComponent implements OnInit {
 
   editingTodoId: string = "N";
   openEditTodoModal(todoId: string): void {
-    const todo = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '').find(t => t.id === todoId);
+    const todo = this.todos.find(t => t.id === todoId);
     if (todo) {
       console.log('Editing Todo:', todo);
       this.editTodoForm.patchValue(todo);
@@ -98,7 +100,6 @@ export class TodosComponent implements OnInit {
         assignedUserId: this.authService.getCurrentUser()?.id || ''
       };
       this.todoService.addTodo(newTodo);
-      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
       this.isModalVisible = false;
       this.todoForm.reset();
     }
@@ -106,7 +107,6 @@ export class TodosComponent implements OnInit {
 
   removeTodo(todoId: string): void {
     this.todoService.removeTodo(todoId, this.authService.getCurrentUser()?.id || '');
-    this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
   }
 
   updateTodo(): void {
@@ -116,7 +116,6 @@ export class TodosComponent implements OnInit {
       this.isEditModalVisible = false;
       this.editTodoForm.reset();
       this.editingTodoId = "N";
-      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
     }
   }
 
@@ -124,7 +123,6 @@ export class TodosComponent implements OnInit {
     const todo = this.todos.find(t => t.id === todoId);
     if (todo) {
       this.todoService.updateTodoStatus(todoId, !todo.completed);
-      this.todos = this.todoService.getTodos(this.authService.getCurrentUser()?.id || '');
     }
   }
 }
