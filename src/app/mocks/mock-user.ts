@@ -16,7 +16,7 @@ export const USERS: User[] = [
     name: 'Bob Smith',
     email: 'bob@example.com',
     password: 'password123',
-    role: 'User',
+    role: 'Admin',
     createdAt: new Date('2025-02-15'),
     todoLabels: ['low'],
     todoCategories: ['personal']

@@ -7,7 +7,8 @@ import { TodoDetailsComponent } from './components/todo-details/todo-details.com
 import { TodoDashboardComponent } from './components/todo-dashboard/todo-dashboard.component';
 import { Layout } from './components/layout/layout';
 import { AuthGuard } from './guards/auth.guard';
-import { TodoResolver } from './resolvers/todo.resolver';
+import { TodosResolver } from './resolvers/todos.resolver';
+import { TodoDetailResolver as TodoResolver } from './resolvers/todo.resolver';
 
 export const routes: Routes = [
     {
@@ -29,7 +30,7 @@ export const routes: Routes = [
                 path: 'todos',
                 component: TodosComponent,
                 title: 'Görevler',
-                resolve: { todos: TodoResolver },
+                resolve: { todos: TodosResolver },
                 children: [
                     {
                         path: 'new',
@@ -42,7 +43,7 @@ export const routes: Routes = [
                 path: 'todos/:id',
                 loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
                 title: 'Görev Detayı',
-                resolve: { todos: TodoResolver }
+                resolve: { todo: TodoResolver }
             },
             {
                 path: 'profile',
@@ -60,13 +61,13 @@ export const routes: Routes = [
                 path: 'dashboard',
                 component: TodoDashboardComponent,
                 title: 'Görev Panosu',
-                resolve: { todos: TodoResolver }
+                resolve: { todos: TodosResolver }
             },
             {
                 path: 'calendar',
                 loadComponent: () => import('./components/calendar/calendar.component').then(m => m.CalendarComponent),
                 title: 'Takvim Görünümü',
-                resolve: { todos: TodoResolver }
+                resolve: { todos: TodosResolver }
             }
         ]
     },

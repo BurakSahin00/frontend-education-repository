@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TodoService } from '../services/todo.service';
+import { Todo } from '../models/todo.model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TodoResolver implements Resolve<any> {
+@Injectable({ providedIn: 'root' })
+export class TodoDetailResolver implements Resolve<Todo> {
   constructor(private todoService: TodoService) {}
 
-  resolve(): Observable<any> {
-    return this.todoService.getTodos();
+  resolve(route: ActivatedRouteSnapshot): Observable<Todo> {
+    const id = route.paramMap.get('id');
+    return this.todoService.getTodoById(id!);
   }
 }

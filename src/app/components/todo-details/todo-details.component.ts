@@ -52,7 +52,7 @@ export class TodoDetailsComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.route.data.subscribe(data => {
-      const todo: Todo = data['todos'].find((t: Todo) => t.id === id);
+      const todo: Todo = data['todo'];
       if (todo) {
         this.todo = todo;
         if (this.todo.children && this.todo.children.length > 0) {
@@ -60,7 +60,6 @@ export class TodoDetailsComponent {
         }
       }
     });
-
   }
 
   getPriorityColor(priority: string): string {
