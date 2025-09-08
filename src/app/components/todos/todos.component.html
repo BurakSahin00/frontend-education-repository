@@ -12,6 +12,17 @@
       <div *ngIf="todoForm.controls['description'].invalid && todoForm.controls['description'].touched">
         <small *ngIf="todoForm.controls['description'].errors?.['required']">Description is required</small>
       </div>
+
+
+      <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
+        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
+      </nz-select>
+
+      <nz-select formControlName="category" nzPlaceHolder="Category">
+        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
+      </nz-select>
+
+      <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
     </form>
   </nz-modal>
   <nz-modal [(nzVisible)]="isEditModalVisible" nzTitle="Edit Todo" (nzOnCancel)="handleEditCancel()"
@@ -27,6 +38,17 @@
       <div *ngIf="editTodoForm.controls['description'].invalid && editTodoForm.controls['description'].touched">
         <small *ngIf="editTodoForm.controls['description'].errors?.['required']">Description is required</small>
       </div>
+
+
+      <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
+        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
+      </nz-select>
+
+      <nz-select formControlName="category" nzPlaceHolder="Category">
+        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
+      </nz-select>
+
+      <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
     </form>
   </nz-modal>
   <div class="list-container">
@@ -35,8 +57,7 @@
         [todo]="todo" 
         (edit)="openEditTodoModal(todo.id)" 
         (delete)="removeTodo(todo.id)" 
-        (toggleComplete)="toggleTodoCompletion(todo.id)" 
-        (toggleIncomplete)="toggleTodoCompletion(todo.id)"></todo-card>
+        (toggleComplete)="toggleTodoCompletion(todo.id)"></todo-card>
     </div>
   </div>
 </section>

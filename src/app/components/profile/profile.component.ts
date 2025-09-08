@@ -1,11 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'todo-profile',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, NzDescriptionsModule, NzButtonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+  private store = inject(Store);
+  private authService = inject(AuthService);
+  user = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
+  constructor() {
+    console.log(this.user);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

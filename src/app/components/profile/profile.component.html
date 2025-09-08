@@ -1,1 +1,11 @@
 
+<div class="profile-container" *ngIf="user">
+	<h2>Profile Informations</h2>
+	<nz-descriptions nzTitle="Profile Informations" nzBordered [nzColumn]="1">
+		<nz-descriptions-item nzTitle="Name">{{ user.name || user.username }}</nz-descriptions-item>
+		<nz-descriptions-item nzTitle="Email">{{ user.email }}</nz-descriptions-item>
+		<nz-descriptions-item *ngIf="user.role" nzTitle="Role">{{ user.role }}</nz-descriptions-item>
+	</nz-descriptions>
+	<button nz-button nzType="default" (click)="logout()">Logout</button>
+</div>
+

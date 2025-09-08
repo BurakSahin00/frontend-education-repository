@@ -1,14 +1,13 @@
-import { Component, computed, signal, OnDestroy, inject } from '@angular/core';
+import { Component, computed, signal, inject } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
-import { AuthService } from '../../services/auth.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { CommonModule } from '@angular/common';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ScrollingModule } from "@angular/cdk/scrolling";
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import type { Todo } from '../../models/todo.model';
 
 @Component({
@@ -22,10 +21,17 @@ export class TodoDashboardComponent {
 
   todos = signal<Todo[]>([]);
   private route = inject(ActivatedRoute);
+  private todoService = inject(TodoService);
 
-  constructor() {}
+  constructor() {
+    // Canlı güncelleme: TodoService'in todos$ observable'ını dinle
+    this.todoService.getTodos()
+      .pipe(takeUntilDestroyed())
+      .subscribe(todos => this.todos.set(todos));
+  }
 
   ngOnInit() {
+    // İlk yüklemede resolverdan gelen veriyi set et
     this.route.data.subscribe(data => {
       this.todos.set(data['todos'] || []);
       console.log('Resolved todos for dashboard:', this.todos());

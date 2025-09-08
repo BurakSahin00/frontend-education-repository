@@ -12,17 +12,18 @@
             <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
                 <li nz-submenu nzIcon="insert-row-left" nzTitle="Categories">
                     <ul>
-                        <li nz-menu-item *ngFor="let category of userCategories">{{ category }}</li>
+                        <li nz-menu-item *ngFor="let category of userCategories" (click)="filterByCategory(category)">{{ category }}</li>
                     </ul>
                 </li>
                 <li nz-submenu nzIcon="border" nzTitle="Labels">
                     <ul>
-                        <li nz-menu-item *ngFor="let label of userLabels">{{ label }}</li>
+                        <li nz-menu-item *ngFor="let label of userLabels" (click)="filterByLabel(label)">{{ label }}</li>
                     </ul>
                 </li>
                 <li nz-menu-item nzIcon="calendar" [routerLink]="['/app', 'calendar']">Calendar</li>
                 <li nz-menu-item nzIcon="unordered-list" nzTitle="Todos" [routerLink]="['/app', 'todos']">Todos</li>
                 <li nz-menu-item nzIcon="user" nzTitle="Dashboard" [routerLink]="['/app', 'dashboard']">Dashboard</li>
+                <li nz-menu-item nzIcon="user" nzTitle="Profile" [routerLink]="['/app', 'profile']">Profile</li>
             </ul>
         </nz-sider>
         <nz-content>

@@ -23,4 +23,6 @@ export interface TodoUpdate {
   title: string;
   description: string;
   priority?: TodoPriority;
+  dueDate?: Date | null;
+  tags?: string[];
 }

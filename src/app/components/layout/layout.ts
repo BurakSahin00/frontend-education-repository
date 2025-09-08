@@ -10,6 +10,7 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import {CommonModule} from "@angular/common";
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'todo-layout',
@@ -21,20 +22,25 @@ export class Layout {
 
   private userService: UserService;
   private authService: AuthService;
+  private router = inject(Router);
   userLabels: string[] | null;
   userCategories: string[] | null;
 
   constructor() {
     this.userService = inject(UserService);
     this.authService = inject(AuthService);
-    this.userLabels = [];
-    this.userCategories = [];
-    this.initProperties();
+    this.userLabels = this.authService.getCurrentUser()?.todoLabels || [];
+    this.userCategories = this.authService.getCurrentUser()?.todoCategories || [];
+    console.log('User Labels in Layout:', this.userLabels);
+    console.log('User Categories in Layout:', this.userCategories);
   }
 
-  initProperties(): void {
-    this.userLabels = this.userService.getUserTodoLabelsById(this.authService.getCurrentUser()?.id || '');
-    this.userCategories = this.userService.getUserTodoCategoriesById(this.authService.getCurrentUser()?.id || '');
+  filterByCategory(category: string) {
+    this.router.navigate(['/app/todos'], { queryParams: { category } });
+  }
+
+  filterByLabel(label: string) {
+    this.router.navigate(['/app/todos'], { queryParams: { label } });
   }
 
 }

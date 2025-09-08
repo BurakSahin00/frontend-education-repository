@@ -20,8 +20,8 @@ export class AuthEffect {
                     this.authService.login(action.email, action.password).pipe(
                         map((response: any) => {
                             if (response && response.token && response.user) {
-                                localStorage.setItem('currentUser', JSON.stringify(response.user));
                                 localStorage.setItem('authToken', response.token);
+                                localStorage.setItem('currentUser', JSON.stringify(response.user));
                                 return loginSuccess({ user: response.user, token: response.token });
                             } else {
                                 return loginFailure({ error: 'Geçersiz kullanıcı veya token.' });

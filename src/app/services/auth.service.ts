@@ -2,6 +2,7 @@ import { inject } from '@angular/core/primitives/di';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +14,7 @@ export class AuthService {
   private API_KEY = "https://8041f853-f90f-4166-8c2b-c52a7ddadb29.mock.pstmn.io";
   private isBrowser: boolean;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
@@ -26,6 +27,7 @@ export class AuthService {
     if (!this.isBrowser) return;
     localStorage.removeItem('currentUser');
     localStorage.removeItem('authToken');
+    this.router.navigate(['']);
   }
 
   isAuthenticated(): boolean {
