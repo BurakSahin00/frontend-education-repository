@@ -1,0 +1,54 @@
+/* Modern NotFound sayfası stili */
+.not-found-container {
+	min-height: 70vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+	border-radius: 16px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+	padding: 48px 24px;
+	margin: 48px auto;
+	max-width: 420px;
+}
+
+.not-found-container h1 {
+	font-size: 6rem;
+	color: #3b82f6;
+	margin-bottom: 0.5rem;
+	font-weight: 800;
+	letter-spacing: 2px;
+}
+
+.not-found-container h2 {
+	font-size: 2rem;
+	color: #1e293b;
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
+
+.not-found-container p {
+	color: #64748b;
+	margin-bottom: 2rem;
+	font-size: 1.1rem;
+}
+
+.home-btn {
+	display: inline-block;
+	padding: 0.75rem 2rem;
+	background: #3b82f6;
+	color: #fff;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 1rem;
+	box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+	transition: background 0.2s, box-shadow 0.2s;
+}
+
+.home-btn:hover {
+	background: #2563eb;
+	box-shadow: 0 4px 16px rgba(59,130,246,0.16);
+}

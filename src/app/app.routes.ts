@@ -9,6 +9,7 @@ import { Layout } from './components/layout/layout';
 import { AuthGuard } from './guards/auth.guard';
 import { TodosResolver } from './resolvers/todos.resolver';
 import { TodoDetailResolver as TodoResolver } from './resolvers/todo.resolver';
+import { NotFound } from './components/not-found/not-found';
 
 export const routes: Routes = [
     {
@@ -25,14 +26,7 @@ export const routes: Routes = [
                 path: 'todos',
                 component: TodosComponent,
                 title: 'Görevler',
-                resolve: { todos: TodosResolver },
-                children: [
-                    {
-                        path: 'new',
-                        loadComponent: () => import('./components/todo-details/todo-details.component').then(m => m.TodoDetailsComponent),
-                        title: 'Yeni Görev'
-                    }
-                ],
+                resolve: { todos: TodosResolver }
             },
             {
                 path: 'todos/:id',
@@ -44,13 +38,6 @@ export const routes: Routes = [
                 path: 'profile',
                 loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent),
                 title: 'Profil',
-                children: [
-                    {
-                        path: 'settings',
-                        loadComponent: () => import('./components/settings/settings.component').then(m => m.SettingsComponent),
-                        title: 'Ayarlar'
-                    },
-                ]
             },
             {
                 path: 'dashboard',
@@ -68,7 +55,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent),
+        component: NotFound,
         title: 'Sayfa Bulunamadı'
     }
 ];
