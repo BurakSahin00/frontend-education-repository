@@ -20,9 +20,9 @@
                         <li nz-menu-item *ngFor="let label of userLabels">{{ label }}</li>
                     </ul>
                 </li>
-                <li nz-menu-item nzIcon="calendar" [routerLink]="['/calendar']">Calendar</li>
-                <li nz-menu-item nzIcon="unordered-list" nzTitle="Todos" [routerLink]="['/todos']">Todos</li>
-                <li nz-menu-item nzIcon="user" nzTitle="Dashboard" [routerLink]="['/dashboard']">Dashboard</li>
+                <li nz-menu-item nzIcon="calendar" [routerLink]="['/app', 'calendar']">Calendar</li>
+                <li nz-menu-item nzIcon="unordered-list" nzTitle="Todos" [routerLink]="['/app', 'todos']">Todos</li>
+                <li nz-menu-item nzIcon="user" nzTitle="Dashboard" [routerLink]="['/app', 'dashboard']">Dashboard</li>
             </ul>
         </nz-sider>
         <nz-content>

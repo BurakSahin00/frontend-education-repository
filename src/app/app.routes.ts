@@ -13,16 +13,11 @@ import { TodoDetailResolver as TodoResolver } from './resolvers/todo.resolver';
 export const routes: Routes = [
     {
         path: '',
-        pathMatch: 'full',
-        redirectTo: 'login'
-    },
-    {
-        path: 'login',
         component: LoginComponent,
         title: 'Giriş'
     },
     {
-        path: '',
+        path: 'app',
         component: Layout,
         canActivate: [AuthGuard],
         children: [

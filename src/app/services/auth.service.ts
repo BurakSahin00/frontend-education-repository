@@ -2,51 +2,44 @@ import { inject } from '@angular/core/primitives/di';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private API_KEY = "https://8041f853-f90f-4166-8c2b-c52a7ddadb29.mock.pstmn.io";
+  private isBrowser: boolean;
 
-  private userService = inject(UserService)
-  private users = this.userService.getUsers();
-  private currentUser: any = null;
-  private token: string | null = null;
-
-  constructor() {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const userJson = localStorage.getItem('currentUser');
-      if (userJson && userJson !== 'undefined') {
-        this.currentUser = JSON.parse(userJson);
-      }
-    }
+  constructor(private http: HttpClient) {
+    this.isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
-  login(email: string, password: string): boolean {
-    const user = this.users.find(u => u.email === email && u.password === password);
-    if (user) {
-      this.currentUser = user;
-      this.token = 'mock-jwt-token';
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
-    }
-    return false;
+  login(email: string, password: string): Observable<void> {
+    console.log('AuthService login called with', { email, password });
+    return this.http.post<any>(`${this.API_KEY}/auth/login`, { email, password });
   }
 
   logout(): void {
-    this.currentUser = null;
-    this.token = null;
+    if (!this.isBrowser) return;
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('authToken');
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUser;
+    if (!this.isBrowser) return false;
+    return !!localStorage.getItem('currentUser');
   }
 
   getCurrentUser(): User {
-    return this.currentUser;
+    if (!this.isBrowser) return {} as User;
+    return JSON.parse(localStorage.getItem('currentUser') || '{}');
   }
 
   getToken(): string | null {
-    return this.token;
+    if (!this.isBrowser) return null;
+    return localStorage.getItem('authToken');
   }
 }

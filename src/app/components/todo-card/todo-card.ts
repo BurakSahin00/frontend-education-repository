@@ -33,7 +33,7 @@ export class TodoCard {
   }
 
   onOpenDetails(): void {
-    this.router.navigate(['/todos', this.todo.id]);
+    this.router.navigate(['/app', 'todos', this.todo.id]);
   }
 
 }
