@@ -1,0 +1,26 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk(todoID)">
+    <form [formGroup]="todoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
+      <input nz-input formControlName="title" placeholder="Title" />
+      <div *ngIf="todoForm.controls['title'].invalid && todoForm.controls['title'].touched">
+        <small *ngIf="todoForm.controls['title'].errors?.['required']">Title is required</small>
+        <small *ngIf="todoForm.controls['title'].errors?.['minlength']">At least 3 characters</small>
+      </div>
+
+      <input nz-input formControlName="description" placeholder="Description" />
+      <div *ngIf="todoForm.controls['description'].invalid && todoForm.controls['description'].touched">
+        <small *ngIf="todoForm.controls['description'].errors?.['required']">Description is required</small>
+      </div>
+
+
+      <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
+        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
+      </nz-select>
+
+      <nz-select formControlName="category" nzPlaceHolder="Category" nzMode="multiple">
+        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
+      </nz-select>
+
+      <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
+    </form>
+  </nz-modal>

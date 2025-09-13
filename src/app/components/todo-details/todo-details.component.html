@@ -1,5 +1,5 @@
 <section>
-    <nz-card [nzTitle]="todo.title">
+    <nz-card [nzTitle]="todo.title" [nzActions]="[editTodo, addSubtaskButton]">
         <p>{{ todo.description }}</p>
     </nz-card>
 
@@ -20,11 +20,25 @@
         </nz-descriptions-item>
     </nz-descriptions>
 
+    <ng-template #editTodo>
+        <button nz-button nzType="default" (click)="editTodoModal.openModal('EDIT', todo)">
+            <i nz-icon nzType="edit"></i> Edit
+        </button>
+
+        <todo-modal
+            #editTodoModal
+        ></todo-modal>
+    </ng-template>
+
+
     <ng-template #addSubtaskButton>
-        <button nz-button nzType="default" (click)="onAddSubtask()">
+        <button nz-button nzType="default" (click)="addSubtaskModal.openModal('ADD')">
             <i nz-icon nzType="plus"></i> Add Subtask
         </button>
 
+        <todo-modal
+            #addSubtaskModal
+        ></todo-modal>
     </ng-template>
 
     <ng-template #priorityTag>

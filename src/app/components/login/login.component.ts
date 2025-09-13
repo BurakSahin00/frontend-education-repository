@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { LoggingService } from '../../services/logging.service';
 import { Store } from '@ngrx/store';
-import { selectUser } from '../../selectors/auth.selector';
-import { login } from '../../actions/auth.action';
+import { selectUser } from '../../management/selectors/auth.selector';
+import { AuthActions } from '../../management/actions/auth.action';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,7 @@ import { login } from '../../actions/auth.action';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  
   email = '';
   password = '';
   rememberMe = false;
@@ -27,6 +28,6 @@ export class LoginComponent {
   constructor() {}
 
   login() {
-    this.store.dispatch(login({ email: this.email, password: this.password }));
+    this.store.dispatch(AuthActions.loginRequested({ email: this.email, password: this.password }));
   }
 }

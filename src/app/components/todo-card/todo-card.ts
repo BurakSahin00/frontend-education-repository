@@ -15,7 +15,7 @@ export class TodoCard {
 
   @Input() todo!: Todo;
   @Output() delete = new EventEmitter<string>();
-  @Output() edit = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<Todo>();
   @Output() toggleComplete = new EventEmitter<string>();
 
   private router = inject(Router);
@@ -25,7 +25,7 @@ export class TodoCard {
   }
 
   onEdit(): void {
-    this.edit.emit(this.todo.id);
+    this.edit.emit(this.todo);
   }
 
   onToggleComplete(): void {

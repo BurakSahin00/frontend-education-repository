@@ -8,7 +8,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { UserService } from '../../services/user.service';
 import { RouterOutlet, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
-import {CommonModule} from "@angular/common";
+import { Store } from '@ngrx/store';
+import { selectUser } from '../../management/selectors/auth.selector';
+import { CommonModule } from "@angular/common";
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -20,20 +22,28 @@ import { Router } from '@angular/router';
 })
 export class Layout {
 
-  private userService: UserService;
-  private authService: AuthService;
-  private router = inject(Router);
-  userLabels: string[] | null;
-  userCategories: string[] | null;
 
-  constructor() {
-    this.userService = inject(UserService);
-    this.authService = inject(AuthService);
-    this.userLabels = this.authService.getCurrentUser()?.todoLabels || [];
-    this.userCategories = this.authService.getCurrentUser()?.todoCategories || [];
-    console.log('User Labels in Layout:', this.userLabels);
-    console.log('User Categories in Layout:', this.userCategories);
+  userLabels: string[];
+  userCategories: string[];
+
+
+  constructor( private authService: AuthService, private router: Router) {
+    this.userLabels = [];
+    this.userCategories = [];
   }
+  
+  private store = inject(Store);
+
+  user$ = this.store.select(selectUser).subscribe(user => {
+    if (user) {
+      this.userLabels = user.todoLabels;
+      this.userCategories = user.todoCategories;
+
+    } else {
+      console.log('No user found in Layout component');
+    }
+  });
+
 
   filterByCategory(category: string) {
     this.router.navigate(['/app/todos'], { queryParams: { category } });

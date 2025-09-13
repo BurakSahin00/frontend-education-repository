@@ -1,5 +1,5 @@
 <section>
-  <button nz-button nzType="primary" (click)="openAddTodoModal()">Add Todo</button>
+  <!--
   <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Add New Todo" (nzOnCancel)="handleCancel()" (nzOnOk)="addTodo()">
     <form [formGroup]="todoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
       <input nz-input formControlName="title" placeholder="Title" />
@@ -51,11 +51,19 @@
       <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
     </form>
   </nz-modal>
+-->
+<button nz-button nzType="primary" (click)="todoModalRef.openModal('ADD')">Add Todo</button>
+  <todo-modal
+    #todoModalRef
+  ></todo-modal>
+
+
   <div class="list-container">
+    
     <div class="todo-list" *ngFor="let todo of todos">
       <todo-card 
-        [todo]="todo" 
-        (edit)="openEditTodoModal(todo.id)" 
+        [todo]="todo"
+        (edit)="todoModalRef.openModal('EDIT', todo)"
         (delete)="removeTodo(todo.id)" 
         (toggleComplete)="toggleTodoCompletion(todo.id)"></todo-card>
     </div>

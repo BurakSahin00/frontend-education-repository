@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Todo, TodoPriority } from '../../models/todo.model';
+import { TodoModal } from '../todo-modal/todo-modal.component';
 import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
   selector: 'todo-details',
-  imports: [CommonModule, NzCardModule, NzStepsModule, NzButtonModule, NzTagModule, NzIconModule, NzDescriptionsModule],
+  imports: [CommonModule, TodoModal, NzCardModule, NzStepsModule, NzButtonModule, NzTagModule, NzIconModule, NzDescriptionsModule],
   templateUrl: './todo-details.component.html',
   styleUrls: ['./todo-details.component.css']
 })

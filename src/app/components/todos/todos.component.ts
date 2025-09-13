@@ -15,11 +15,12 @@ import { NotificationService } from '../../services/notification.service';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { ActivatedRoute } from '@angular/router';
 import { map, Subscription } from 'rxjs';
+import { TodoModal } from '../todo-modal/todo-modal.component';
 
 @Component({
   selector: 'todos',
   standalone: true,
-  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule],
+  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
@@ -34,8 +35,6 @@ export class TodosComponent implements OnInit, OnDestroy {
   private todosSub?: Subscription;
   isModalVisible = false;
   isEditModalVisible = false;
-  todoForm: FormGroup;
-  editTodoForm: FormGroup;
   userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
   
 
@@ -50,8 +49,6 @@ export class TodosComponent implements OnInit, OnDestroy {
   this.userCategories = currentUser?.todoCategories || [];
   console.log('User Labels:', this.userLabels);
   console.log('User Categories:', this.userCategories);
-  this.todoForm = this.createTodoForm();
-  this.editTodoForm = this.createTodoForm();
 }
 
   ngOnInit(): void {
@@ -84,16 +81,6 @@ export class TodosComponent implements OnInit, OnDestroy {
     this.todosSub?.unsubscribe();
   }
 
-  createTodoForm(): FormGroup {
-  return this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(3)]],
-    description: ['', [Validators.required]],
-    priority: [null, [Validators.required]],
-    category: [null, [Validators.required]],
-    dueDate: [null, [Validators.required]]
-  });
-  }
-
   @Input() newTodo: Todo = {
     id: this.todoService.getNextTodoId(),
     title: '',
@@ -105,56 +92,6 @@ export class TodosComponent implements OnInit, OnDestroy {
     createdAt: new Date(),
     assignedUserId: this.authService.getCurrentUser()?.id || ''
   };
-
-  editingTodoId: string = "N";
-openEditTodoModal(todoId: string): void {
-  const todo = this.todos.find(t => t.id === todoId);
-  if (todo) {
-    const patch = {
-      ...todo,
-      dueDate: todo.dueDate ? new Date(todo.dueDate).toISOString().substring(0, 10) : null,
-      tags: todo.tags || null
-    };
-    this.editTodoForm.patchValue(patch);
-    this.editingTodoId = todoId;
-    this.isEditModalVisible = true;
-  }
-}
-
-  handleEditCancel(): void {
-    this.isEditModalVisible = false;
-    this.editTodoForm.reset();
-  }
-
-  openAddTodoModal(): void {
-    this.isModalVisible = true;
-  }
-
-  handleCancel(): void {
-    this.isModalVisible = false;
-    this.todoForm.reset();
-  }
-
-addTodo(): void {
-  if (this.todoForm.valid) {
-    const formValue = this.todoForm.value;
-    const newTodo: Todo = {
-      id: this.todoService.getNextTodoId(),
-      title: formValue.title,
-      description: formValue.description,
-      completed: false,
-      priority: formValue.priority,
-      tags: formValue.tags,
-      parentId: null,
-      dueDate: formValue.dueDate ? new Date(formValue.dueDate) : null,
-      createdAt: new Date(),
-      assignedUserId: this.authService.getCurrentUser()?.id || ''
-    };
-    this.todoService.addTodo(newTodo);
-    this.isModalVisible = false;
-    this.todoForm.reset();
-  }
-}
 
   removeTodo(todoId: string): void {
    if (this.userid) {
@@ -172,30 +109,6 @@ addTodo(): void {
         console.error('Kullanıcı ID alınamadı. Todo silinemedi.');
       }
   }
-
-  updateTodo(): void {
-  if (this.editTodoForm.valid && this.editingTodoId) {
-    const formValue = this.editTodoForm.value;
-    const update: TodoUpdate = {
-      title: formValue.title,
-      description: formValue.description,
-      priority: formValue.priority,
-      tags: formValue.tags,
-      dueDate: formValue.dueDate ? new Date(formValue.dueDate) : null
-    };
-    this.todoService.updateTodo(this.editingTodoId, update).subscribe({
-      next: (updatedTodo) => {
-        this.logger.info('Todo başarıyla güncellendi.', updatedTodo);
-      },
-      error: (err) => {
-        this.logger.error('Todo güncellenirken hata oluştu:', err);
-      }
-    });
-    this.isEditModalVisible = false;
-    this.editTodoForm.reset();
-    this.editingTodoId = "N";
-  }
-}
 
   toggleTodoCompletion(todoId: string): void {
     const todo = this.todos.find(t => t.id === todoId);

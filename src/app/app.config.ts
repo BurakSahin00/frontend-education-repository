@@ -9,10 +9,10 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
-import { authReducer } from './reducers/auth.reducer';
+import { provideState, provideStore } from '@ngrx/store';
+import { authFeature } from './management/reducers/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
-import { AuthEffect } from './effects/auth.effect';
+import { AuthEffect } from './management/effects/auth.effect';
 
 registerLocaleData(en);
 
@@ -26,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(en_US),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideStore({ auth: authReducer }),
-    provideEffects([AuthEffect])
+    provideStore(),
+    provideState(authFeature),
+    provideEffects(AuthEffect)
   ]
 };

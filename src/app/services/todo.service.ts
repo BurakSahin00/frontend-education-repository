@@ -4,6 +4,7 @@ import { Todo, TodoUpdate } from '../models/todo.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
+import { environment } from '../environment/environment';
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class TodoService {
   private nextTodoId = this.todos.length + 1;
   public static instanceCount = 0;
 
-  private readonly API_URL = 'https://8041f853-f90f-4166-8c2b-c52a7ddadb29.mock.pstmn.io';
+  private readonly API_URL = environment.apiUrl;
   private userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
 
   constructor(private http: HttpClient) {
