@@ -18,12 +18,11 @@ export class TodoService {
   private nextTodoId = this.todos.length + 1;
   public static instanceCount = 0;
 
-  private readonly API_URL = environment.apiUrl;
   private userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
 
   constructor(private http: HttpClient) {
     this.logger.info('TodoService başlatıldı. Sunucudan todos çekiliyor.');
-    this.http.get<Todo[]>(`${this.API_URL}/todo/${this.userid}`).subscribe({
+  this.http.get<Todo[]>(`/api/todo/${this.userid}`).subscribe({
       next: (todos) => {
         this.logger.info('Todos başarıyla yüklendi.', todos);
         this.todos = todos;
@@ -53,7 +52,7 @@ export class TodoService {
   // Todo ekle
   addTodo(todo: Todo): Observable<Todo> {
     this.logger.info('Yeni todo ekleniyor.', todo);
-    return this.http.post<Todo>(`${this.API_URL}/todo/save`, todo).pipe(
+  return this.http.post<Todo>(`/api/todo/save`, todo).pipe(
       tap({
         next: (response) => {
           this.logger.info('Todo başarıyla eklendi.', response);
@@ -70,7 +69,7 @@ export class TodoService {
   // Todo sil
   removeTodo(todoId: string, userId: string): Observable<void> {
     this.logger.warn('Todo siliniyor.', { todoId, userId });
-    return this.http.delete<void>(`${this.API_URL}/todo/${userId}/delete/${todoId}`).pipe(
+  return this.http.delete<void>(`/api/todo/${userId}/delete/${todoId}`).pipe(
       tap({
         next: () => {
           this.logger.info('Todo başarıyla silindi.', { todoId });
@@ -87,7 +86,7 @@ export class TodoService {
   // Todo güncelle
   updateTodo(todoId: string, update: TodoUpdate): Observable<Todo | undefined> {
     this.logger.info('Todo güncelleniyor.', { todoId, update });
-    return this.http.put<Todo>(`${this.API_URL}/todo/update/${todoId}`, update).pipe(
+  return this.http.put<Todo>(`/api/todo/update/${todoId}`, update).pipe(
       tap({
         next: (response) => {
           this.logger.info('Todo başarıyla güncellendi.', response);
@@ -106,7 +105,7 @@ export class TodoService {
 
   updateTodoStatus(todoId: string, completed: boolean): Observable<Todo> {
     this.logger.info('Todo durumu güncelleniyor.', { todoId, completed });
-    return this.http.put<Todo>(`${this.API_URL}/todo/statusUpdate/${todoId}`, { completed }).pipe(
+  return this.http.put<Todo>(`/api/todo/statusUpdate/${todoId}`, { completed }).pipe(
       tap({
         next: (response) => {
           const index = this.todos.findIndex(t => t.id === todoId);

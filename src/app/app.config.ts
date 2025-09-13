@@ -8,18 +8,32 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { authFeature } from './management/reducers/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffect } from './management/effects/auth.effect';
+import { authInterceptor } from './interseptors/auth.interceptor';
+import { csrfAppInitializer } from './security/csrf/csrf-init.factory';
+import { environment } from './environment/environment';
 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([
+        authInterceptor
+      ]),
+      withXsrfConfiguration(
+        {
+          cookieName: environment.csrf.cookieName,
+          headerName: environment.csrf.headerName,
+        }
+      )
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
@@ -28,6 +42,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideStore(),
     provideState(authFeature),
-    provideEffects(AuthEffect)
+    provideEffects(AuthEffect),
+    csrfAppInitializer
   ]
 };

@@ -12,7 +12,7 @@ import { environment } from '../environment/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = environment.apiUrl;
+  // Use relative API paths; same-origin via Angular dev proxy or reverse proxy
   private readonly API_KEY = environment.apiKey;
   private isBrowser: boolean;
 
@@ -22,7 +22,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     console.log('AuthService login called with', { email, password });
-    return this.http.post<any>(`${this.API_URL}/auth/login`, { email, password });
+    return this.http.post<any>(`/api/auth/login`, { email, password });
   }
 
   logout(): void {
@@ -33,11 +33,11 @@ export class AuthService {
   }
 
   register(data: {email: string, password: string, name: string, surname: string}): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/auth/register`, data);
+    return this.http.post<any>(`/api/auth/register`, data);
   }
 
   verifyEmail(verificationId: string, code: string): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/auth/verify-email`, { verificationId, code });
+    return this.http.post<any>(`/api/auth/verify-email`, { verificationId, code });
   }
 
   isAuthenticated(): boolean {
