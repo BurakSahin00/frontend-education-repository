@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../environment/environment';
+import { LoginRequest } from '../models/auth.model';
+import { Response } from '../features/todo/model/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +22,25 @@ export class AuthService {
     this.isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
-  login(email: string, password: string): Observable<any> {
-    console.log('AuthService login called with', { email, password });
-    return this.http.post<any>(`/api/auth/login`, { email, password });
+  login(loginRequest: LoginRequest): Observable<any> {
+    console.log('AuthService login called with', loginRequest);
+    return this.http.post<any>(`/api/auth/login`, loginRequest, {
+      withCredentials: true
+    });
+    //State yönetimi kısmında response verisinden accessToken'ı Store'a kaydet
+    //ve her istek için header'a ekleyecek interceptor yazılacak.
   }
 
-  logout(): void {
-    if (!this.isBrowser) return;
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('authToken');
-    this.router.navigate(['']);
+  logout(): Observable<any> {
+    return this.http.post<any>(`/api/auth/logout`, {}, {
+      withCredentials: true
+    });
+  }
+
+  refresh(): Observable<any> {
+    return this.http.post<any>(`/api/auth/refresh`, {}, {
+      withCredentials: true
+    });
   }
 
   register(data: {email: string, password: string, name: string, surname: string}): Observable<any> {
@@ -38,11 +49,6 @@ export class AuthService {
 
   verifyEmail(verificationId: string, code: string): Observable<any> {
     return this.http.post<any>(`/api/auth/verify-email`, { verificationId, code });
-  }
-
-  isAuthenticated(): boolean {
-    if (!this.isBrowser) return false;
-    return !!localStorage.getItem('currentUser');
   }
 
   getCurrentUser(): User {

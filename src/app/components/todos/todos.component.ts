@@ -8,14 +8,16 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { TodoService } from '../../services/todo.service';
 import { TodoCard } from '../todo-card/todo-card';
 import { CommonModule } from '@angular/common';
-import { Todo, TodoPriority, TodoUpdate } from '../../models/todo.model';
+import { TodoPriority, TodoUpdate } from '../../models/todo.model';
+import { Todo } from '../../features/todo/model/todo.model';
 import { Store } from '@ngrx/store';
 import { LoggingService } from '../../services/logging.service';
 import { NotificationService } from '../../services/notification.service';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { ActivatedRoute } from '@angular/router';
-import { map, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { TodoModal } from '../todo-modal/todo-modal.component';
+import { selectAllTasks } from '../../management/selectors/task.selector';
 
 @Component({
   selector: 'todos',
@@ -29,13 +31,18 @@ export class TodosComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private todoService = inject(TodoService);
   private store = inject(Store);
-  todos: Todo[] = [];
+  todoList: Todo[] = [];
   userLabels: string[] = [];
   userCategories: string[] = [];
   private todosSub?: Subscription;
   isModalVisible = false;
   isEditModalVisible = false;
   userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
+
+  //----
+
+  todos$: Observable<Todo[]> = this.store.select(selectAllTasks);
+
   
 
   constructor(

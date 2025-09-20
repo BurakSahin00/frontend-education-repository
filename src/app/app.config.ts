@@ -13,8 +13,9 @@ import { authFeature } from './management/reducers/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffect } from './management/effects/auth.effect';
 import { authInterceptor } from './interseptors/auth.interceptor';
-import { csrfAppInitializer } from './security/csrf/csrf-init.factory';
-import { environment } from './environment/environment';
+//import { csrfAppInitializer } from './security/csrf/csrf-init.factory';
+//import { environment } from './environment/environment';
+//import { csrfCrossOriginInterceptor } from './security/csrf/csrf-cross-origin.interceptor';
 
 registerLocaleData(en);
 
@@ -23,15 +24,19 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(
       withFetch(),
+      
       withInterceptors([
-        authInterceptor
+        authInterceptor,
+       //csrfCrossOriginInterceptor
       ]),
+      /*
       withXsrfConfiguration(
         {
-          cookieName: environment.csrf.cookieName,
-          headerName: environment.csrf.headerName,
+          //cookieName: environment.csrf.cookieName,
+          //headerName: environment.csrf.headerName,
         }
       )
+      */
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
@@ -42,6 +47,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState(authFeature),
     provideEffects(AuthEffect),
-    csrfAppInitializer
+    //csrfAppInitializer
   ]
 };

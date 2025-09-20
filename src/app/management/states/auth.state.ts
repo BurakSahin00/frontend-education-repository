@@ -1,6 +1,6 @@
-import { User } from '../../models/user.model';
+import { User } from '../../features/todo/model/user.model';
 
-export type AuthStatus = 'anonymous' | 'registering' | 'awaitingVerification' | 'verifying' | 'authenticated' | 'error';
+export type AuthStatus = 'anonymous' | 'registering' | 'loggingIn' | 'loggingOut' | 'updating' | 'deleting' | 'awaitingVerification' | 'verifying' | 'authenticated' | 'error';
 
 export interface VerificationState {
   verificationId: string;
@@ -11,16 +11,18 @@ export interface VerificationState {
 
 export interface AuthState {
   status: AuthStatus;
-  error: string | null;
+  error: string[] | null;
   currentUser: User | null;
+  accessToken: string | null;
 
   // UI/flow flags
   loading: {
     registering: boolean;
     verifying: boolean;
     resending: boolean;
+    deleting: boolean;
+    updating: boolean;
+    loggingIn: boolean;
+    loggingOut: boolean;
   };
-
-  // Register flow
-  verification: VerificationState | null;
 }

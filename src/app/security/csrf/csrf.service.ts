@@ -10,7 +10,7 @@ interface CsrfInitResponse {
   // Sunucu JSON body döndürüyorsa token burada gelir. Dönmüyorsa `undefined` olur.
   token?: string;
 }
-
+/*
 @Injectable({
     providedIn: 'root'
 })
@@ -43,6 +43,7 @@ export class CsrfService {
     // Not: withCredentials şart; sunucu CORS'ta Allow-Credentials:true ve Allow-Origin: <ui-origin> döndürmelidir.
     // Cross-origin senaryosunda init çağrısını backend origin'ine yap
     let initUrl = environment.csrf.initEndpoint; // same-origin varsayılan
+    
     try {
       const baseOrigin = typeof window !== 'undefined' ? window.location.origin : '';
       const apiOrigin = new URL(environment.apiUrl).origin;
@@ -58,6 +59,7 @@ export class CsrfService {
       .pipe(
         tap((res) => {
           // Sunucu body'de token döndürürse belleğe yaz (synchronizer token pattern)
+          this.logger.info('CSRF: Init response', { response: res });
           if (res && typeof res === 'object' && 'token' in res) {
             const bodyToken = (res as CsrfInitResponse).token;
             if (bodyToken) this.setMemoryToken(bodyToken);
@@ -71,6 +73,8 @@ export class CsrfService {
         if (!isPlatformBrowser(this.pid)) return null;
         const escaped = name.replace(/[$()*+./?[\\\]^{|}-]/g, '\\$&');
         const match = document.cookie.match(new RegExp('(?:^|; )' + escaped + '=([^;]*)'));
+        this.logger.info('CSRF: Read cookie', { name, value: match ? decodeURIComponent(match[1]) : null });
         return match ? decodeURIComponent(match[1]) : null;
     }
 }
+    */

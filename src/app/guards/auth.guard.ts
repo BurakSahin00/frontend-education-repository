@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router, UrlTree } from "@angular/router";
-import { AuthService } from "../services/auth.service";
 import { Store } from "@ngrx/store";
 import { selectStatus } from "../management/selectors/auth.selector";
 import { map, take } from 'rxjs/operators';
@@ -9,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router, private store: Store) { }
+  constructor(private router: Router, private store: Store) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.store.select(selectStatus).pipe(
@@ -19,7 +18,6 @@ export class AuthGuard implements CanActivate {
         if (isAuthenticated) {
           return true;
         }
-        // Login sayfanız '' path'inde, oraya yönlendiren UrlTree döndürün
         return this.router.createUrlTree(['']);
       })
     );

@@ -1,7 +1,8 @@
 import { inject, provideAppInitializer } from '@angular/core';
-import { CsrfService } from './csrf.service';
+//import { CsrfService } from './csrf.service';
 import { catchError, of, firstValueFrom } from 'rxjs';
 
+/*
 // Angular 19+ recommended: use provideAppInitializer
 export const csrfAppInitializer = provideAppInitializer(() => {
   const csrf = inject(CsrfService);
@@ -12,3 +13,4 @@ export const csrfAppInitializer = provideAppInitializer(() => {
     )
   );
 });
+*/
