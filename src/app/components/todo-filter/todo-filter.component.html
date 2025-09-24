@@ -1,0 +1,45 @@
+<button nz-button nzType="primary" (click)="isVisible.set(true)">Filter Todos</button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Filter Todos" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()">
+    <form [formGroup]="filterForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
+        <ng-container *ngTemplateOutlet="completeToggle"></ng-container>
+        <ng-container *ngTemplateOutlet="priortySelect"></ng-container>
+        <ng-container *ngTemplateOutlet="categorySelect"></ng-container>
+        <ng-container *ngTemplateOutlet="startDateSelect"></ng-container>
+        <ng-container *ngTemplateOutlet="endDateSelect"></ng-container>
+    </form>
+</nz-modal>
+
+<ng-template #completeToggle>
+    <h4>Completion Status</h4>
+    <nz-radio-group formControlName="completion">
+        <label nz-radio [nzValue]="true">Completed</label>
+        <label nz-radio [nzValue]="false">Not Completed</label>
+    </nz-radio-group>
+</ng-template>
+
+<ng-template #priortySelect>
+    <h4>Priority</h4>
+    <nz-radio-group formControlName="priority">
+        <label nz-radio [nzValue]="0">Low</label>
+        <label nz-radio [nzValue]="1">Medium</label>
+        <label nz-radio [nzValue]="2">High</label>
+    </nz-radio-group>
+</ng-template>
+
+<ng-template #categorySelect>
+    <h4>Category</h4>
+    <nz-select nzPlaceHolder="Select category" formControlName="category">
+        <nz-option *ngFor="let category of categories()" [nzValue]="category.id" [nzLabel]="category.name"></nz-option>
+    </nz-select>
+</ng-template>
+
+<ng-template #startDateSelect>
+    <h4>Start Date</h4>
+    <input nz-input type="date" formControlName="startDate" />
+</ng-template>
+
+<ng-template #endDateSelect>
+    <h4>End Date</h4>
+    <input nz-input type="date" formControlName="endDate" />
+</ng-template>

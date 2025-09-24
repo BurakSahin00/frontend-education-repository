@@ -22,3 +22,8 @@ export const selectToken = createSelector(
     selectAuthState,
     (state) => state.accessToken
 );
+
+export const selectUserId = createSelector(
+    selectAuthState,
+    (state) => state.id
+);

@@ -24,27 +24,27 @@ export interface Todo {
 export interface CreateTodoRequest {
     title: string;
     description?: string;
-    priority: TodoPriority;
+    priority: 0 | 1 | 2;
     dueDate?: Date;
     userId: string;
 }
 
 export interface UpdateTodoRequest {
-    id: string;
+    taskItemId: string;
     title?: string;
     description?: string;
-    priority?: TodoPriority;
+    priority?: 0 | 1 | 2;
     dueDate?: Date;
     clearDueDate?: boolean;
     clearDescription?: boolean;
 }
 
 export interface CompleteTodoRequest {
-    id: string;
+    taskItemId: string;
 }
 
 export interface ReOpenTodoRequest {
-    id: string;
+    taskItemId: string;
 }
 
 export interface AssignTodoRequest {
@@ -59,4 +59,13 @@ export interface UnassignTodoRequest {
 
 export interface GetTodosByCategoryRequest {
     categoryId: string;
+}
+
+export interface TodoFilterRequest {
+    UserId: number;
+    isCompleted?: boolean;
+    Priority?: 0 | 1 | 2;
+    CategoryId?: number;
+    StartDate?: Date;
+    EndDate?: Date;
 }

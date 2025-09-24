@@ -8,7 +8,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type { Todo } from '../../models/todo.model';
+import type { Todo } from '../../features/todo/model/todo.model';
 
 @Component({
   selector: 'todo-dashboard',
@@ -21,41 +21,41 @@ export class TodoDashboardComponent {
 
   todos = signal<Todo[]>([]);
   private route = inject(ActivatedRoute);
-  private todoService = inject(TodoService);
-
-  constructor() {
-    // Canlı güncelleme: TodoService'in todos$ observable'ını dinle
-    this.todoService.getTodos()
-      .pipe(takeUntilDestroyed())
-      .subscribe(todos => this.todos.set(todos));
-  }
 
   ngOnInit() {
     // İlk yüklemede resolverdan gelen veriyi set et
     this.route.data.subscribe(data => {
-      this.todos.set(data['todos'] || []);
+      const incoming = data['todos'];
+      let arr: Todo[] = [];
+      if (Array.isArray(incoming)) {
+        arr = incoming as Todo[];
+      } else if (incoming && typeof incoming === 'object' && Array.isArray(incoming.value)) {
+        // Resolver bir envelope (Response) döndürdüyse value'yu al
+        arr = incoming.value as Todo[];
+      }
+      this.todos.set(arr);
       console.log('Resolved todos for dashboard:', this.todos());
     });
   }
 
   completedPercentage = computed(() => {
-    const list = this.todos();
+    const list = Array.isArray(this.todos()) ? this.todos() : [];
     if (!list || list.length === 0) return 0;
-    const done = list.filter(t => !!t.completed).length;
+    const done = list.filter(t => !!t.isCompleted).length;
     return Math.round((done / list.length) * 100);
   });
 
   completedTodoNumber = computed(() => {
-    const list = this.todos();
+    const list = Array.isArray(this.todos()) ? this.todos() : [];
     if (!list || list.length === 0) return 0;
-    const done = list.filter(t => !!t.completed).length;
+    const done = list.filter(t => !!t.isCompleted).length;
     return done;
   });
 
   unCompletedTodoNumber = computed(() => {
-    const list = this.todos();
+    const list = Array.isArray(this.todos()) ? this.todos() : [];
     if (!list || list.length === 0) return 0;
-    const undone = list.filter(t => !t.completed).length;
+    const undone = list.filter(t => !t.isCompleted).length;
     return undone;
   });
 

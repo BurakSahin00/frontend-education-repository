@@ -4,6 +4,7 @@ import { TaskState } from '../states/task.state';
 
 const initialState: TaskState = {
   tasks: [],
+  selectedTask: null,
   status: 'empty',
   loading: false,
   filteredBy: 'none',
@@ -19,14 +20,14 @@ export const taskFeature = createReducer(
     on(TaskActions.loadTasksSuccess, (state, { tasks }) => ({
       ...state,
       tasks,
-      status: tasks.length ? 'loaded' : 'empty',
-      filteredBy: 'none',
+      status: tasks.length ? 'loaded' as const : 'empty' as const,
+      filteredBy: 'none' as const,
       loading: false
     })),
     on(TaskActions.loadTasksFailure, (state, { error }) => ({
       ...state,
       error,
-      status: 'error',
+      status: 'error' as const,
       loading: false
     })),
     on(TaskActions.loadOverdueTasks, (state) => ({
@@ -36,129 +37,129 @@ export const taskFeature = createReducer(
     on(TaskActions.loadOverdueTasksSuccess, (state, { tasks }) => ({
       ...state,
       tasks,
-      status: tasks.length ? 'loaded' : 'empty',
+      status: tasks.length ? 'loaded' as const : 'empty' as const,
       loading: false
     })),
     on(TaskActions.loadOverdueTasksFailure, (state, { error }) => ({
       ...state,
       error,
-      status: 'error',
+      status: 'error' as const,
       loading: false
     })),
     on(TaskActions.loadUpcomingTasks, (state) => ({
       ...state,
-      status: 'filtering',
+      status: 'filtering' as const,
       loading: true
     })),
     on(TaskActions.loadUpcomingTasksSuccess, (state, { tasks }) => ({
       ...state,
-      status: tasks.length ? 'loaded' : 'empty',
+      status: tasks.length ? 'loaded' as const : 'empty' as const,
       tasks,
     })),
     on(TaskActions.loadUpcomingTasksFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error,
     })),
     on(TaskActions.filterTasks, (state) => ({
       ...state,
-      status: 'filtering',
+      status: 'filtering' as const,
       loading: true
     })),
     on(TaskActions.filterTasksSuccess, (state, { tasks, filteredBy }) => ({
       ...state,
       tasks,
       filteredBy,
-      status: 'loaded',
+      status: 'loaded' as const,
       loading: false
     })),
     on(TaskActions.filterTasksFailure, (state, { error }) => ({
       ...state,
       error,
-      status: 'error',
+      status: 'error' as const,
       loading: false
     })),
     on(TaskActions.addTask, (state) => ({
       ...state,
-      status: 'adding',
+      status: 'adding' as const,
       loading: true
     })),
     on(TaskActions.addTaskSuccess, (state, { task }) => ({
       ...state,
       tasks: [...state.tasks, task],
-      status: 'loaded',
+      status: 'loaded' as const,
       loading: false
     })),
     on(TaskActions.addTaskFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error,
       loading: false
     })),
     on(TaskActions.updateTask, (state) => ({
       ...state,
-      status: 'updating',
+      status: 'updating' as const,
       loading: true
     })),
     on(TaskActions.updateTaskSuccess, (state, { task }) => ({
       ...state,
-      status: 'loaded',
+      status: 'loaded' as const,
       tasks: state.tasks.map(t => (t.id === task.id ? task : t)),
       loading: false
     })),
     on(TaskActions.updateTaskFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error
     })),
     on(TaskActions.deleteTask, (state) => ({
       ...state,
-      status: 'deleting',
+      status: 'deleting' as const,
       loading: true
     })),
     on(TaskActions.deleteTaskSuccess, (state, { taskId }) => ({
       ...state,
-      status: state.tasks.length > 1 ? 'loaded' : 'empty',
+      status: state.tasks.length > 1 ? 'loaded' as const : 'empty' as const,
       tasks: state.tasks.filter(t => t.id !== taskId),
       loading: false
     })),
     on(TaskActions.deleteTaskFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error,
       loading: false
     })),
     on(TaskActions.completeTask, (state) => ({
       ...state,
-      status: 'completing',
+      status: 'completing' as const,
       loading: true
     })),
     on(TaskActions.completeTaskSuccess, (state, { taskId }) => ({
       ...state,
-      status: 'loaded',
+      status: 'loaded' as const,
       tasks: state.tasks.map(t => t.id === taskId.toString() ? { ...t, isCompleted: true, completedAt: new Date() } : t),
       loading: false
     })),
     on(TaskActions.completeTaskFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error,
       loading: false
     })),
     on(TaskActions.reopenTask, (state) => ({
       ...state,
-      status: 'reopening',
+      status: 'reopening' as const,
       loading: true
     })),
     on(TaskActions.reopenTaskSuccess, (state, { taskId }) => ({
       ...state,
-      status: 'loaded',
+      status: 'loaded' as const,
       tasks: state.tasks.map(t => t.id === taskId.toString() ? { ...t, isCompleted: false, completedAt: undefined } : t),
       loading: false
     })),
     on(TaskActions.reopenTaskFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as const,
       error,
       loading: false
     })),
@@ -192,20 +193,20 @@ export const taskFeature = createReducer(
     })),
     on(TaskActions.filterTasksByCategory, (state) => ({
       ...state,
-      status: 'filtering',
+      status: 'filtering' as const,
       loading: true
     })),
     on(TaskActions.filterTasksByCategorySuccess, (state, { tasks, filteredBy }) => ({
       ...state,
       tasks,
       filteredBy,
-      status: 'loaded',
+      status: 'loaded' as const,
       loading: false
     })),
     on(TaskActions.filterTasksByCategoryFailure, (state, { error }) => ({
       ...state,
       error,
-      status: 'error',
+      status: 'error' as const,
       loading: false
-    })),
+    }))
 );

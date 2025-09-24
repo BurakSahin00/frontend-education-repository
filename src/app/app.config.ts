@@ -10,9 +10,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { authFeature } from './management/reducers/auth.reducer';
+import { taskFeature } from './management/reducers/task.reducer';
+import { categoryFeature } from './management/reducers/category.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffect } from './management/effects/auth.effect';
 import { authInterceptor } from './interseptors/auth.interceptor';
+import { TaskEffect } from './management/effects/task.effect';
+import { CategoryEffect } from './management/effects/category.effect';
 //import { csrfAppInitializer } from './security/csrf/csrf-init.factory';
 //import { environment } from './environment/environment';
 //import { csrfCrossOriginInterceptor } from './security/csrf/csrf-cross-origin.interceptor';
@@ -45,8 +49,10 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
     provideStore(),
-    provideState(authFeature),
-    provideEffects(AuthEffect),
+    provideState({ name: 'auth', reducer: authFeature }),
+    provideState({ name: 'tasks', reducer: taskFeature }),
+    provideState({ name: 'categories', reducer: categoryFeature }),
+    provideEffects(AuthEffect, TaskEffect, CategoryEffect),
     //csrfAppInitializer
   ]
 };

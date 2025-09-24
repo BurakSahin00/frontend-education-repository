@@ -14,6 +14,7 @@ export interface AuthState {
   error: string[] | null;
   currentUser: User | null;
   accessToken: string | null;
+  id: number | null;
 
   // UI/flow flags
   loading: {

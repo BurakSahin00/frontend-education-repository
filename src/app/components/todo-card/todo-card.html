@@ -12,6 +12,6 @@
 
 <ng-template #toggleButtonTemplate>
   <button nz-button nzType="primary" (click)="onToggleComplete(); $event.stopPropagation();">
-    {{ todo.completed ? 'Mark Incomplete' : 'Mark Complete' }}
+    {{ todo.isCompleted ? 'Mark Incomplete' : 'Mark Complete' }}
   </button>
 </ng-template>

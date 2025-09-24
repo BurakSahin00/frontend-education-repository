@@ -14,11 +14,11 @@
 
 
       <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
-        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
+        <nz-option *ngFor="let label of userLabels" [nzValue]="label.id" [nzLabel]="label.name"></nz-option>
       </nz-select>
 
       <nz-select formControlName="category" nzPlaceHolder="Category" nzMode="multiple">
-        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
+        <nz-option *ngFor="let category of userCategories" [nzValue]="category.id" [nzLabel]="category.name"></nz-option>
       </nz-select>
 
       <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />

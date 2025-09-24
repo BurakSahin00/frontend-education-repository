@@ -7,6 +7,8 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthActions } from '../../management/actions/auth.action';
+import { selectUser } from '../../management/selectors/auth.selector';
+import { User } from '../../features/todo/model/user.model';
 
 @Component({
   selector: 'todo-profile',
@@ -18,13 +20,16 @@ import { AuthActions } from '../../management/actions/auth.action';
 export class ProfileComponent {
   private store = inject(Store);
   private authService = inject(AuthService);
-  user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  user$ = this.store.select(selectUser);
+  user: User | null = null;
 
-  constructor() {
-    console.log(this.user);
+  ngOnInit() {
+    this.user$.subscribe(user => {
+      this.user = user;
+    });
   }
 
   logout() {
-    this.store.dispatch(AuthActions.logoutRequested());
+
   }
 }

@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, ReOpenTodoRequest, Todo, UnassignTodoRequest, UpdateTodoRequest } from '../../features/todo/model/todo.model';
+import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, ReOpenTodoRequest, Todo, TodoFilterRequest, UnassignTodoRequest, UpdateTodoRequest } from '../../features/todo/model/todo.model';
 
 export const TaskActions = createActionGroup({
     source: 'Task',
@@ -17,7 +17,7 @@ export const TaskActions = createActionGroup({
         'Load Upcoming Tasks Success': props<{ tasks: Todo[] }>(),
         'Load Upcoming Tasks Failure': props<{ error: any }>(),
 
-        'Filter Tasks': props<{ params : { userId: number, isCompleted?: boolean, priority?: string, startDate?: Date, endDate?: Date, categoryId?: number } }>(),
+        'Filter Tasks': props<{ params: TodoFilterRequest }>(),
         'Filter Tasks Success': props<{ tasks: Todo[], filteredBy: string[] | 'none' }>(),
         'Filter Tasks Failure': props<{ error: any }>(),
 

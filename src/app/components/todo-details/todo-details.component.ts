@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Todo, TodoPriority } from '../../models/todo.model';
+import { signal } from '@angular/core';
+import { Todo, UpdateTodoRequest } from '../../features/todo/model/todo.model';
 import { TodoModal } from '../todo-modal/todo-modal.component';
-import { TodoService } from '../../services/todo.service';
-import { AuthService } from '../../services/auth.service';
+import { Store } from '@ngrx/store';
+import { TaskActions } from '../../management/actions/task.action';
+import { CompleteTodoRequest, ReOpenTodoRequest } from '../../features/todo/model/todo.model';
 import { CommonModule } from '@angular/common';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
@@ -15,106 +17,55 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
   selector: 'todo-details',
+  standalone: true,
   imports: [CommonModule, TodoModal, NzCardModule, NzStepsModule, NzButtonModule, NzTagModule, NzIconModule, NzDescriptionsModule],
   templateUrl: './todo-details.component.html',
   styleUrls: ['./todo-details.component.css']
 })
-export class TodoDetailsComponent {
+export class TodoDetailsComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
-  private todoService = inject(TodoService);
-  private authService = inject(AuthService);
-  index = 0;
+  private store = inject(Store);
 
-  displayedSubTodo: Todo = {
-    id: '',
-    title: '',
-    description: '',
-    completed: false,
-    parentId: null,
-    priority: TodoPriority.Low,
-    dueDate: new Date(),
-    createdAt: new Date(),
-    assignedUserId: ''
-  };
-
-  todo: Todo = {
-    id: '',
-    title: '',
-    description: '',
-    completed: false,
-    parentId: null,
-    priority: TodoPriority.Low,
-    dueDate: new Date(),
-    createdAt: new Date(),
-    assignedUserId: ''
-  };
+  todo = signal<Todo>({} as Todo);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.route.data.subscribe(data => {
       const todo: Todo = data['todo'];
       if (todo) {
-        this.todo = todo;
-        if (this.todo.children && this.todo.children.length > 0) {
-          this.displayedSubTodo = this.todo.children[this.index];
-        }
+        this.todo.set(todo);
       }
     });
   }
 
   getPriorityColor(priority: string): string {
     switch (priority) {
-      case "High":
+      case "2":
         return "red";
-      case "Medium":
+      case "1":
         return "orange";
-      case "Low":
+      case "0":
         return "green";
       default:
         return "grey";
     }
   }
 
-  onSubtaskCardIndexChange(event: number): void {
-    this.index = event;
-    if (this.todo.children) {
-      this.displayedSubTodo = this.todo.children[this.index];
-    }
-  }
-
   onToggleComplete(): void {
-    if (!this.displayedSubTodo.id) return;
-    this.displayedSubTodo.completed = !this.displayedSubTodo.completed;
-    this.todoService.updateTodoStatus(this.displayedSubTodo.id, this.displayedSubTodo.completed);
+    const currentTodo = this.todo();
+    if (currentTodo.isCompleted) {
+      const request: ReOpenTodoRequest = { taskItemId: currentTodo.id };
+      this.store.dispatch(TaskActions.reopenTask({ taskId: request }));
+    } else {
+      const request: CompleteTodoRequest = { taskItemId: currentTodo.id };
+      this.store.dispatch(TaskActions.completeTask({ taskId: request }));
+    }
   }
 
   onDeleteTodo(): void {
-    if (!this.displayedSubTodo.id) return;
-    const userId = this.authService.getCurrentUser()?.id || '';
-    this.todoService.removeTodo(this.displayedSubTodo.id, userId);
+    const currentTodo = this.todo();
+    this.store.dispatch(TaskActions.deleteTask({ taskId: currentTodo.id }));
   }
 
-  onEditTodo(): void {
-
-  }
-
-  onAddSubtask(): void {
-    const newSubtask: Todo = {
-      id: this.todoService.getNextTodoId(),
-      title: '',
-      description: '',
-      completed: false,
-      parentId: this.todo.id,
-      priority: TodoPriority.Low,
-      dueDate: new Date(),
-      createdAt: new Date(),
-      assignedUserId: ''
-    };
-    this.todoService.addChildTodo(this.todo.id, newSubtask);
-    if (this.todo.children) {
-      this.displayedSubTodo = newSubtask;
-      this.index = this.todo.children.length - 1;
-    }
-  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, ReOpenTodoRequest, UnassignTodoRequest, UpdateTodoRequest } from "../model/todo.model";
+import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, ReOpenTodoRequest, TodoFilterRequest, UnassignTodoRequest, UpdateTodoRequest } from "../model/todo.model";
 import { HttpParams } from '@angular/common/http';
 import { Response } from "../model/response.model";
 
@@ -14,62 +14,62 @@ export class TaskService {
     constructor(private http: HttpClient) { }
 
     getTodos(userId: number): Observable<Response> {
-        return this.http.get<Response>('/api/TaskItem/user-tasks', { params: { userid: userId.toString() } });
+        return this.http.get<Response>('/url/api/TaskItem/user-tasks', { params: { UserId: userId.toString() } });
     }
 
-    getFilteredTasks(options: { userId: number; isCompleted?: boolean; priority?: string; startDate?: Date; endDate?: Date; categoryId?: number }): Observable<Response> {
+    getFilteredTasks(options: TodoFilterRequest): Observable<Response> {
         let params = new HttpParams();
-        if (options.userId !== undefined) params = params.set('UserId', options.userId.toString());
+        if (options.UserId !== undefined) params = params.set('UserId', options.UserId.toString());
         if (options.isCompleted !== undefined) params = params.set('IsCompleted', options.isCompleted.toString());
-        if (options.priority !== undefined) params = params.set('Priority', options.priority.toString());
-        if (options.startDate) params = params.set('StartDate', options.startDate.toISOString());
-        if (options.endDate) params = params.set('EndDate', options.endDate.toISOString());
-        if (options.categoryId !== undefined) params = params.set('CategoryId', options.categoryId.toString());
+        if (options.Priority !== undefined) params = params.set('Priority', options.Priority.toString());
+        if (options.StartDate) params = params.set('StartDate', options.StartDate.toISOString());
+        if (options.EndDate) params = params.set('EndDate', options.EndDate.toISOString());
+        if (options.CategoryId !== undefined) params = params.set('CategoryId', options.CategoryId.toString());
 
-        return this.http.get<Response>('/api/TaskItem/filtered-tasks', { params });
+        return this.http.get<Response>('/url/api/TaskItem/filtered-tasks', { params });
     }
 
     getUpcomingTasks(userId: number, days?: number): Observable<Response> {
         if (days) {
-            return this.http.get<Response>('/api/TaskItem/upcoming-tasks', { params: { userid: userId.toString(), days: days.toString() } });
+            return this.http.get<Response>('/url/api/TaskItem/upcoming-tasks', { params: { userid: userId.toString(), days: days.toString() } });
         }
-        return this.http.get<Response>('/api/TaskItem/upcoming-tasks', { params: { userid: userId.toString() } });
+        return this.http.get<Response>('/url/api/TaskItem/upcoming-tasks', { params: { userid: userId.toString() } });
     }
 
     getOverdueTasks(userId: number): Observable<Response> {
-        return this.http.get<Response>('/api/TaskItem/overdue-tasks', { params: { userid: userId.toString() } });
+        return this.http.get<Response>('/url/api/TaskItem/overdue-tasks', { params: { userid: userId.toString() } });
     }
 
     createTask(todo: CreateTodoRequest): Observable<Response> {
-        return this.http.post<Response>('/api/TaskItem/', todo);
+        return this.http.post<Response>('/url/api/TaskItem/', todo);
     }
 
     updateTask(todo: UpdateTodoRequest, todoId: number): Observable<Response> {
-        return this.http.put<Response>(`/api/TaskItem/${todoId}`, todo);
+        return this.http.put<Response>(`/url/api/TaskItem/${todoId}`, todo);
     }
 
     deleteTask(todoId: number): Observable<Response> {
-        return this.http.delete<Response>(`/api/TaskItem/${todoId}`);
+        return this.http.delete<Response>(`/url/api/TaskItem/${todoId}`);
     }
 
     assignCategory(assignment: AssignTodoRequest): Observable<Response> {
-        return this.http.post<Response>(`/api/TaskItem/assign-category`, assignment);
+        return this.http.post<Response>(`/url/api/TaskItem/assign-category`, assignment);
     }
 
     unassignCategory(assignment: UnassignTodoRequest): Observable<Response> {
-        return this.http.delete<Response>(`/api/TaskItem/unassign-category`, { body: assignment });
+        return this.http.delete<Response>(`/url/api/TaskItem/unassign-category`, { body: assignment });
     }
 
     completeTask(todo: CompleteTodoRequest): Observable<Response> {
-        return this.http.post<Response>(`/api/TaskItem/complete`, todo);
+        return this.http.post<Response>(`/url/api/TaskItem/complete`, todo);
     }
 
     reopenTask(todo: ReOpenTodoRequest): Observable<Response> {
-        return this.http.post<Response>(`/api/TaskItem/reopen`, todo);
+        return this.http.post<Response>(`/url/api/TaskItem/reopen`, todo);
     }
 
     getTasksByCategory(filter: GetTodosByCategoryRequest): Observable<Response> {
-        return this.http.get<Response>(`/api/TaskItem/category/${filter.categoryId}`);
+        return this.http.get<Response>(`/url/api/TaskItem/category/${filter.categoryId}`);
     }
 
 }

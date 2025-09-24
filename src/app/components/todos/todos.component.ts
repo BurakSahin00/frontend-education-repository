@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, Input, OnInit, OnDestroy, signal } from '@angular/core';
 import { FormsModule, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -9,7 +9,7 @@ import { TodoService } from '../../services/todo.service';
 import { TodoCard } from '../todo-card/todo-card';
 import { CommonModule } from '@angular/common';
 import { TodoPriority, TodoUpdate } from '../../models/todo.model';
-import { Todo } from '../../features/todo/model/todo.model';
+import { CompleteTodoRequest, ReOpenTodoRequest, Todo } from '../../features/todo/model/todo.model';
 import { Store } from '@ngrx/store';
 import { LoggingService } from '../../services/logging.service';
 import { NotificationService } from '../../services/notification.service';
@@ -18,116 +18,74 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { TodoModal } from '../todo-modal/todo-modal.component';
 import { selectAllTasks } from '../../management/selectors/task.selector';
+import { selectUser } from '../../management/selectors/auth.selector';
+import { User } from '../../features/todo/model/user.model';
+import { TaskActions } from '../../management/actions/task.action';
+import { TodoFilter } from '../todo-filter/todo-filter.component';
 
 @Component({
   selector: 'todos',
   standalone: true,
-  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal],
+  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal, TodoFilter],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
-export class TodosComponent implements OnInit, OnDestroy {
+export class TodosComponent implements OnInit {
 
-  private authService = inject(AuthService);
-  private todoService = inject(TodoService);
-  private store = inject(Store);
-  todoList: Todo[] = [];
-  userLabels: string[] = [];
-  userCategories: string[] = [];
-  private todosSub?: Subscription;
-  isModalVisible = false;
-  isEditModalVisible = false;
-  userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
+  todoList = signal<Todo[]>([]);
+  userLabels = signal<string[]>([]);
+  userCategories = signal<string[]>([]);
+  user = signal<User | null>(null);
 
-  //----
-
-  todos$: Observable<Todo[]> = this.store.select(selectAllTasks);
-
-  
-
-  constructor(
-  private fb: FormBuilder,
-  private route: ActivatedRoute,
-  private logger: LoggingService,
-  private notification: NotificationService
-) {
-  const currentUser = this.authService.getCurrentUser();
-  this.userLabels = currentUser?.todoLabels || [];
-  this.userCategories = currentUser?.todoCategories || [];
-  console.log('User Labels:', this.userLabels);
-  console.log('User Categories:', this.userCategories);
-}
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private logger: LoggingService, private notification: NotificationService, private store: Store) {}
 
   ngOnInit(): void {
     // Query parametrelerine göre filtreleme
+
+    this.store.select(selectUser).subscribe(currentUser => {
+      this.user.set(currentUser);
+    });
+
+    // Store'daki görevler değiştikçe sinyali güncelle
+    this.store.select(selectAllTasks).subscribe(tasks => {
+      this.todoList.set(tasks || []);
+    });
+
     this.route.queryParams.subscribe(params => {
       const category = params['category'];
-      const label = params['label'];
-      this.todosSub = this.todoService.getTodos().subscribe(todos => {
-        let filtered = todos;
-        if (category) {
-          const catLower = category.toLowerCase();
-          filtered = filtered.filter(todo => todo.tags?.some(tag => tag.toLowerCase() === catLower));
-        }
-        if (label) {
-          const labelLower = label.toLowerCase();
-          filtered = filtered.filter(todo => todo.priority?.toString().toLowerCase() === labelLower);
-        }
-        this.todos = filtered;
-      });
+      const isCompleted = params['isCompleted'];
+      const priority = params['priority'];
+      const startDate = params['startDate'] ? new Date(params['startDate']) : null;
+      const endDate = params['endDate'] ? new Date(params['endDate']) : null;
+      const categoryId = params['categoryId'] ? parseInt(params['categoryId'], 10) : null;
     });
     // İlk yüklemede resolver'dan gelen veriyi set et (query param yoksa)
     this.route.data.subscribe(data => {
-      if (!this.route.snapshot.queryParams['category'] && !this.route.snapshot.queryParams['label']) {
-        this.todos = data['todos'] || [];
-      }
+    this.todoList.set(data['todos'] || []);
     });
   }
 
-  ngOnDestroy(): void {
-    this.todosSub?.unsubscribe();
-  }
-
-  @Input() newTodo: Todo = {
-    id: this.todoService.getNextTodoId(),
-    title: '',
-    description: '',
-    completed: false,
-    priority: TodoPriority.Low,
-    parentId: null,
-    dueDate: new Date(),
-    createdAt: new Date(),
-    assignedUserId: this.authService.getCurrentUser()?.id || ''
-  };
-
+  //Silme işlemi
   removeTodo(todoId: string): void {
-   if (this.userid) {
-        this.todoService.removeTodo(todoId, this.userid).subscribe({
-          next: () => {
-            this.logger.warn('Todo başarıyla silindi.', { todoId, userId: this.userid });
-            this.notification.showSuccess('Başarılı', 'Todo başarıyla silindi.');
-          },
-          error: (err) => {
-            this.logger.error('Todo silinirken hata oluştu:', err);
-            this.notification.showError('Hata', 'Todo silinirken bir hata oluştu.');
-          }
-        });
-      } else {
-        console.error('Kullanıcı ID alınamadı. Todo silinemedi.');
-      }
+    this.store.dispatch(TaskActions.deleteTask({ taskId: todoId }));
   }
 
+  //Tamamlanma durumunu güncelleme
   toggleTodoCompletion(todoId: string): void {
-    const todo = this.todos.find(t => t.id === todoId);
-    if (todo) {
-      this.todoService.updateTodoStatus(todoId, !todo.completed).subscribe({
-        next: (updatedTodo) => {
-          this.logger.info('Todo durumu başarıyla güncellendi.', updatedTodo);
-        },
-        error: (err) => {
-          this.logger.error('Todo durumu güncellenirken hata oluştu:', err);
-        }
-      });
+    const todo = this.todoList().find(t => t.id === todoId);
+    
+
+    if (todo && todo.isCompleted) {
+      const request: ReOpenTodoRequest = { taskItemId: todoId };
+      this.todoList.update(todos => todos.map(t => t.id === todoId ? { ...t, isCompleted: false } : t));
+      this.store.dispatch(TaskActions.reopenTask({ taskId: request }));
+    } else {
+      const request: CompleteTodoRequest = { taskItemId: todoId };
+      this.todoList.update(todos => todos.map(t => t.id === todoId ? { ...t, isCompleted: true, completedAt: new Date() } : t));
+      this.store.dispatch(TaskActions.completeTask({ taskId: request }));
     }
   }
+
+  trackByTodoId = (_: number, todo: Todo): string => todo.id;
+
 }

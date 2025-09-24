@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Response } from "../model/response.model";
+import { CreateCategoryRequest, UpdateCategoryRequest, DeleteCategoryRequest, GetCategoriesByTaskRequest } from "../model/category.model";
 
 @Injectable({
     providedIn: 'root'
@@ -10,27 +11,27 @@ export class CategoryService {
     constructor(private http: HttpClient) { }
 
     getCategories(): Observable<Response> {
-        return this.http.get<Response>('/api/Category');
+        return this.http.get<Response>('/url/api/Category');
     }
 
     getCategoryById(id: number): Observable<Response> {
-        return this.http.get<Response>(`/api/Category/${id}`);
+        return this.http.get<Response>(`/url/api/Category/${id}`);
     }
 
-    addCategory(name: string, description: string): Observable<Response> {
-        return this.http.post<Response>('/api/Category', { name, description });
+    addCategory(request: CreateCategoryRequest): Observable<Response> {
+        return this.http.post<Response>('/url/api/Category', request);
     }
 
-    updateCategory(id: number, name: string, description: string): Observable<Response> {
-        return this.http.put<Response>(`/api/Category/${id}`, { id, name, description });
+    updateCategory(request: UpdateCategoryRequest): Observable<Response> {
+        return this.http.put<Response>(`/url/api/Category/${request.id}`, request);
     }
 
-    deleteCategory(id: number): Observable<Response> {
-        return this.http.delete<Response>(`/api/Category/${id}`);
+    deleteCategory(request: DeleteCategoryRequest): Observable<Response> {
+        return this.http.delete<Response>(`/url/api/Category/${request.id}`);
     }
 
-    getCategoriesByTaskId(taskId: number): Observable<Response> {
-        return this.http.get<Response>(`/api/Category/task/${taskId}`);
+    getCategoriesByTaskId(request: GetCategoriesByTaskRequest): Observable<Response> {
+        return this.http.get<Response>(`/url/api/Category/task/${request.taskId}`);
     }
     
 }

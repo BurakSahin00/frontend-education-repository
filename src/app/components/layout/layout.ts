@@ -13,6 +13,8 @@ import { selectUser } from '../../management/selectors/auth.selector';
 import { CommonModule } from "@angular/common";
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { selectAllCategories, selectCategoryState } from '../../management/selectors/category.selector';
+import { TodoCategory } from '../../features/todo/model/category.model';
 
 @Component({
   selector: 'todo-layout',
@@ -23,8 +25,21 @@ import { Router } from '@angular/router';
 export class Layout {
 
 
-  userLabels: string[];
-  userCategories: string[];
+  userLabels = [
+    {
+      id: 0,
+      name: 'Low'
+    },
+    {
+      id: 1,
+      name: 'Medium'
+    },
+    {
+      id: 2,
+      name: 'High'
+    }
+  ];
+  userCategories: TodoCategory[];
 
 
   constructor( private authService: AuthService, private router: Router) {
@@ -34,23 +49,20 @@ export class Layout {
   
   private store = inject(Store);
 
-  user$ = this.store.select(selectUser).subscribe(user => {
+  user$ = this.store.select(selectAllCategories).subscribe(user => {
     if (user) {
-      this.userLabels = user.todoLabels;
-      this.userCategories = user.todoCategories;
-
-    } else {
-      console.log('No user found in Layout component');
+      this.userCategories = user;
     }
   });
 
 
-  filterByCategory(category: string) {
-    this.router.navigate(['/app/todos'], { queryParams: { category } });
+  filterByCategory(categoryId: string) {
+    this.router.navigate(['/app/todos'], { queryParams: { categoryId } });
   }
 
-  filterByLabel(label: string) {
-    this.router.navigate(['/app/todos'], { queryParams: { label } });
+  filterByPriority(priority: number) {
+    this.router.navigate(['/app/todos'], { queryParams: { priority } });
   }
+
 
 }

@@ -52,15 +52,18 @@
     </form>
   </nz-modal>
 -->
-<button nz-button nzType="primary" (click)="todoModalRef.openModal('ADD')">Add Todo</button>
+<div class="header">
+  <button nz-button nzType="primary" (click)="todoModalRef.openModal('ADD')">Add Todo</button>
+<todo-filter></todo-filter>
+</div>
   <todo-modal
     #todoModalRef
   ></todo-modal>
 
 
   <div class="list-container">
-    
-    <div class="todo-list" *ngFor="let todo of todos">
+
+    <div class="todo-list" *ngFor="let todo of todoList(); trackBy: trackByTodoId">
       <todo-card 
         [todo]="todo"
         (edit)="todoModalRef.openModal('EDIT', todo)"
