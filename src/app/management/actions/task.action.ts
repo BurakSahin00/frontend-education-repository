@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, ReOpenTodoRequest, Todo, TodoFilterRequest, UnassignTodoRequest, UpdateTodoRequest } from '../../features/todo/model/todo.model';
+import { AssignTodoRequest, CompleteTodoRequest, CreateTodoRequest, GetTodosByCategoryRequest, GetTodosByOverdueRequest, GetTodosByUpcomingRequest, ReOpenTodoRequest, Todo, TodoFilterRequest, UnassignTodoRequest, UpdateTodoRequest } from '../../features/todo/model/todo.model';
 
 export const TaskActions = createActionGroup({
     source: 'Task',
@@ -9,11 +9,11 @@ export const TaskActions = createActionGroup({
         'Load Tasks Success': props<{ tasks: Todo[] }>(),
         'Load Tasks Failure': props<{ error: any }>(),
 
-        'Load Overdue Tasks': props<{ userId: number }>(),
+        'Load Overdue Tasks': props<{ request: GetTodosByOverdueRequest }>(),
         'Load Overdue Tasks Success': props<{ tasks: Todo[] }>(),
         'Load Overdue Tasks Failure': props<{ error: any }>(),
 
-        'Load Upcoming Tasks': props<{ userId: number, days?: number }>(),
+        'Load Upcoming Tasks': props<{ request: GetTodosByUpcomingRequest }>(),
         'Load Upcoming Tasks Success': props<{ tasks: Todo[] }>(),
         'Load Upcoming Tasks Failure': props<{ error: any }>(),
 

@@ -9,6 +9,9 @@ import { GetCategoriesByTaskRequest } from "../../features/todo/model/category.m
 export const CategoryActions = createActionGroup({
     source: 'Category',
     events: {
+        'Load Category': props<{ id: string }>(),
+        'Load Category Success': props<{ category: Category }>(),
+        'Load Category Failure': props<{ error: string[] }>(),
 
         'Create Category': props<{ request: CreateCategoryRequest }>(),
         'Create Category Success': props<{ category: Category }>(),
@@ -18,7 +21,7 @@ export const CategoryActions = createActionGroup({
         'Update Category Success': props<{ category: Category }>(),
         'Update Category Failure': props<{ error: string[] }>(),
 
-        'Delete Category': props<{ request: DeleteCategoryRequest}>(),
+        'Delete Category': props<{ request: DeleteCategoryRequest }>(),
         'Delete Category Success': props<{ id: string }>(),
         'Delete Category Failure': props<{ error: string[] }>(),
 

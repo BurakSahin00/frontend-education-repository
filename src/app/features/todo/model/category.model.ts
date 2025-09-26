@@ -15,7 +15,6 @@ export interface TodoCategory {
 export interface CreateCategoryRequest {
     name: string;
     description?: string;
-    userId: string;
 }
 
 export interface UpdateCategoryRequest {

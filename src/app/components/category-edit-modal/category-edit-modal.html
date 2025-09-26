@@ -1,0 +1,17 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="title()"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <form [formGroup]="categoryForm" class="category-edit-form">
+    <div class="form-item">
+      <label>Ad</label>
+      <input type="text" formControlName="name" />
+    </div>
+    <div class="form-item">
+      <label>Açıklama</label>
+      <textarea formControlName="description" rows="3"></textarea>
+    </div>
+  </form>
+</nz-modal>

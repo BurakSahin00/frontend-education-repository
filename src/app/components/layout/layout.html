@@ -2,9 +2,8 @@
     <nz-header>
         <div class="logo">TODO App</div>
         <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-            <li nz-menu-item nzSelected>Home</li>
-            <li nz-menu-item>Office</li>
-            <li nz-menu-item>School</li>
+            <li nz-menu-item (click)="filterByOverdue()">Overdue Todos</li>
+            <li nz-menu-item (click)="filterByUpcoming()">Upcoming Todos</li>
         </ul>
     </nz-header>
     <section>
@@ -12,12 +11,14 @@
             <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
                 <li nz-submenu nzIcon="insert-row-left" nzTitle="Categories">
                     <ul>
-                        <li nz-menu-item *ngFor="let category of userCategories" (click)="filterByCategory(category.id)">{{ category.name }}</li>
+                        <li nz-menu-item *ngFor="let category of userCategories()" (click)="filterByCategory(category.id)">{{ category.name }}</li>
                     </ul>
                 </li>
-                <li nz-submenu nzIcon="border" nzTitle="Labels">
+                <li nz-menu-item nzIcon="plus" (click)="addCategoryModal.open()">Add Category</li>
+                <category-add-modal #addCategoryModal></category-add-modal>
+                <li nz-submenu nzIcon="border" nzTitle="Priority">
                     <ul>
-                        <li nz-menu-item *ngFor="let label of userLabels" (click)="filterByPriority(label.id)">{{ label.name }}</li>
+                        <li nz-menu-item *ngFor="let label of userLabels()" (click)="filterByPriority(label.id)">{{ label.name }}</li>
                     </ul>
                 </li>
                 <li nz-menu-item nzIcon="calendar" [routerLink]="['/app', 'calendar']">Calendar</li>

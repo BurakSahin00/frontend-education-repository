@@ -22,11 +22,15 @@ import { selectUser } from '../../management/selectors/auth.selector';
 import { User } from '../../features/todo/model/user.model';
 import { TaskActions } from '../../management/actions/task.action';
 import { TodoFilter } from '../todo-filter/todo-filter.component';
+import { selectCategoryById } from '../../management/selectors/category.selector';
+import { Category } from '../../features/todo/model/category.model';
+import { CategoryEditModal } from '../category-edit-modal/category-edit-modal';
+import { CategoryActions } from '../../management/actions/category.actions';
 
 @Component({
   selector: 'todos',
   standalone: true,
-  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal, TodoFilter],
+  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal, TodoFilter, CategoryEditModal],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
@@ -36,6 +40,8 @@ export class TodosComponent implements OnInit {
   userLabels = signal<string[]>([]);
   userCategories = signal<string[]>([]);
   user = signal<User | null>(null);
+  activeCategory = signal<Category | null>(null);
+  private categorySub?: Subscription;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private logger: LoggingService, private notification: NotificationService, private store: Store) {}
 
@@ -57,7 +63,26 @@ export class TodosComponent implements OnInit {
       const priority = params['priority'];
       const startDate = params['startDate'] ? new Date(params['startDate']) : null;
       const endDate = params['endDate'] ? new Date(params['endDate']) : null;
-      const categoryId = params['categoryId'] ? parseInt(params['categoryId'], 10) : null;
+      const categoryId = params['categoryId'] as string | undefined;
+
+      // Resolver zaten ilk yüklemeyi yapıyor. Query param ile geldiysek kategoriye göre filtre aksiyonu tetikleyelim.
+      if (categoryId) {
+        this.store.dispatch(TaskActions.filterTasksByCategory({ request: { categoryId } }));
+        this.store.dispatch(CategoryActions.loadCategory({ id: categoryId }));
+        // Önceki aboneliği kes, yeni categoryId için abone ol
+        if (this.categorySub) {
+          this.categorySub.unsubscribe();
+        }
+        this.categorySub = this.store.select(selectCategoryById(categoryId)).subscribe(cat => this.activeCategory.set(cat ?? null));
+      } else {
+        // URL'de categoryId yoksa header'ı gizlemek için aktif kategoriyi temizle
+        this.activeCategory.set(null);
+        if (this.categorySub) {
+          this.categorySub.unsubscribe();
+          this.categorySub = undefined;
+        }
+      }
+      // Diğer parametreler için istenirse benzer dispatchler eklenebilir.
     });
     // İlk yüklemede resolver'dan gelen veriyi set et (query param yoksa)
     this.route.data.subscribe(data => {
@@ -87,5 +112,9 @@ export class TodosComponent implements OnInit {
   }
 
   trackByTodoId = (_: number, todo: Todo): string => todo.id;
+
+  onEdit(todo: Todo) {
+    // edit action now directly passes todo to modal.openModal
+  }
 
 }

@@ -1,73 +1,28 @@
 <section>
-  <!--
-  <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Add New Todo" (nzOnCancel)="handleCancel()" (nzOnOk)="addTodo()">
-    <form [formGroup]="todoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
-      <input nz-input formControlName="title" placeholder="Title" />
-      <div *ngIf="todoForm.controls['title'].invalid && todoForm.controls['title'].touched">
-        <small *ngIf="todoForm.controls['title'].errors?.['required']">Title is required</small>
-        <small *ngIf="todoForm.controls['title'].errors?.['minlength']">At least 3 characters</small>
+  <div class="header">
+    <button nz-button nzType="primary" (click)="todoModalRef.openModal('ADD')">Add Todo</button>
+    <todo-filter></todo-filter>
+  </div>
+  <!-- Aktif kategori başlığı ve açıklaması -->
+  <div *ngIf="activeCategory() as cat" class="category-header">
+    <div class="category-header-row">
+      <div>
+        <h2 class="category-title">{{ cat.name }}</h2>
+        <p class="category-desc" *ngIf="cat.description">{{ cat.description }}</p>
       </div>
-
-      <input nz-input formControlName="description" placeholder="Description" />
-      <div *ngIf="todoForm.controls['description'].invalid && todoForm.controls['description'].touched">
-        <small *ngIf="todoForm.controls['description'].errors?.['required']">Description is required</small>
-      </div>
-
-
-      <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
-        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
-      </nz-select>
-
-      <nz-select formControlName="category" nzPlaceHolder="Category">
-        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
-      </nz-select>
-
-      <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
-    </form>
-  </nz-modal>
-  <nz-modal [(nzVisible)]="isEditModalVisible" nzTitle="Edit Todo" (nzOnCancel)="handleEditCancel()"
-    (nzOnOk)="updateTodo()">
-    <form [formGroup]="editTodoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
-      <input nz-input formControlName="title" placeholder="Title" />
-      <div *ngIf="editTodoForm.controls['title'].invalid && editTodoForm.controls['title'].touched">
-        <small *ngIf="editTodoForm.controls['title'].errors?.['required']">Title is required</small>
-        <small *ngIf="editTodoForm.controls['title'].errors?.['minlength']">At least 3 characters</small>
-      </div>
-
-      <input nz-input formControlName="description" placeholder="Description" />
-      <div *ngIf="editTodoForm.controls['description'].invalid && editTodoForm.controls['description'].touched">
-        <small *ngIf="editTodoForm.controls['description'].errors?.['required']">Description is required</small>
-      </div>
-
-
-      <nz-select formControlName="priority" nzPlaceHolder="Priority (Label)">
-        <nz-option *ngFor="let label of userLabels" [nzValue]="label" [nzLabel]="label"></nz-option>
-      </nz-select>
-
-      <nz-select formControlName="category" nzPlaceHolder="Category">
-        <nz-option *ngFor="let category of userCategories" [nzValue]="category" [nzLabel]="category"></nz-option>
-      </nz-select>
-
-      <input nz-input formControlName="dueDate" type="date" placeholder="Due Date" />
-    </form>
-  </nz-modal>
--->
-<div class="header">
-  <button nz-button nzType="primary" (click)="todoModalRef.openModal('ADD')">Add Todo</button>
-<todo-filter></todo-filter>
-</div>
-  <todo-modal
-    #todoModalRef
-  ></todo-modal>
-
+      <button nz-button nzType="default" (click)="categoryEditRef.open(cat)">
+        Düzenle
+      </button>
+    </div>
+    <category-edit-modal #categoryEditRef [category]="cat"></category-edit-modal>
+  </div>
+<todo-modal #todoModalRef></todo-modal>
 
   <div class="list-container">
 
     <div class="todo-list" *ngFor="let todo of todoList(); trackBy: trackByTodoId">
-      <todo-card 
-        [todo]="todo"
-        (edit)="todoModalRef.openModal('EDIT', todo)"
-        (delete)="removeTodo(todo.id)" 
+
+      <todo-card [todo]="todo" (edit)="todoModalRef.openModal('EDIT', todo)" (delete)="removeTodo(todo.id)"
         (toggleComplete)="toggleTodoCompletion(todo.id)"></todo-card>
     </div>
   </div>

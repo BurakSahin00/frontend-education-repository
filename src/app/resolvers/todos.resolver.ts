@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { filter, switchMap, take, tap } from 'rxjs';
@@ -12,19 +12,28 @@ export class TodosResolver implements Resolve<any> {
   private store = inject(Store);
   private actions$ = inject(Actions);
 
-  resolve() {
+  resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
+    const categoryId = route.queryParamMap.get('categoryId');
+
+    // Eğer categoryId varsa kategoriye göre filtreleyip onu resolve et
+    if (categoryId) {
+      this.store.dispatch(TaskActions.filterTasksByCategory({ request: { categoryId } }));
+      return this.actions$.pipe(
+        ofType(TaskActions.filterTasksByCategorySuccess, TaskActions.filterTasksByCategoryFailure),
+        take(1),
+        switchMap(() => this.store.select(selectAllTasks).pipe(take(1)))
+      );
+    }
+
+    // Aksi halde kullanıcının tüm görevlerini yükle
     return this.store.select(selectUser).pipe(
-      // 1) null kullanıcıları atla, kimlikli kullanıcıyı bekle
       filter((u) => !!u && !!u.id),
       take(1),
-      // 2) Görevleri yükle
       tap(user => this.store.dispatch(TaskActions.loadTasks({ userId: Number(user?.id) }))),
-      // 3) Başarı veya hata aksiyonunu bekle
       switchMap(() =>
         this.actions$.pipe(
           ofType(TaskActions.loadTasksSuccess, TaskActions.loadTasksFailure),
           take(1),
-          // 4) Son haldeki görevleri al ve resolve et
           switchMap(() => this.store.select(selectAllTasks).pipe(take(1)))
         )
       )

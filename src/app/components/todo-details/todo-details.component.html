@@ -21,12 +21,13 @@
     </nz-descriptions>
 
     <ng-template #editTodo>
-        <button nz-button nzType="default" (click)="editTodoModal.openModal('EDIT', todo())">
+        <button nz-button nzType="default" (click)="editTodoModal.openModal('EDIT')">
             <i nz-icon nzType="edit"></i> Edit
         </button>
 
         <todo-modal
             #editTodoModal
+            [todo]="todo()"
         ></todo-modal>
     </ng-template>
 

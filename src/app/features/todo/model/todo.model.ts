@@ -10,7 +10,7 @@ export interface Todo {
     id: string;
     title: string;
     description?: string;
-    priority: TodoPriority;
+    priority: 0 | 1 | 2;
     dueDate?: Date;
     completedAt?: Date;
     isCompleted: boolean;
@@ -48,17 +48,26 @@ export interface ReOpenTodoRequest {
 }
 
 export interface AssignTodoRequest {
-    todoId: string;
+    taskItemId: string;
     categoryId: string;
 }
 
 export interface UnassignTodoRequest {
-    todoId: string;
+    taskItemId: string;
     categoryId: string;
 }
 
 export interface GetTodosByCategoryRequest {
     categoryId: string;
+}
+
+export interface GetTodosByOverdueRequest {
+    userId: number;
+}
+
+export interface GetTodosByUpcomingRequest {
+    userId: number;
+    days?: number;
 }
 
 export interface TodoFilterRequest {

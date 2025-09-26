@@ -62,7 +62,7 @@ export class TaskEffect {
                         }
                         return forkJoin(
                             categoryIds.map(id =>
-                                this.category.getCategoryById(Number(id)).pipe(
+                                this.category.getCategoryById(id as any).pipe(
                                     map(response => response.isSuccess && response.hasValue ? response.value as Category : null)
                                 )
                             )
@@ -76,6 +76,38 @@ export class TaskEffect {
                                 this.log.error('Error loading categories.', error);
                                 return of(CategoryActions.getCategoriesFromTasksFailure({ error }));
                             })
+                        );
+                    })
+                )
+            )
+        )
+    );
+
+    // Filter sonrası da kategori detaylarını yükle
+    loadCategoriesAfterFilter$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(TaskActions.filterTasksByCategorySuccess),
+            switchMap(() =>
+                this.store.select(selectAllTasks).pipe(
+                    take(1),
+                    switchMap(tasks => {
+                        this.log.info('Tasks after category filter.', tasks);
+                        const categoryIds = Array.from(new Set(tasks.flatMap(t => t.categories?.map(c => c.id) || [])));
+                        if (categoryIds.length === 0) {
+                            return of(CategoryActions.getCategoriesFromTasksSuccess({ categories: [] }));
+                        }
+                        return forkJoin(
+                            categoryIds.map(id =>
+                                this.category.getCategoryById(id as any).pipe(
+                                    map(response => response.isSuccess && response.hasValue ? response.value as Category : null)
+                                )
+                            )
+                        ).pipe(
+                            map(categories => {
+                                const validCategories = categories.filter(Boolean) as Category[];
+                                return CategoryActions.getCategoriesFromTasksSuccess({ categories: validCategories });
+                            }),
+                            catchError(error => of(CategoryActions.getCategoriesFromTasksFailure({ error })))
                         );
                     })
                 )
@@ -175,7 +207,7 @@ export class TaskEffect {
         this.actions$.pipe(
             ofType(TaskActions.loadOverdueTasks),
             mergeMap(action =>
-                this.task.getOverdueTasks(action.userId).pipe(
+                this.task.getOverdueTasks(action.request.userId).pipe(
                     map(response => {
                         if (response.isSuccess && response.hasValue) {
                             this.log.info('Overdue tasks loaded successfully.', response.value);
@@ -198,7 +230,7 @@ export class TaskEffect {
         this.actions$.pipe(
             ofType(TaskActions.loadUpcomingTasks),
             mergeMap(action =>
-                this.task.getUpcomingTasks(action.userId, action.days).pipe(
+                this.task.getUpcomingTasks(action.request.userId, action.request.days).pipe(
                     map(response => {
                         if (response.isSuccess && response.hasValue) {
                             this.log.info('Upcoming tasks loaded successfully.', response.value);

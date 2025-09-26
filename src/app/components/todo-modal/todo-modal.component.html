@@ -1,5 +1,5 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="handleCancel()"
-    (nzOnOk)="handleOk(todoID)">
+    (nzOnOk)="handleOk()">
     <form [formGroup]="todoForm" *nzModalContent style="display: flex; flex-direction: column; gap: 12px;">
       <input nz-input formControlName="title" placeholder="Title" />
       <div *ngIf="todoForm.controls['title'].invalid && todoForm.controls['title'].touched">

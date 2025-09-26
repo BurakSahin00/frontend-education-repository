@@ -26,7 +26,8 @@ export const routes: Routes = [
                 path: 'todos',
                 component: TodosComponent,
                 title: 'Görevler',
-                resolve: { todos: TodosResolver }
+                resolve: { todos: TodosResolver },
+                runGuardsAndResolvers: 'paramsOrQueryParamsChange'
             },
             {
                 path: 'todos/:id',

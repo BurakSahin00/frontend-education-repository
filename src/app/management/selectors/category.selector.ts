@@ -10,5 +10,5 @@ export const selectAllCategories = createSelector(
 
 export const selectCategoryById = (id: string) => createSelector(
   selectAllCategories,
-  (categories) => categories.find(category => category.id === id)
+  (categories) => categories.find(category => String(category.id) === String(id))
 );

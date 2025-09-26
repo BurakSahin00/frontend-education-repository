@@ -8,7 +8,7 @@ import { selectAllTasks } from '../management/selectors/task.selector';
 
 @Injectable({ providedIn: 'root' })
 export class TodoDetailResolver implements Resolve<Todo> {
-  constructor(private todoService: TodoService, private store: Store) {}
+  constructor(private store: Store) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Todo> {
     const id = route.paramMap.get('id');

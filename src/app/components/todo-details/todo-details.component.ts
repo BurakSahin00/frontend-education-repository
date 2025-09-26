@@ -13,6 +13,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { LoggingService } from '../../services/logging.service';
 
 
 @Component({
@@ -26,29 +27,31 @@ export class TodoDetailsComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
   private store = inject(Store);
+  private logger = inject(LoggingService);
 
   todo = signal<Todo>({} as Todo);
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
     this.route.data.subscribe(data => {
       const todo: Todo = data['todo'];
       if (todo) {
         this.todo.set(todo);
       }
     });
+
+    this.logger.info('TodoDetailsComponent initialized with todo:', this.todo());
   }
 
-  getPriorityColor(priority: string): string {
+  getPriorityColor(priority: 0 | 1 | 2): string {
     switch (priority) {
-      case "2":
-        return "red";
-      case "1":
-        return "orange";
-      case "0":
-        return "green";
+      case 2:
+        return 'red';
+      case 1:
+        return 'orange';
+      case 0:
+        return 'green';
       default:
-        return "grey";
+        return 'grey';
     }
   }
 

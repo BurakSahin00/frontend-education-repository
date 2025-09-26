@@ -102,4 +102,26 @@ export class CategoryEffect {
             )
         )
     );
+
+    loadCategory$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CategoryActions.loadCategory),
+            mergeMap(action =>
+                this.category.getCategoryById(action.id).pipe(
+                    map(response => {
+                        if (response.isSuccess && response.hasValue) {
+                            this.log.info('Category fetched successfully.', response.value);
+                            return CategoryActions.loadCategorySuccess({ category: response.value as Category });
+                        }
+                        this.log.error('Failed to fetch category.', response.errors);
+                        return CategoryActions.loadCategoryFailure({ error: response.errors || ['Unknown error'] });
+                    }),
+                    catchError(error => {
+                        this.log.error('Error fetching category.', error);
+                        return of(CategoryActions.loadCategoryFailure({ error: [error.message || 'Unknown error'] }));
+                    })
+                )
+            )
+        )
+    );
 }
