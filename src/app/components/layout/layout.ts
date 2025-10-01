@@ -12,7 +12,6 @@ import { User } from '../../models/user.model';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../management/selectors/auth.selector';
 import { CommonModule } from "@angular/common";
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TaskActions } from '../../management/actions/task.action';
 import { selectAllCategories, selectCategoryState } from '../../management/selectors/category.selector';

@@ -1,11 +1,13 @@
-import { Injectable, inject, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, inject, DestroyRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo, TodoUpdate } from '../models/todo.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
 // import { environment } from '../environment/environment';
+import { Store } from '@ngrx/store';
+import { selectUserId } from '../management/selectors/auth.selector';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Injectable({
@@ -19,18 +21,20 @@ export class TodoService {
   private nextTodoId = this.todos.length + 1;
   public static instanceCount = 0;
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private pid: Object) {
+  constructor(private http: HttpClient, private store: Store, private destroyRef: DestroyRef) {
     this.logger.info('TodoService başlatıldı.');
+    // Keep userId in memory from NgRx store (no localStorage usage)
+    this.store
+      .select(selectUserId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((id) => {
+        // Normalize to string for URL composition; empty string if not available
+        this.currentUserId = (id != null ? String(id) : '');
+      });
   }
 
-  private get userId(): string {
-    if (!isPlatformBrowser(this.pid)) return '';
-    try {
-      return JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
-    } catch {
-      return '';
-    }
-  }
+  // Cached user id from store
+  private currentUserId: string = '';
 
   loadTodos(): Observable<Todo[]> {
     this.logger.info('Sunucudan todos çekiliyor.');

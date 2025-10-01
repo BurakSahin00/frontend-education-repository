@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { TodoService } from '../services/todo.service';
 import { Todo } from '../features/todo/model/todo.model';
 import { Store } from '@ngrx/store';
 import { selectAllTasks } from '../management/selectors/task.selector';
