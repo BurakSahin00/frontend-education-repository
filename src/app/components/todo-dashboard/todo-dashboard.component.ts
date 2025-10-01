@@ -1,4 +1,4 @@
-import { Component, computed, signal, inject } from '@angular/core';
+import { Component, computed, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
@@ -8,6 +8,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef } from '@angular/core';
 import type { Todo } from '../../features/todo/model/todo.model';
 
 @Component({
@@ -15,16 +16,18 @@ import type { Todo } from '../../features/todo/model/todo.model';
   standalone: true,
   imports: [CommonModule, NzCardModule, NzProgressModule, ScrollingModule, NzListModule, NzSkeletonModule],
   templateUrl: './todo-dashboard.component.html',
-  styleUrls: ['./todo-dashboard.component.css']
+  styleUrls: ['./todo-dashboard.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoDashboardComponent {
 
   todos = signal<Todo[]>([]);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     // İlk yüklemede resolverdan gelen veriyi set et
-    this.route.data.subscribe(data => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
       const incoming = data['todos'];
       let arr: Todo[] = [];
       if (Array.isArray(incoming)) {

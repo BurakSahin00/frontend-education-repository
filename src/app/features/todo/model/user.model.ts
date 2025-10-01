@@ -1,5 +1,5 @@
 export interface User {
-    id: string;
+    id: number;
     email: string;
     createdAt: Date;
     updatedAt?: Date;
@@ -17,7 +17,7 @@ export interface LoginRequest {
 }
 
 export interface UpdateUserRequest {
-    userId: string;
+    userId: number;
     email: string;
     password?: string;
 }

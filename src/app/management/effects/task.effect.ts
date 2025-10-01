@@ -5,11 +5,14 @@ import { Store } from "@ngrx/store";
 import { TaskActions } from "../actions/task.action";
 import { mergeMap, map, catchError, switchMap, take } from "rxjs/operators";
 import { of, forkJoin } from "rxjs";
+import { NotificationService } from "../../services/notification.service";
 import { selectAllTasks } from "../selectors/task.selector";
 import { Category } from "../../features/todo/model/category.model";
 import { CategoryService } from "../../features/todo/service/category.service";
 import { CategoryActions } from "../actions/category.actions";
 import { LoggingService } from "../../services/logging.service";
+import { Action } from "@ngrx/store";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class TaskEffect {
@@ -19,6 +22,8 @@ export class TaskEffect {
     private category = inject(CategoryService);
     private store = inject(Store);
     private log = inject(LoggingService);
+    private notify = inject(NotificationService);
+    private router = inject(Router);
 
     loadTasks$ = createEffect(() =>
         this.actions$.pipe(
@@ -126,17 +131,31 @@ export class TaskEffect {
                     priority: action.task.priority,
                     userId: action.task.userId
                 }).pipe(
-                    map(response => {
+                    mergeMap(response => {
                         if (response.isSuccess && response.hasValue) {
                             this.log.info('Task created successfully.', response.value);
+                            this.notify.showSuccess('Görev oluşturuldu', 'Görev başarıyla oluşturuldu.');
                             const createdTask = response.value as any;
-                            return TaskActions.addTaskSuccess({ task: createdTask });
+                            const followUps: Action[] = [
+                                TaskActions.addTaskSuccess({ task: createdTask })
+                            ];
+                            // If categories were provided, assign them immediately
+                            if (action.categoryIds && action.categoryIds.length) {
+                                action.categoryIds.forEach(cid => {
+                                    followUps.push(TaskActions.assignCategory({ request: { taskItemId: createdTask.id, categoryId: cid } }));
+                                });
+                            }
+                            // Finally refresh the list to hydrate full data
+                            followUps.push(TaskActions.loadTasks({ userId: action.task.userId }));
+                            return of(...followUps);
                         }
                         this.log.error('Failed to create task.', response.errors);
-                        return TaskActions.addTaskFailure({ error: response.errors });
+                        this.notify.showError('Görev oluşturulamadı', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
+                        return of(TaskActions.addTaskFailure({ error: response.errors }));
                     }),
                     catchError(error => {
                         this.log.error('Error creating task.', error);
+                        this.notify.showError('Görev oluşturulamadı', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.addTaskFailure({ error }));
                     })
                 )
@@ -192,10 +211,12 @@ export class TaskEffect {
                             }
                         }
                         this.log.error('Failed to filter tasks.', response.errors);
+                        this.notify.showError('Filtreleme başarısız', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.filterTasksFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error filtering tasks.', error);
+                        this.notify.showError('Filtreleme başarısız', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.filterTasksFailure({ error }));
                     })
                 )
@@ -215,10 +236,12 @@ export class TaskEffect {
                             return TaskActions.loadOverdueTasksSuccess({ tasks: overdueTasks });
                         }
                         this.log.error('Failed to load overdue tasks.', response.errors);
+                        this.notify.showError('Geciken görevler yüklenemedi', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.loadOverdueTasksFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error loading overdue tasks.', error);
+                        this.notify.showError('Geciken görevler yüklenemedi', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.loadOverdueTasksFailure({ error }));
                     })
                 )
@@ -238,10 +261,12 @@ export class TaskEffect {
                             return TaskActions.loadUpcomingTasksSuccess({ tasks: upcomingTasks });
                         }
                         this.log.error('Failed to load upcoming tasks.', response.errors);
+                        this.notify.showError('Yaklaşan görevler yüklenemedi', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.loadUpcomingTasksFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error loading upcoming tasks.', error);
+                        this.notify.showError('Yaklaşan görevler yüklenemedi', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.loadUpcomingTasksFailure({ error }));
                     })
                 )
@@ -257,14 +282,17 @@ export class TaskEffect {
                     map(response => {
                         if (response.isSuccess && response.hasValue) {
                             this.log.info('Category assigned to task successfully.', response.value);
+                            this.notify.showSuccess('Kategori atandı', `Kategori başarıyla atandı.`);
                             const updatedTask = response.value as any;
                             return TaskActions.assignCategorySuccess({ task: updatedTask });
                         }
                         this.log.error('Failed to assign category to task.', response.errors);
+                        this.notify.showError('Kategori atanamadı', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.assignCategoryFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error assigning category to task.', error);
+                        this.notify.showError('Kategori atanamadı', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.assignCategoryFailure({ error }));
                     })
                 )
@@ -280,14 +308,17 @@ export class TaskEffect {
                     map(response => {
                         if (response.isSuccess && response.hasValue) {
                             this.log.info('Category unassigned from task successfully.', response.value);
+                            this.notify.showSuccess('Kategori kaldırıldı', `Kategori başarıyla kaldırıldı.`);
                             const updatedTask = response.value as any;
                             return TaskActions.unassignCategorySuccess({ task: updatedTask });
                         }
                         this.log.error('Failed to unassign category from task.', response.errors);
+                        this.notify.showError('Kategori kaldırılamadı', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.unassignCategoryFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error unassigning category from task.', error);
+                        this.notify.showError('Kategori kaldırılamadı', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.unassignCategoryFailure({ error }));
                     })
                 )
@@ -323,17 +354,44 @@ export class TaskEffect {
             ofType(TaskActions.updateTask),
             mergeMap(action =>
                 this.task.updateTask(action.task, action.taskId).pipe(
-                    map(response => {
-                        if (response.isSuccess && response.hasValue) {
+                    mergeMap(response => {
+                        // Backend döndürürse direkt başarı
+                        if (response && response.isSuccess && response.hasValue) {
                             this.log.info('Task updated successfully.', response.value);
+                            this.notify.showSuccess('Görev güncellendi', 'Görev başarıyla güncellendi.');
                             const updatedTask = response.value as any;
-                            return TaskActions.updateTaskSuccess({ task: updatedTask });
+                            return of(TaskActions.updateTaskSuccess({ task: updatedTask }));
                         }
+                        // 204/empty body veya success without value: mevcut görev üstüne patch uygula
+                        if (!response || (response.isSuccess && !response.hasValue)) {
+                            return this.store.select(selectAllTasks).pipe(
+                                take(1),
+                                map(tasks => {
+                                    const existing = tasks.find(t => t.id === action.taskId);
+                                    if (!existing) {
+                                        this.log.error('Updated task not found in store; cannot patch locally.', action.taskId);
+                                        return TaskActions.updateTaskFailure({ error: ['Updated task not found'] });
+                                    }
+                                    const patch: any = { ...existing };
+                                    if (Object.prototype.hasOwnProperty.call(action.task, 'title')) patch.title = action.task.title;
+                                    if (Object.prototype.hasOwnProperty.call(action.task, 'description')) patch.description = action.task.description;
+                                    if (Object.prototype.hasOwnProperty.call(action.task, 'priority')) patch.priority = action.task.priority as any;
+                                    if (Object.prototype.hasOwnProperty.call(action.task, 'dueDate')) patch.dueDate = action.task.dueDate as any;
+                                    if ((action.task as any).clearDescription) patch.description = undefined;
+                                    if ((action.task as any).clearDueDate) patch.dueDate = undefined;
+                                    this.notify.showSuccess('Görev güncellendi', 'Görev başarıyla güncellendi.');
+                                    return TaskActions.updateTaskSuccess({ task: patch });
+                                })
+                            );
+                        }
+                        // Explicit failure
                         this.log.error('Failed to update task.', response);
-                        return TaskActions.updateTaskFailure({ error: response.errors });
+                        this.notify.showError('Görev güncellenemedi', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
+                        return of(TaskActions.updateTaskFailure({ error: response.errors }));
                     }),
                     catchError(error => {
                         this.log.error('Error updating task.', error);
+                        this.notify.showError('Görev güncellenemedi', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.updateTaskFailure({ error }));
                     })
                 )
@@ -347,20 +405,36 @@ export class TaskEffect {
             mergeMap(action =>
                 this.task.deleteTask(Number(action.taskId)).pipe(
                     map(response => {
-                        if (response.isSuccess) {
+                        // Some APIs return 204 No Content with no body; treat null/undefined as success
+                        if (!response || response.isSuccess) {
                             this.log.info('Task deleted successfully.', action.taskId);
+                            this.notify.showSuccess('Görev silindi', `Görev başarıyla silindi.`);
                             return TaskActions.deleteTaskSuccess({ taskId: action.taskId });
                         }
                         this.log.error('Failed to delete task.', response.errors);
+                        this.notify.showError('Görev silinemedi', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.deleteTaskFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error deleting task.', error);
+                        this.notify.showError('Görev silinemedi', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.deleteTaskFailure({ error }));
                     })
                 )
             )
         )
+    );
+
+    // Navigate back to the general tasks list after successful delete (works from details page too)
+    navigateAfterTaskDelete$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(TaskActions.deleteTaskSuccess),
+                map(() => {
+                    this.router.navigate(["/app/todos"]);
+                })
+            ),
+        { dispatch: false }
     );
 
     completeTask$ = createEffect(() =>
@@ -370,14 +444,17 @@ export class TaskEffect {
                 this.task.completeTask(action.taskId).pipe(
                     map(response => {
                         if (response.isSuccess) {
-                                this.log.info('Task completed successfully.', action.taskId);
+                            this.log.info('Task completed successfully.', action.taskId);
+                            this.notify.showSuccess('Görev tamamlandı', `Görev başarıyla tamamlandı.`);
                             return TaskActions.completeTaskSuccess({ taskId: Number(action.taskId.taskItemId) });
                         }
                         this.log.error('Failed to complete task.', response.errors);
+                        this.notify.showError('Görev tamamlanamadı', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.completeTaskFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error completing task.', error);
+                        this.notify.showError('Görev tamamlanamadı', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.completeTaskFailure({ error }));
                     })
                 )
@@ -393,13 +470,16 @@ export class TaskEffect {
                     map(response => {
                         if (response.isSuccess) {
                             this.log.info('Task reopened successfully.', action.taskId);
+                            this.notify.showSuccess('Görev yeniden açıldı', `Görev başarıyla yeniden açıldı.`);
                             return TaskActions.reopenTaskSuccess({ taskId: Number(action.taskId.taskItemId) });
                         }
                         this.log.error('Failed to reopen task.', response.errors);
+                        this.notify.showError('Görev yeniden açılamadı', (response.errors as any)?.join?.(' | ') ?? 'Hata oluştu');
                         return TaskActions.reopenTaskFailure({ error: response.errors });
                     }),
                     catchError(error => {
                         this.log.error('Error reopening task.', error);
+                        this.notify.showError('Görev yeniden açılamadı', (error as any)?.message ?? 'Hata oluştu');
                         return of(TaskActions.reopenTaskFailure({ error }));
                     })
                 )

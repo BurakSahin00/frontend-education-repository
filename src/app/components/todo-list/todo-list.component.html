@@ -1,0 +1,9 @@
+<div class="todo-list-container">
+  <div class="todo-item" *ngFor="let todo of todos; trackBy: trackByTodoId">
+    <todo-card
+      [todo]="todo"
+      (delete)="deleteTodo.emit($event)"
+      (edit)="editTodo.emit($event)"
+      (toggleComplete)="toggleComplete.emit($event)"></todo-card>
+  </div>
+</div>

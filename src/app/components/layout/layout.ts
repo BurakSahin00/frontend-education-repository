@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -16,14 +16,17 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TaskActions } from '../../management/actions/task.action';
 import { selectAllCategories, selectCategoryState } from '../../management/selectors/category.selector';
+import { CategoryActions } from '../../management/actions/category.actions';
 import { TodoCategory } from '../../features/todo/model/category.model';
 import { GetTodosByCategoryRequest, GetTodosByOverdueRequest, GetTodosByUpcomingRequest } from '../../features/todo/model/todo.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'todo-layout',
   imports: [CategoryAddModal, RouterOutlet, RouterModule, NzLayoutModule, NzMenuModule, NzIconModule, NzBreadCrumbModule, CommonModule, NzButtonModule, NzModalModule],
   templateUrl: './layout.html',
-  styleUrls: ['./layout.css']
+  styleUrls: ['./layout.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Layout {
 
@@ -34,14 +37,18 @@ export class Layout {
   constructor(private router: Router) { }
 
   private store = inject(Store);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
+    // Tüm kategorileri veritabanından yükle
+    this.store.dispatch(CategoryActions.loadAllCategories());
 
-    this.store.select(selectAllCategories).subscribe(categories => {
-      this.userCategories.set(categories);
+    this.store.select(selectAllCategories).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(categories => {
+      // filter out any null/undefined placeholders to avoid rendering blanks
+      this.userCategories.set((categories || []).filter(Boolean));
     });
 
-    this.store.select(selectUser).subscribe(user => {
+    this.store.select(selectUser).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(user => {
       if (user) {
         this.userId.set(Number(user.id));
       }
@@ -55,7 +62,9 @@ export class Layout {
 
   }
 
-  filterByCategory(categoryId: string) {
+  trackByCategoryId = (_: number, item: { id: number }) => item?.id;
+
+  filterByCategory(categoryId: number) {
     this.router.navigate(['/app/todos'], { queryParams: { categoryId } });
   }
 
@@ -64,18 +73,10 @@ export class Layout {
   }
 
   filterByOverdue() {
-    const request: GetTodosByOverdueRequest = {
-      userId: this.userId()
-    };
-    this.store.dispatch(TaskActions.loadOverdueTasks({ request }));
     this.router.navigate(['/app/todos'], { queryParams: { isOverdue: true } });
   }
 
   filterByUpcoming() {
-    const request: GetTodosByUpcomingRequest = {
-      userId: this.userId()
-    };
-    this.store.dispatch(TaskActions.loadUpcomingTasks({ request }));
     this.router.navigate(['/app/todos'], { queryParams: { isUpcoming: true } });
   }
 }

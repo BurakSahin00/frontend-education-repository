@@ -1,5 +1,5 @@
-<nz-card (click)="onOpenDetails()" [nzTitle]="todo.title" [nzActions]="[toggleButtonTemplate, editButtonTemplate, deleteButtonTemplate]">
-  <p>{{ todo.description }}</p>
+<nz-card (click)="onOpenDetails()" [nzTitle]="todo?.title || 'Untitled'" [nzActions]="[toggleButtonTemplate, editButtonTemplate, deleteButtonTemplate]">
+  <p [innerHTML]="(todo?.description || '') | sanitizeHtml"></p>
 </nz-card>
 
 <ng-template #deleteButtonTemplate>
@@ -12,6 +12,6 @@
 
 <ng-template #toggleButtonTemplate>
   <button nz-button nzType="primary" (click)="onToggleComplete(); $event.stopPropagation();">
-    {{ todo.isCompleted ? 'Mark Incomplete' : 'Mark Complete' }}
+    {{ todo?.isCompleted ? 'Mark Incomplete' : 'Mark Complete' }}
   </button>
 </ng-template>

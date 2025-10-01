@@ -1,5 +1,5 @@
 export interface Category {
-    id: string;
+    id: number;
     name: string;
     description: string;
     taskCount: number;
@@ -8,25 +8,27 @@ export interface Category {
 }
 
 export interface TodoCategory {
-    id: string;
+    id: number;
     name: string;
 } 
 
 export interface CreateCategoryRequest {
     name: string;
     description?: string;
+    userId: number;
 }
 
 export interface UpdateCategoryRequest {
-    id: string;
+    id: number;
     name?: string;
     description?: string;
+    userId?: number;    
 }
 
 export interface DeleteCategoryRequest {
-    id: string;
+    id: number;
 }
 
 export interface GetCategoriesByTaskRequest {
-    taskId: string;
+    taskId: number;
 }

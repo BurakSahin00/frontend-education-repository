@@ -1,6 +1,6 @@
 <section>
     <nz-card [nzTitle]="todo().title" [nzActions]="[completeButton, editTodo, deleteButton]">
-        <p>{{ todo().description }}</p>
+        <p [innerHTML]="(todo().description || '') | sanitizeHtml"></p>
     </nz-card>
 
     <nz-descriptions nzTitle="Todo Details" nzBordered>

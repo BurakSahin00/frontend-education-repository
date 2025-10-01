@@ -11,7 +11,7 @@ export class TodoDetailResolver implements Resolve<Todo> {
   constructor(private store: Store) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Todo> {
-    const id = route.paramMap.get('id');
+    const id = Number(route.paramMap.get('id'));
     return this.store.select(selectAllTasks).pipe(
       map(tasks => tasks.find(t => t.id === id) as Todo)
     );

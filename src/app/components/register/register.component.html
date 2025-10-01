@@ -1,3 +1,27 @@
 <div class="register-container">
-    
+  <div class="register-left"></div>
+  <div class="register-right">
+    <h2>Kayıt Ol</h2>
+    <p>Zaten hesabınız var mı? <a routerLink="/">Giriş yapın</a></p>
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <div class="row">
+        <input type="text" placeholder="Ad" formControlName="name" />
+        <input type="text" placeholder="Soyad" formControlName="surname" />
+      </div>
+
+      <input type="email" placeholder="Email" formControlName="email" />
+      <input type="password" placeholder="Şifre" formControlName="password" />
+      <input type="password" placeholder="Şifre (Tekrar)" formControlName="confirmPassword" />
+
+      <div class="options">
+        <label>
+          <input type="checkbox" formControlName="agree" />
+          Kullanım şartlarını kabul ediyorum
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">Kayıt Ol</button>
+      <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
 </div>

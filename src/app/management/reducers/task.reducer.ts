@@ -101,12 +101,22 @@ export const taskFeature = createReducer(
       status: 'updating' as const,
       loading: true
     })),
-    on(TaskActions.updateTaskSuccess, (state, { task }) => ({
-      ...state,
-      status: 'loaded' as const,
-      tasks: state.tasks.map(t => (t.id === task.id ? task : t)),
-      loading: false
-    })),
+    on(TaskActions.updateTaskSuccess, (state, { task }) => {
+      // Guard against undefined/null task to avoid runtime errors
+      if (!task || (task as any).id == null) {
+        return {
+          ...state,
+          status: 'loaded' as const,
+          loading: false
+        };
+      }
+      return {
+        ...state,
+        status: 'loaded' as const,
+        tasks: state.tasks.map(t => (t.id === (task as any).id ? (task as any) : t)),
+        loading: false
+      };
+    }),
     on(TaskActions.updateTaskFailure, (state, { error }) => ({
       ...state,
       status: 'error' as const,
@@ -137,7 +147,7 @@ export const taskFeature = createReducer(
     on(TaskActions.completeTaskSuccess, (state, { taskId }) => ({
       ...state,
       status: 'loaded' as const,
-      tasks: state.tasks.map(t => t.id === taskId.toString() ? { ...t, isCompleted: true, completedAt: new Date() } : t),
+      tasks: state.tasks.map(t => t.id === taskId ? { ...t, isCompleted: true, completedAt: new Date() } : t),
       loading: false
     })),
     on(TaskActions.completeTaskFailure, (state, { error }) => ({
@@ -154,7 +164,7 @@ export const taskFeature = createReducer(
     on(TaskActions.reopenTaskSuccess, (state, { taskId }) => ({
       ...state,
       status: 'loaded' as const,
-      tasks: state.tasks.map(t => t.id === taskId.toString() ? { ...t, isCompleted: false, completedAt: undefined } : t),
+      tasks: state.tasks.map(t => t.id === taskId ? { ...t, isCompleted: false, completedAt: undefined } : t),
       loading: false
     })),
     on(TaskActions.reopenTaskFailure, (state, { error }) => ({

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 import { LoggingService } from '../../services/logging.service';
 import { NotificationService } from '../../services/notification.service';
 import { NzListModule } from 'ng-zorro-antd/list';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { TodoModal } from '../todo-modal/todo-modal.component';
 import { selectAllTasks } from '../../management/selectors/task.selector';
@@ -26,13 +26,16 @@ import { selectCategoryById } from '../../management/selectors/category.selector
 import { Category } from '../../features/todo/model/category.model';
 import { CategoryEditModal } from '../category-edit-modal/category-edit-modal';
 import { CategoryActions } from '../../management/actions/category.actions';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TodoListComponent } from '../todo-list/todo-list.component';
 
 @Component({
   selector: 'todos',
   standalone: true,
-  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal, TodoFilter, CategoryEditModal],
+  imports: [TodoCard, CommonModule, NzListModule, NzButtonModule, NzModalModule, FormsModule, NzInputModule, ReactiveFormsModule, NzSelectModule, TodoModal, TodoFilter, CategoryEditModal, TodoListComponent],
   templateUrl: './todos.component.html',
-  styleUrl: './todos.component.css'
+  styleUrl: './todos.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodosComponent implements OnInit {
 
@@ -41,64 +44,61 @@ export class TodosComponent implements OnInit {
   userCategories = signal<string[]>([]);
   user = signal<User | null>(null);
   activeCategory = signal<Category | null>(null);
-  private categorySub?: Subscription;
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private logger: LoggingService, private notification: NotificationService, private store: Store) {}
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private logger: LoggingService, private notification: NotificationService, private store: Store) {}
 
   ngOnInit(): void {
     // Query parametrelerine göre filtreleme
 
-    this.store.select(selectUser).subscribe(currentUser => {
+    this.store.select(selectUser).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(currentUser => {
       this.user.set(currentUser);
     });
 
     // Store'daki görevler değiştikçe sinyali güncelle
-    this.store.select(selectAllTasks).subscribe(tasks => {
+    this.store.select(selectAllTasks).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(tasks => {
       this.todoList.set(tasks || []);
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       const category = params['category'];
       const isCompleted = params['isCompleted'];
       const priority = params['priority'];
       const startDate = params['startDate'] ? new Date(params['startDate']) : null;
       const endDate = params['endDate'] ? new Date(params['endDate']) : null;
-      const categoryId = params['categoryId'] as string | undefined;
+  const categoryId = params['categoryId'] ? Number(params['categoryId']) : undefined;
 
       // Resolver zaten ilk yüklemeyi yapıyor. Query param ile geldiysek kategoriye göre filtre aksiyonu tetikleyelim.
       if (categoryId) {
-        this.store.dispatch(TaskActions.filterTasksByCategory({ request: { categoryId } }));
-        this.store.dispatch(CategoryActions.loadCategory({ id: categoryId }));
-        // Önceki aboneliği kes, yeni categoryId için abone ol
-        if (this.categorySub) {
-          this.categorySub.unsubscribe();
-        }
-        this.categorySub = this.store.select(selectCategoryById(categoryId)).subscribe(cat => this.activeCategory.set(cat ?? null));
+        // Resolver bu durumda zaten filterTasksByCategory ve gerekirse category yüklemesini tetikler.
+        // Burada sadece header için kategori seçimini dinliyoruz.
+        this.store.select(selectCategoryById(categoryId))
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(cat => this.activeCategory.set(cat ?? null));
       } else {
         // URL'de categoryId yoksa header'ı gizlemek için aktif kategoriyi temizle
         this.activeCategory.set(null);
-        if (this.categorySub) {
-          this.categorySub.unsubscribe();
-          this.categorySub = undefined;
-        }
+      }
+
+      if (priority) {
+
       }
       // Diğer parametreler için istenirse benzer dispatchler eklenebilir.
     });
     // İlk yüklemede resolver'dan gelen veriyi set et (query param yoksa)
-    this.route.data.subscribe(data => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
     this.todoList.set(data['todos'] || []);
     });
   }
 
   //Silme işlemi
-  removeTodo(todoId: string): void {
+  removeTodo(todoId: number): void {
     this.store.dispatch(TaskActions.deleteTask({ taskId: todoId }));
   }
 
   //Tamamlanma durumunu güncelleme
-  toggleTodoCompletion(todoId: string): void {
+  toggleTodoCompletion(todoId: number): void {
     const todo = this.todoList().find(t => t.id === todoId);
-    
 
     if (todo && todo.isCompleted) {
       const request: ReOpenTodoRequest = { taskItemId: todoId };
@@ -111,10 +111,16 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  trackByTodoId = (_: number, todo: Todo): string => todo.id;
+  trackByTodoId = (_: number, todo: Todo): number => todo.id;
 
   onEdit(todo: Todo) {
     // edit action now directly passes todo to modal.openModal
+  }
+
+  deleteCategory(categoryId: number) {
+    if (!categoryId) return;
+    this.store.dispatch(CategoryActions.deleteCategory({ request: { id: categoryId } }));
+    // Yönlendirme, CategoryEffect.deleteCategorySuccess sonrasında yapılacak
   }
 
 }

@@ -3,15 +3,19 @@
   [nzTitle]="title()"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
+  [nzOkDisabled]="categoryForm.invalid"
 >
-  <form [formGroup]="categoryForm" class="category-edit-form">
+  <form [formGroup]="categoryForm" *nzModalContent class="category-edit-form">
     <div class="form-item">
       <label>Ad</label>
-      <input type="text" formControlName="name" />
+      <input nz-input type="text" formControlName="name" placeholder="Kategori adı" />
+      <div class="error" *ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid">
+        Kategori adı zorunlu ve sadece boşluk olamaz.
+      </div>
     </div>
     <div class="form-item">
       <label>Açıklama</label>
-      <textarea formControlName="description" rows="3"></textarea>
+      <textarea nz-input formControlName="description" rows="3" placeholder="Açıklama (opsiyonel)"></textarea>
     </div>
   </form>
 </nz-modal>

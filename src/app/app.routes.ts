@@ -18,6 +18,11 @@ export const routes: Routes = [
         title: 'Giriş'
     },
     {
+        path: 'register',
+        loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent),
+        title: 'Kayıt Ol'
+    },
+    {
         path: 'app',
         component: Layout,
         canActivate: [AuthGuard],

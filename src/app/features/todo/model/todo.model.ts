@@ -7,7 +7,7 @@ export enum TodoPriority {
 }
 
 export interface Todo {
-    id: string;
+    id: number;
     title: string;
     description?: string;
     priority: 0 | 1 | 2;
@@ -26,11 +26,11 @@ export interface CreateTodoRequest {
     description?: string;
     priority: 0 | 1 | 2;
     dueDate?: Date;
-    userId: string;
+    userId: number;
 }
 
 export interface UpdateTodoRequest {
-    taskItemId: string;
+    taskItemId: number;
     title?: string;
     description?: string;
     priority?: 0 | 1 | 2;
@@ -40,25 +40,25 @@ export interface UpdateTodoRequest {
 }
 
 export interface CompleteTodoRequest {
-    taskItemId: string;
+    taskItemId: number;
 }
 
 export interface ReOpenTodoRequest {
-    taskItemId: string;
+    taskItemId: number;
 }
 
 export interface AssignTodoRequest {
-    taskItemId: string;
-    categoryId: string;
+    taskItemId: number;
+    categoryId: number;
 }
 
 export interface UnassignTodoRequest {
-    taskItemId: string;
-    categoryId: string;
+    taskItemId: number;
+    categoryId: number;
 }
 
 export interface GetTodosByCategoryRequest {
-    categoryId: string;
+    categoryId: number;
 }
 
 export interface GetTodosByOverdueRequest {

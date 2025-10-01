@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, DestroyRef, Input, signal, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AssignTodoRequest, CreateTodoRequest, Todo, UnassignTodoRequest } from '../../features/todo/model/todo.model';
 import { LoggingService } from '../../services/logging.service';
@@ -15,13 +15,15 @@ import { UpdateTodoRequest } from '../../features/todo/model/todo.model';
 import { User } from '../../features/todo/model/user.model';
 import { selectUser } from '../../management/selectors/auth.selector';
 import { Task } from '../../features/todo/domain/todo.domain';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'todo-modal',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, NzModalModule, NzFormModule, NzInputModule, NzSelectModule, CommonModule],
   templateUrl: './todo-modal.component.html',
-  styleUrls: ['./todo-modal.component.css']
+  styleUrls: ['./todo-modal.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoModal {
 
@@ -32,10 +34,12 @@ export class TodoModal {
   isVisible: boolean = false;
   modalTitle: string = '';
   mode: string = '';
-  todoID: string = '';
+  todoID: number = 0;
   user = signal<User | null>(null);
   userLabels: { id: string; name: string }[] = [];
   userCategories: Category[] = [];
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   // Allow passing selected todo via input binding
   @Input()
@@ -50,18 +54,18 @@ export class TodoModal {
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required]],
       priority: ['', [Validators.required]],
-      category: [[], [Validators.required]],
+      category: [[]],
       dueDate: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
 
-    this.store.select(selectAllCategories).subscribe(categories => {
+    this.store.select(selectAllCategories).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(categories => {
       this.userCategories = categories;
     });
 
-    this.store.select(selectUser).subscribe(user => {
+    this.store.select(selectUser).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(user => {
       this.user.set(user);
     });
 
@@ -84,6 +88,7 @@ export class TodoModal {
   handleCancel(): void {
     this.isVisible = false;
     this.todoForm.reset();
+    this.cdr.markForCheck();
   }
 
   handleOk(): void {
@@ -92,7 +97,7 @@ export class TodoModal {
       this.loggingService.info('Düzenleme modunda form gönderiliyor.', { todoID: this._currentTodo.id, formValue });
 
       // Multi-select returns string[] of selected category IDs directly
-      const selectedCategoryIds: string[] = Array.isArray(formValue.category) ? formValue.category : [];
+      const selectedCategoryIds: number[] = Array.isArray(formValue.category) ? formValue.category : [];
       const dueDateUtc = formValue.dueDate ? this.toUtcDate(formValue.dueDate) : undefined;
 
       const updatedTodo: UpdateTodoRequest = {
@@ -116,20 +121,20 @@ export class TodoModal {
       const added = selectedCategoryIds.filter(id => !existingCategoryIds.includes(id));
 
       removed.forEach(categoryId => {
-        const request: UnassignTodoRequest = { taskItemId: this._currentTodo!.id, categoryId };
+        const request: UnassignTodoRequest = { taskItemId: this._currentTodo!.id, categoryId: Number(categoryId) };
         this.store.dispatch(TaskActions.unassignCategory({ request: request }));
         this.loggingService.info('Kategori kaldırıldı', { todo: this._currentTodo!.title, categoryId });
       });
 
       added.forEach(categoryId => {
-        const request: AssignTodoRequest = { taskItemId: this._currentTodo!.id, categoryId };
+        const request: AssignTodoRequest = { taskItemId: this._currentTodo!.id, categoryId: Number(categoryId) };
         this.store.dispatch(TaskActions.assignCategory({ request: request }));
         this.loggingService.info('Kategori eklendi', { todo: this._currentTodo!.title, categoryId });
       });
 
       this.store.dispatch(TaskActions.updateTask({ task: updatedTodo, taskId: Number(this._currentTodo.id) }));
 
-    } else if (this.todoForm.valid && this.mode === 'ADD') {
+  } else if (this.todoForm.valid && this.mode === 'ADD') {
 
       const formValue = this.todoForm.value;
       const dueDateUtc = formValue.dueDate ? this.toUtcDate(formValue.dueDate) : undefined;
@@ -138,18 +143,20 @@ export class TodoModal {
         description: formValue.description,
         priority: Number(formValue.priority) as 0 | 1 | 2,
         dueDate: dueDateUtc,
-        userId: this.user()?.id || '',
+        userId: this.user()?.id || 0,
       };
 
       this.loggingService.info('Yeni todo ekleme formu gönderiliyor.', newTodo);
 
-      this.store.dispatch(TaskActions.addTask({ task: newTodo }));
+  const selectedCategoryIds: number[] = Array.isArray(formValue.category) ? formValue.category : [];
+  this.store.dispatch(TaskActions.addTask({ task: newTodo, categoryIds: selectedCategoryIds }));
     }
 
     this.isVisible = false;
     this.mode = '';
     this.modalTitle = '';
     this.todoForm.reset();
+    this.cdr.markForCheck();
   }
 
   openModal(mode: 'ADD' | 'EDIT', todo?: Todo): void {
@@ -180,6 +187,7 @@ export class TodoModal {
       this.todoForm.reset();
     }
     this.isVisible = true;
+    this.cdr.markForCheck();
   }
 
   private toUtcDate(dateOnly: string): Date {

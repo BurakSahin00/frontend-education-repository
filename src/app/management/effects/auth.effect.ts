@@ -9,6 +9,7 @@ import { AuthActions } from "../actions/auth.action";
 import { ofType } from "@ngrx/effects";
 import { User } from "../../features/todo/model/user.model";
 import { LoggingService } from "../../services/logging.service";
+import { NotificationService } from "../../services/notification.service";
 import { Store } from "@ngrx/store";
 import { selectUserId } from "../selectors/auth.selector";
 
@@ -20,6 +21,7 @@ export class AuthEffect {
     private router = inject(Router);
     private log = inject(LoggingService)
     private store = inject(Store);
+    private notify = inject(NotificationService);
 
     register$ = createEffect(() =>
         this.actions$.pipe(
@@ -53,7 +55,8 @@ export class AuthEffect {
                         if (response.isSuccess && response.hasValue && typeof response.value === 'string') {
                             const accessToken = response.value;
                             const decoded = jwtDecode<any>(accessToken);
-                            const userId = decoded.UserId;
+                            this.log.info('Decoded JWT:', decoded);
+                            const userId = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
                             this.log.info('User logged in successfully.');
                             this.log.info('Access Token:', accessToken);
                             return AuthActions.getAccessToken({ accessToken: accessToken, userId: userId });
@@ -149,7 +152,61 @@ export class AuthEffect {
             ofType(AuthActions.registerSuccess),
             tap(() => {
                 this.log.info('User register redirect.');
-                this.router.navigate(['/login']);
+                this.router.navigate(['/']);
+            })
+        ),
+        { dispatch: false }
+    );
+
+    // User-facing notifications (success)
+    authSuccessToasts$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(
+                AuthActions.registerSuccess,
+                AuthActions.loginSuccess,
+                AuthActions.updateUserSuccess,
+                AuthActions.deleteUserSuccess,
+                AuthActions.logoutSuccess
+            ),
+            tap((action) => {
+                switch (action.type) {
+                    case AuthActions.registerSuccess.type:
+                        this.notify.showSuccess('Kayıt başarılı', 'Hesabınız oluşturuldu.');
+                        break;
+                    case AuthActions.loginSuccess.type:
+                        this.notify.showSuccess('Giriş başarılı', 'Hoş geldiniz.');
+                        break;
+                    case AuthActions.updateUserSuccess.type:
+                        this.notify.showSuccess('Profil güncellendi', 'Bilgileriniz kaydedildi.');
+                        break;
+                    case AuthActions.deleteUserSuccess.type:
+                        this.notify.showSuccess('Hesap silindi', 'Hesabınız kaldırıldı.');
+                        break;
+                    case AuthActions.logoutSuccess.type:
+                        this.notify.showSuccess('Çıkış yapıldı', 'Güle güle.');
+                        break;
+                }
+            })
+        ),
+        { dispatch: false }
+    );
+
+    // User-facing notifications (errors)
+    authErrorToasts$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(
+                AuthActions.registerFailure,
+                AuthActions.loginFailure,
+                AuthActions.updateUserFailure,
+                AuthActions.deleteUserFailure,
+                AuthActions.logoutFailure
+            ),
+            tap(({ error }) => {
+                const e: unknown = error as unknown;
+                const msg = Array.isArray(e)
+                  ? (e as any[]).join(' | ')
+                  : (typeof e === 'string' ? e : (e && typeof (e as any).message === 'string' ? (e as any).message : 'İşlem başarısız'));
+                this.notify.showError('İşlem başarısız', msg);
             })
         ),
         { dispatch: false }

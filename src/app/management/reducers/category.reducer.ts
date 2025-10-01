@@ -11,6 +11,14 @@ function upsertCategory(list: Category[], incoming: Category): Category[] {
     return clone;
 }
 
+function mergeById(existing: Category[], incoming: Category[]): Category[] {
+    const map = new Map<string, Category>(existing.map(c => [String(c.id), c]));
+    for (const c of incoming) {
+        map.set(String(c.id), c);
+    }
+    return Array.from(map.values());
+}
+
 const initialCategoryState: CategoryState = {
   categories: [],
   status: 'empty',
@@ -88,13 +96,32 @@ export const categoryFeature = createReducer(
         status: 'loading' as const,
         error: null
     })),
-    on(CategoryActions.getCategoriesFromTasksSuccess, (state, {categories}) => ({
-        ...state
-        , categories: categories.filter(Boolean) as Category[],
+    on(CategoryActions.getCategoriesFromTasksSuccess, (state, {categories}) => {
+        const merged = mergeById(state.categories, (categories || []).filter(Boolean) as Category[]);
+        return {
+            ...state,
+            categories: merged,
+            status: merged.length ? 'loaded' as const : 'empty' as const,
+            error: null
+        };
+    }),
+    on(CategoryActions.getCategoriesFromTasksFailure, (state, { error }) => ({
+        ...state,
+        status: 'error' as const,
+        error
+    })),
+    on(CategoryActions.loadAllCategories, (state) => ({
+        ...state,
+        status: 'loading' as const,
+        error: null
+    })),
+    on(CategoryActions.loadAllCategoriesSuccess, (state, { categories }) => ({
+        ...state,
+        categories: mergeById(state.categories, categories),
         status: categories.length ? 'loaded' as const : 'empty' as const,
         error: null
     })),
-    on(CategoryActions.getCategoriesFromTasksFailure, (state, { error }) => ({
+    on(CategoryActions.loadAllCategoriesFailure, (state, { error }) => ({
         ...state,
         status: 'error' as const,
         error

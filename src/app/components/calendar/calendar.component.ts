@@ -1,46 +1,42 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { TodoService } from '../../services/todo.service';
-import { UserService } from '../../services/user.service';
-import { Todo } from '../../models/todo.model';
+import { Todo } from '../../features/todo/model/todo.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
+import { selectAllTasks } from '../../management/selectors/task.selector';
 
 @Component({
   selector: 'todo-calendar',
   imports: [NzCalendarModule, NzBadgeModule, NzAlertModule, DatePipe, FormsModule, CommonModule],
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarComponent {
   selectedDate: Date = new Date();
   todos: Todo[] = [];
-  private todoService = inject(TodoService);
-  private userService = inject(UserService);
+  private store = inject(Store);
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
    
   }
 
   ngOnInit() {
-    // Test için otomatik login (kullanıcı yoksa ilk kullanıcıyı login yap)
-    let user = this.userService.getLoggedUser();
-    if (!user) {
-      const users = this.userService.getUsers();
-      if (users.length > 0) {
-        this.userService.setLoggedUser(users[0]);
-        user = users[0];
-      }
-    }
-    if (user) {
-     this.todoService.getTodos().subscribe(todos => {
-        this.todos = todos;
+    // Resolver, route değişiminde görevleri NgRx effect'leri ile yüklüyor.
+    // Burada sadece store'dan listeyi izleyip ekrana yansıtıyoruz.
+    this.store
+      .select(selectAllTasks)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((todos) => {
+        this.todos = todos ?? [];
       });
-    }
   }
 
   onDateChange(date: Date) {
@@ -48,41 +44,14 @@ export class CalendarComponent {
   }
 
   getTodosForDate(date: Date): Todo[] {
-    const allTodos: Todo[] = [];
-    for (const todo of this.todos) {
-      if (todo.dueDate) {
-        const todoDate = new Date(todo.dueDate);
-        if (
-          todoDate.getFullYear() === date.getFullYear() &&
-          todoDate.getMonth() === date.getMonth() &&
-          todoDate.getDate() === date.getDate()
-        ) {
-          allTodos.push(todo);
-        }
-      }
-      if (todo.children && todo.children.length > 0) {
-        for (const child of todo.children) {
-          if (child.dueDate) {
-            const childDate = new Date(child.dueDate);
-            if (
-              childDate.getFullYear() === date.getFullYear() &&
-              childDate.getMonth() === date.getMonth() &&
-              childDate.getDate() === date.getDate()
-            ) {
-              allTodos.push(child);
-            }
-          }
-        }
-      }
-    }
-      return this.todos.filter(todo => {
-        if (!todo.dueDate) return false;
-        const todoDate = new Date(todo.dueDate);
-        return (
-          todoDate.getFullYear() === date.getFullYear() &&
-          todoDate.getMonth() === date.getMonth() &&
-          todoDate.getDate() === date.getDate()
-        );
-      });
-    }
+    return this.todos.filter((todo) => {
+      if (!todo.dueDate) return false;
+      const todoDate = new Date(todo.dueDate);
+      return (
+        todoDate.getFullYear() === date.getFullYear() &&
+        todoDate.getMonth() === date.getMonth() &&
+        todoDate.getDate() === date.getDate()
+      );
+    });
+  }
 }

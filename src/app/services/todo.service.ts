@@ -1,10 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Todo, TodoUpdate } from '../models/todo.model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
-import { environment } from '../environment/environment';
+// import { environment } from '../environment/environment';
 
 
 @Injectable({
@@ -18,20 +19,33 @@ export class TodoService {
   private nextTodoId = this.todos.length + 1;
   public static instanceCount = 0;
 
-  private userid = JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private pid: Object) {
+    this.logger.info('TodoService başlatıldı.');
+  }
 
-  constructor(private http: HttpClient) {
-    this.logger.info('TodoService başlatıldı. Sunucudan todos çekiliyor.');
-  this.http.get<Todo[]>(`/api/todo/${this.userid}`).subscribe({
-      next: (todos) => {
-        this.logger.info('Todos başarıyla yüklendi.', todos);
-        this.todos = todos;
-        this.todosSubject.next(this.todos);
-      },
-      error: (err) => {
-        this.logger.error('Todos yüklenirken hata oluştu.', err);
-      }
-    });
+  private get userId(): string {
+    if (!isPlatformBrowser(this.pid)) return '';
+    try {
+      return JSON.parse(localStorage.getItem('currentUser') || '{}').id || '';
+    } catch {
+      return '';
+    }
+  }
+
+  loadTodos(): Observable<Todo[]> {
+    this.logger.info('Sunucudan todos çekiliyor.');
+    return this.http.get<Todo[]>(`/api/todo/${this.userId}`).pipe(
+      tap({
+        next: (todos) => {
+          this.logger.info('Todos başarıyla yüklendi.', todos);
+          this.todos = todos;
+          this.todosSubject.next(this.todos);
+        },
+        error: (err) => {
+          this.logger.error('Todos yüklenirken hata oluştu.', err);
+        }
+      })
+    );
   }
 
   // Tüm todoları döndür

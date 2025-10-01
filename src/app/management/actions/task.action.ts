@@ -25,7 +25,7 @@ export const TaskActions = createActionGroup({
         'Filter Tasks By Category Success': props<{ tasks: Todo[], filteredBy: string[] | 'none' }>(),
         'Filter Tasks By Category Failure': props<{ error: any }>(),
 
-        'Add Task': props<{ task: CreateTodoRequest }>(),
+        'Add Task': props<{ task: CreateTodoRequest; categoryIds?: number[] }>(),
         'Add Task Success': props<{ task: Todo }>(),
         'Add Task Failure': props<{ error: any }>(),
 
@@ -33,8 +33,8 @@ export const TaskActions = createActionGroup({
         'Update Task Success': props<{ task: Todo }>(),
         'Update Task Failure': props<{ error: any }>(),
 
-        'Delete Task': props<{ taskId: string }>(),
-        'Delete Task Success': props<{ taskId: string }>(),
+        'Delete Task': props<{ taskId: number }>(),
+        'Delete Task Success': props<{ taskId: number }>(),
         'Delete Task Failure': props<{ error: any }>(),
 
         'Complete Task': props<{ taskId: CompleteTodoRequest }>(),
@@ -46,7 +46,7 @@ export const TaskActions = createActionGroup({
         'Reopen Task Failure': props<{ error: any }>(),
 
         //Reducer a eklenmeli
-        'Assign Category': props<{ request: AssignTodoRequest}>(),
+        'Assign Category': props<{ request: AssignTodoRequest }>(),
         'Assign Category Success': props<{ task: Todo }>(),
         'Assign Category Failure': props<{ error: any }>(),
 

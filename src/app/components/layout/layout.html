@@ -11,7 +11,7 @@
             <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
                 <li nz-submenu nzIcon="insert-row-left" nzTitle="Categories">
                     <ul>
-                        <li nz-menu-item *ngFor="let category of userCategories()" (click)="filterByCategory(category.id)">{{ category.name }}</li>
+                        <li nz-menu-item *ngFor="let category of userCategories(); trackBy: trackByCategoryId" (click)="filterByCategory(category.id)">{{ category?.name }}</li>
                     </ul>
                 </li>
                 <li nz-menu-item nzIcon="plus" (click)="addCategoryModal.open()">Add Category</li>
